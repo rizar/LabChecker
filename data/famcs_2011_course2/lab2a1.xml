@@ -1,0 +1,23 @@
+<!-- Скрипт проверки первого шага -->
+
+<script>
+
+    <!-- Проверяю размер файла, размеры изображения, набор цветов изображения -->
+
+    <file_size_test size = "95kb" dev = "5%"/>
+                               
+    <image_size_test width = "840" height = "490"/>
+
+    <color_set_test>
+        <add_color file = "%ORIG%"/>
+        <rem_color color = "0, 204, 255"/>
+    </color_set_test>
+
+    <!-- Проверяю, что зона 2 залита одним цветом (0, 255, 255) -->
+
+    <pat_test pat_file = "lab2a2.png">
+        <color pat_rgb = "195, 195, 20" test_rgb = "0, 255, 255"/>
+        <pat_rect x1 = "100" y1 = "50" x2 = "750" y2 = "400"/>
+    </pat_test>    
+
+</script>
