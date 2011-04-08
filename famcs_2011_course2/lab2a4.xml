@@ -1,0 +1,56 @@
+﻿<!-- Скрипт проверки четвертого шага -->
+
+<script>
+    
+    <!-- Проверяю размер файла, размеры изображения, набор цветов изображения -->
+
+    <file_size_test size = "20kb" dev = "5%"/>
+
+    <image_size_test width = "940" height = "590"/>
+
+    <color_set_test>
+        <add_color file = "%ORIG%"/>
+        <rem_color color = "0, 204, 255"/>
+        <add_color color = "c4"/>
+        <add_color color = "c5"/>
+        <add_color color = "c6"/>
+        <add_color color = "c6-"/>
+        <add_color color = "c7"/>
+        <add_color color = "c8"/>
+    </color_set_test>
+
+    <!-- Проверяю четыре угла рамки "багет" -->
+
+    <pat_test file = "lab2a4.png">
+        <pat_rect x1 = "30" y1 = "30" x2 = "49" y2 = "49"/>
+        <color pat_color = "0, 255, 255" test_color = "0, 255, 255"/>
+        <color pat_color = "255, 255, 0" test_color = "255, 255, 0"/>
+    </pat_test>
+
+    <pat_test file = "lab2a4.png">
+        <pat_rect x1 = "30" y1 = "540" x2 = "49" y2 = "559"/>
+        <color pat_color = "0, 255, 255" test_color = "0, 255, 255"/>
+        <color pat_color = "255, 255, 0" test_color = "255, 255, 0"/>
+    </pat_test>
+
+    <pat_test file = "lab2a4.png">
+        <pat_rect x1 = "890" y1 = "540" x2 = "909" y2 = "559"/>
+        <color pat_color = "0, 255, 255" test_color = "0, 255, 255"/>
+        <color pat_color = "255, 255, 0" test_color = "255, 255, 0"/>
+    </pat_test>
+
+    <pat_test file = "lab2a4.png">
+        <pat_rect x1 = "890" y1 = "30" x2 = "909" y2 = "49"/>
+        <color pat_color = "0, 255, 255" test_color = "0, 255, 255"/>
+        <color pat_color = "255, 255, 0" test_color = "255, 255, 0"/>
+    </pat_test>
+
+    <!-- Проверяю низ изображения -->
+
+    <pat_test file = "lab2a4.png">
+        <pat_rect x1 = "0" y1 = "540" x2 = "939" y2 = "589"/>
+        <color pat_color = "0, 255, 255" test_color = "0, 255, 255"/>
+        <color pat_color = "255, 255, 0" test_color = "255, 255, 0"/>
+    </pat_test>
+
+</script>

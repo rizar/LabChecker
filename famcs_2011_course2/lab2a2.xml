@@ -1,0 +1,71 @@
+﻿<!-- Скрипт проверки второго шага -->
+
+<script>
+    
+    <!-- Проверяю размер файла, размеры изображения, набор цветов изображения -->
+
+    <file_size_test size = "30kb" dev = "2kb"/>
+
+    <image_size_test width = "840" height = "490"/>
+
+    <color_set_test>
+        <add_color file = "%ORIG%"/>
+        <rem_color color = "0, 204, 255"/>
+        <add_color color = "c4"/>
+        <add_color color = "c5"/>
+        <add_color color = "c6"/>
+        <add_color color = "c6-"/>
+        <add_color color = "c7"/>
+        <add_color color = "c8"/>
+    </color_set_test>
+
+    <!-- Проверяю изменение цвета границы между зонами -->
+
+    <pat_test file = "lab2a2(borders).png" rem = "0 mod 2">
+        <pat_rect x1 = "120" y1 = "60" x2 = "735" y2 = "400"/>
+
+        <color pat_rgb = "120, 165, 120" pat_test = "c6-"/>
+        <color pat_rgb = "255, 255, 0" pat_test = "%ORIG%(512, 178)"/>
+        <color pat_rgb = "255, 255, 255" pat_test = "%ORIG%(517, 197)"/>
+    </pat_test>
+
+    <pat_test file = "lab2a2(borders).png" rem = "1 mod 2">
+        <pat_rect x1 = "120" y1 = "60" x2 = "735" y2 = "400"/>
+
+        <color pat_rgb = "120, 165, 120" pat_test = "%ORIG%(291, 326)"/>
+        <color pat_rgb = "255, 255, 0" pat_test = "c6-"/>
+        <color pat_rgb = "255, 255, 255" pat_test = "%ORIG%(517, 197)"/>
+    </pat_test>
+
+    <!-- Ищу линию ширины 3пт в легенде -->
+
+    <pat_test file = "3pt_line.png" seek = "true">
+        <color pat_rgb = "0, 0, 0" pat_test = "c6-"/>
+        <color pat_rgb = "255, 255, 255" pat_test = "255, 255, 255"/>
+        <pat_rect x1 = "0" y1 = "0" x2 = "9" y2 = "4"/>
+        <test_rect x1 = "4" y1 = "423" x2 = "39" y2 = "436"/>
+    </pat_test>
+
+    <!-- Проверяю изменение цвета зон -->
+
+    <pat_test file = "lab2a2.png">
+        <color pat_rgb = "255, 255, 20" test_rgb = "c4"/>
+        <color pat_rgb = "195, 195, 20" test_rgb = "c5"/>
+        <color pat_rgb = "135, 135, 20" test_rgb = "c6"/>
+        <color pat_rgb = "75, 75, 20" test_rgb = "c7"/>
+        <color pat_rgb = "15, 15, 20" test_rgb = "c8"/>   
+    </pat_test>
+
+    <!-- Проверяю наличие и правильный цвет окружностей -->
+    
+    <pat_test file = "lab2a2.png">
+        <pat_rect x1 = "367" y1 = "416" x2 = "552" y2 = "484"/>
+        
+        <color pat_rgb = "120, 120, 325" test_rgb = "c6-"/>
+        <color pat_rgb = "255, 0, 255" test_rgb = "%ORIG%(165, 40)"/>
+        <color pat_rgb = "0, 255, 255" test_rgb = "%ORIG%(215, 110)"/>
+        <color pat_rgb = "0, 255, 0" test_rgb = "%ORIG%(240, 140)"/>
+        <color pat_rgb = "0, 0, 255" test_rgb = "%ORIG%(290, 230)"/>
+    </pat_test>
+
+</script>
