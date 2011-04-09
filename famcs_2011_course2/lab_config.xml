@@ -12,7 +12,7 @@
 
     <!-- Макрос оригинала изображения -->
 
-    <macro name = "ORIG" description = "orig/lab2a0var2(%MOD%k+%REM%)%GROUP%.BDV"/>
+    <macro name = "ORIG" def = "orig/lab2a0var2(%MOD%k%REM_SUFF%)%GROUP%.BDV"/>
 
     <!-- Список шагов. Для каждого определяется проверяющий его скрипт и шаблон названия файла -->
 
