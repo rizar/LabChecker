@@ -1,4 +1,4 @@
-package com.github.rizar.labchecker.lab;
+package com.github.rizar.labchecker.exceptions;
 
 /**
  *

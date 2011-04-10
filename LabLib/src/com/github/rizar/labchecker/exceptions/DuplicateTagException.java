@@ -1,10 +1,10 @@
-package com.github.rizar.labchecker.lab;
+package com.github.rizar.labchecker.exceptions;
 
 /**
  *
  * @author Rizar
  */
-class DuplicateTagException  extends TagProblemException
+public class DuplicateTagException  extends TagProblemException
 {
     /**
      * Constructs DuplicateTagException.

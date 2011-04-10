@@ -22,7 +22,11 @@ public interface LabPredefinedMacros
 
     String GET_VAR_MACRO = "GET_VAR";
 
-    String GET_CODE_MACRO_DEFINITION = "(\\d\\d\\d)";
+    String VARIANT_MACRO = "VAR";
+
+    String SOLUTION_MACRO = "SOL";
+
+    String GET_CODE_MACRO_DEFINITION = "([\\d[a-z]]\\d\\d)";
 
     String GET_VAR_MACRO_DEFINITION = "(\\d)";
 }

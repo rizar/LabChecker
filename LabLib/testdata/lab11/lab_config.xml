@@ -2,13 +2,15 @@
 
 <lab lab = "lab2a">
 
+    <color_set> </color_set>
+
     <!-- Модуль, предназначенный для раздачи вариантов -->
 
     <module mod = "3"/>
 
     <!-- Макрос имени, по которому будут обьединяться различные шаги исполнителя, относящиеся к одной лабораторной -->
 
-    <macro name = "SOL" def =   "%LAB%-%CODE%-v%VAR%"/>
+    <macro name = "SOL" def = "%LAB%-%CODE%-%VAR%"/>
 
     <!-- Макрос оригинала изображения -->
 
@@ -17,7 +19,7 @@
     <!-- Список шагов. Для каждого определяется проверяющий его скрипт и шаблон названия файла -->
 
     <step script = "%LAB%1.xml" file = "%LAB%1-%GET_CODE%-v%GET_VAR%.pcx"/>
-    <step script = "%LAB%2.xml" file = "%LAB%2-%GET_CODE%-v%GET_VAR%.tiff"/>
+    <step script = "%LAB%2.xml" file = "%LAB%2-%GET_CODE%-v%GET_VAR%.gif"/>
     <step script = "%LAB%3.xml" file = "%LAB%3-%GET_CODE%-v%GET_VAR%.gif"/>
     <step script = "%LAB%4.xnl" file = "%LAB%4-%GET_CODE%-v%GET_VAR%.png"/>
 

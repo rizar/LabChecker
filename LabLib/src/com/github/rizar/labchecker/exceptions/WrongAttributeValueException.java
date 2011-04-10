@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package com.github.rizar.labchecker.lab;
+package com.github.rizar.labchecker.exceptions;
 
 import java.util.Formatter;
 

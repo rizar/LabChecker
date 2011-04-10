@@ -1,15 +1,13 @@
 package com.github.rizar.labchecker.lab;
 
-import com.github.rizar.labchecker.lab.MissedAttributeException;
-import com.github.rizar.labchecker.lab.DuplicateTagException;
-import com.github.rizar.labchecker.lab.WrongTagDataException;
-import com.github.rizar.labchecker.lab.LabsManager;
-import com.github.rizar.labchecker.lab.MissedTagException;
-import com.github.rizar.labchecker.lab.ColorSet;
-import com.github.rizar.labchecker.lab.Step;
-import com.github.rizar.labchecker.lab.WrongAttributeValueException;
-import com.github.rizar.labchecker.lab.AttributeProblemException;
-import com.github.rizar.labchecker.lab.Lab;
+import com.github.rizar.labchecker.exceptions.WrongNestedTagException;
+import com.github.rizar.labchecker.exceptions.MissedAttributeException;
+import com.github.rizar.labchecker.exceptions.DuplicateTagException;
+import com.github.rizar.labchecker.exceptions.WrongTagDataException;
+import com.github.rizar.labchecker.exceptions.MissedTagException;
+import com.github.rizar.labchecker.exceptions.WrongAttributeValueException;
+import com.github.rizar.labchecker.exceptions.AttributeProblemException;
+import com.github.rizar.labchecker.exceptions.WrongRootTagException;
 import java.util.Arrays;
 import java.awt.Color;
 import static com.github.rizar.labchecker.lab.LabTags.*;
@@ -51,6 +49,13 @@ public class LabTest
     public void testModuleTagWithWrongValue() throws Exception
     {
         Lab lab = testManager.getLabByName("lab4");
+        lab.load();
+    }
+
+    @Test (expected = WrongNestedTagException.class)
+    public void testWrongNestedTag2() throws Exception
+    {
+        Lab lab = testManager.getLabByName("lab11");
         lab.load();
     }
 
@@ -113,6 +118,13 @@ public class LabTest
         lab.load();
     }
 
+    @Test(expected = WrongRootTagException.class)
+    public void testWrongRootTag() throws Exception
+    {
+        Lab lab = testManager.getLabByName("lab12");
+        lab.load();
+    }
+
     /*@Test
     public void testUnknownTag() throws Exception
     {
@@ -143,7 +155,7 @@ public class LabTest
         Lab lab = realManager.getLabByName("famcs_2011_course2");
         lab.load();
         assertEquals(lab.getModule(), 3);
-        assertEquals(lab.getSolutionNameMacro(), "%LAB%-%CODE%-%VAR%");
+        //assertEquals(lab.getSolutionNameMacro(), "%LAB%-%CODE%-%VAR%");
         assertEquals(lab.getNumberOfColorsInSet(), 16);
 
         ColorSet [] colorSets = lab.getColorSets();
@@ -154,8 +166,13 @@ public class LabTest
         Step [] steps = lab.getSteps().toArray(new Step[0]);
         assertEquals(steps[0].getScript(), "%LAB%1.xml");
         assertEquals(steps[2].getScript(), "%LAB%3.xml");
-        assertEquals(steps[1].getFileMacro(), "%LAB%2-%GET_CODE%-v%GET_VAR%.gif");
-        assertEquals(steps[3].getFileMacro(), "%LAB%4-%GET_CODE%-v%GET_VAR%.png");
+        assertTrue(steps[1].isStepFile(new File("lab2a2-304-v1.tiff")));
+        assertTrue(steps[3].isStepFile(new File("lab2a4-304-v1.png")));
+        //assertEquals(steps[1].getFileMacro(), "%LAB%2-%GET_CODE%-v%GET_VAR%.gif");
+        //assertEquals(steps[3].getFileMacro(), "%LAB%4-%GET_CODE%-v%GET_VAR%.png");
+
+        assertEquals(lab.getSolutionName(new File("lab2a3-304-v3.gif")), "lab2a-304-v3");
+        assertEquals(lab.getSolutionName(new File("lab2a2-a05-v2.tiff")), "lab2a-a05-v2");
 
         String [] macros = lab.getMacroProcessor().getMacros();
         System.err.println(Arrays.deepToString(macros));

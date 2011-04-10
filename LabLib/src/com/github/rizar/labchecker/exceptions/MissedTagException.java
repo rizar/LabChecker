@@ -1,10 +1,10 @@
-package com.github.rizar.labchecker.lab;
+package com.github.rizar.labchecker.exceptions;
 
 /**
  *
  * @author Rizar
  */
-class MissedTagException extends TagProblemException
+public class MissedTagException extends TagProblemException
 {
     /**
      * Constructs MissedTagException.

@@ -1,5 +1,13 @@
 package com.github.rizar.labchecker.lab;
 
+import com.github.rizar.labchecker.exceptions.MissedTagException;
+import com.github.rizar.labchecker.exceptions.WrongConfigException;
+import com.github.rizar.labchecker.exceptions.WrongNestedTagException;
+import com.github.rizar.labchecker.exceptions.WrongAttributeValueException;
+import com.github.rizar.labchecker.exceptions.WrongTagDataException;
+import com.github.rizar.labchecker.exceptions.MissedAttributeException;
+import com.github.rizar.labchecker.exceptions.DuplicateTagException;
+import com.github.rizar.labchecker.exceptions.WrongRootTagException;
 import static com.github.rizar.labchecker.lab.LabTags.*;
 import static com.github.rizar.labchecker.lab.LabPredefinedMacros.*;
 import static com.github.rizar.labchecker.lab.LabConstraints.*;
@@ -69,15 +77,10 @@ public class Lab
 
     private int module;
 
-    private String solutionNameMacro;
-
+    //private String solutionNameMacro;
     private int numberOfColorsInSet;
 
     ColorSet[] colorSets;
-
-    StringBuilder colorSetStringBuiler;
-
-    int colorSetNumber;
 
     /**
      * Get module according to which variant is chosen.
@@ -92,11 +95,10 @@ public class Lab
      * Get solution name macro.
      * @return solution name macro
      */
-    public String getSolutionNameMacro()
+    /*public String getSolutionNameMacro()
     {
-        return solutionNameMacro;
-    }
-
+    return solutionNameMacro;
+    }*/
     int getNumberOfColorsInSet()
     {
         return numberOfColorsInSet;
@@ -125,6 +127,10 @@ public class Lab
 
         private Set<String> allTags = new HashSet<String>();
 
+        private StringBuilder colorSetStringBuiler;
+
+        int colorSetNumber;
+
         @Override
         public void setDocumentLocator(Locator locator)
         {
@@ -138,18 +144,29 @@ public class Lab
             System.err.println("startElement " + qName);
 
             //check nesting tabs
-            String currentTag;
-            if (!openedTags.empty() && !(currentTag = openedTags.peek()).equals(
-                    LAB_TAG))
+            if (!openedTags.empty())
             {
-                if (!currentTag.equals(COLOR_SETS_TAG))
-                    throw new SAXException(new WrongNestedTagException(locator.
-                            getLineNumber(), locator.getColumnNumber(), qName,
-                            false, currentTag));
-                else if (!qName.equals(COLOR_SET_TAG))
-                    throw new SAXException(new WrongNestedTagException(locator.
-                            getLineNumber(), locator.getColumnNumber(), qName,
-                            false, currentTag));
+                String currentTag = openedTags.peek();
+                if (qName.equals(COLOR_SET_TAG))
+                {
+                    if (!currentTag.equals(COLOR_SETS_TAG))
+                        throw new SAXException(new WrongNestedTagException(locator.
+                                getLineNumber(), locator.getColumnNumber(),
+                                COLOR_SET_TAG, true, COLOR_SETS_TAG));
+                }
+                else
+                {
+                    if (!currentTag.equals(LAB_TAG))
+                        throw new SAXException(new WrongNestedTagException(locator.
+                                getLineNumber(), locator.getColumnNumber(),
+                                qName, false, currentTag));
+                }
+            }
+            else
+            {
+                if (!qName.equals(LAB_TAG))
+                    throw new SAXException(new WrongRootTagException(locator.
+                            getLineNumber(), locator.getColumnNumber(), qName));
             }
             openedTags.push(qName);
             allTags.add(qName);
@@ -178,10 +195,16 @@ public class Lab
                             MODULE_TAG_MODULE_ATTRIBUTE);
                     if (moduleStr == null)
                         throw new SAXException(new MissedAttributeException(
-                            locator.getLineNumber(), locator.getColumnNumber(),
-                            MODULE_TAG,
-                            MODULE_TAG_MODULE_ATTRIBUTE));
+                                locator.getLineNumber(),
+                                locator.getColumnNumber(),
+                                MODULE_TAG,
+                                MODULE_TAG_MODULE_ATTRIBUTE));
                     module = Integer.parseInt(moduleStr);
+                    if (module < MIN_MODULE || module > MAX_MODULE)
+                        throw new SAXException(new WrongTagDataException(
+                                locator.getLineNumber(),
+                                locator.getColumnNumber(),
+                                MODULE_TAG));
                     macroProcessor.setModule(module);
                 }
                 catch (NumberFormatException e)
@@ -192,16 +215,16 @@ public class Lab
                             MODULE_TAG_MODULE_ATTRIBUTE));
                 }
             }
-            else if (qName.equals(SOLUTION_NAME_TAG))
+            /*else if (qName.equals(SOLUTION_NAME_TAG))
             {
-                solutionNameMacro = attributes.getValue(
-                        SOLUTION_NAME_TAG_NAME_ATTRIBUTE);
-                if (solutionNameMacro == null)
-                    throw new SAXException(new MissedAttributeException(
-                            locator.getLineNumber(), locator.getColumnNumber(),
-                            SOLUTION_NAME_TAG,
-                            SOLUTION_NAME_TAG_NAME_ATTRIBUTE));
-            }
+            solutionNameMacro = attributes.getValue(
+            SOLUTION_NAME_TAG_NAME_ATTRIBUTE);
+            if (solutionNameMacro == null)
+            throw new SAXException(new MissedAttributeException(
+            locator.getLineNumber(), locator.getColumnNumber(),
+            SOLUTION_NAME_TAG,
+            SOLUTION_NAME_TAG_NAME_ATTRIBUTE));
+            }*/
             else if (qName.equals(COLOR_SETS_TAG))
             {
                 try
@@ -408,7 +431,7 @@ public class Lab
      * Get lab name.
      * @return lab name.
      */
-    String getLabName()
+    public String getLabName()
     {
         return directory.getName();
     }
@@ -418,8 +441,11 @@ public class Lab
      * @param <code>stepFile</code> - reference to step file.
      * @return solution name, if <code>stepFile</code> is well-named step file, <code>null</code> otherwise.
      */
-    String getSolutionName(File stepFile)
+    public String getSolutionName(File stepFile)
     {
+        for (Step step : steps)
+            if (step.isStepFile(stepFile))
+                return step.getSolutionName(stepFile);
         return null;
     }
 

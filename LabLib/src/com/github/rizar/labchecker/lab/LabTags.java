@@ -14,9 +14,9 @@ public interface LabTags
 
     String MODULE_TAG_MODULE_ATTRIBUTE = "mod";
 
-    String SOLUTION_NAME_TAG = "solution_name";
+    /*String SOLUTION_NAME_TAG = "solution_name";
 
-    String SOLUTION_NAME_TAG_NAME_ATTRIBUTE = "name";
+    String SOLUTION_NAME_TAG_NAME_ATTRIBUTE = "name";*/
 
     String COLOR_SETS_TAG = "color_sets";
 
@@ -40,6 +40,6 @@ public interface LabTags
 
     String[] OBLIGATORY_TAGS = new String[]
     {
-        LAB_TAG, MODULE_TAG, SOLUTION_NAME_TAG, COLOR_SETS_TAG, SOLUTION_NAME_TAG
+        LAB_TAG, MODULE_TAG, COLOR_SETS_TAG//, SOLUTION_NAME_TAG
     };
 }

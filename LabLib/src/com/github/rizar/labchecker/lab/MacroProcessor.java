@@ -1,5 +1,7 @@
 package com.github.rizar.labchecker.lab;
 
+import com.github.rizar.labchecker.exceptions.InfiniteCycleException;
+import com.github.rizar.labchecker.exceptions.UndefinedMacroException;
 import static com.github.rizar.labchecker.lab.LabPredefinedMacros.*;
 
 import java.util.ArrayList;
@@ -15,7 +17,9 @@ import java.util.regex.Pattern;
  */
 public class MacroProcessor
 {
-    Map<String, String> macros = new HashMap<String, String> ();
+    public static final int MAX_ITERATION_NUMBER = 100;
+
+    Map<String, String> macros = new HashMap<String, String>();
 
     public MacroProcessor()
     {
@@ -23,16 +27,18 @@ public class MacroProcessor
         registerMacro(GET_VAR_MACRO, GET_VAR_MACRO_DEFINITION);
     }
 
-    private int module, group, code;
+    private int module, group;
 
-    public int getCode()
+    private String code;
+
+    public String getCode()
     {
         return code;
     }
 
-    public void setCode(int code)
+    public void setCode(String code)
     {
-        registerMacro(CODE_MACRO, Integer.toString(code));
+        registerMacro(CODE_MACRO, code);
         this.code = code;
     }
 
@@ -70,23 +76,37 @@ public class MacroProcessor
 
     String[] getMacros()
     {
-        List<String> macrosList = new ArrayList<String> ();
+        List<String> macrosList = new ArrayList<String>();
         for (Map.Entry<String, String> entry : macros.entrySet())
             macrosList.add(entry.getKey() + " " + entry.getValue());
-        return macrosList.toArray(new String [0]);
+        return macrosList.toArray(new String[0]);
+    }
+
+    private int codeInteger()
+    {
+        return 100 * Character.digit(code.charAt(0), 26) + 10 * Character.digit(code.
+                charAt(1), 10) + Character.digit(code.charAt(2), 10);
     }
 
     private String processMacro(String macro)
     {
         if (macro.equals(REMAINDER_MACRO))
-            return Integer.toString(code % module);
+        {
+            int rem = codeInteger() % module;
+            return Integer.toString(rem);
+        }
         else if (macro.equals(REMAINDER_SUFFIX_MACRO))
         {
-            int rem = code % module;
+            int rem = codeInteger() % module;
             return rem != 0 ? ("+" + Integer.toString(rem)) : "";
         }
         else
-            return macros.get(macro);
+        {
+            String ret = macros.get(macro);
+            if (ret == null)
+                throw new UndefinedMacroException("", macro);
+            return ret;
+        }
     }
 
     private Pattern macroPattern = Pattern.compile("%(.*?)%");
@@ -94,8 +114,13 @@ public class MacroProcessor
     public String process(String text)
     {
         boolean noMacros = false;
+        int iterationNumber = 0;
         do
         {
+            iterationNumber++;
+            if (iterationNumber > MAX_ITERATION_NUMBER)
+                throw new InfiniteCycleException();
+
             noMacros = true;
             StringBuilder sb = new StringBuilder();
             Matcher matcher = macroPattern.matcher(text);
@@ -114,5 +139,4 @@ public class MacroProcessor
         while (!noMacros);
         return text;
     }
-
 }
