@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="rizar-laptop" name="com.github.rizar.labchecker.lab.MacroProcessorTest" tests="5" time="0.297" timestamp="2011-04-11T11:46:50">
+<testsuite errors="0" failures="0" hostname="rizar-laptop" name="com.github.rizar.labchecker.lab.MacroProcessorTest" tests="6" time="0.172" timestamp="2011-04-11T14:25:48">
   <properties>
     <property name="libs.jsp-compiler.javadoc" value="" />
     <property name="netbeans.autoupdate.country" value="BY" />
@@ -416,6 +416,7 @@
   <testcase classname="com.github.rizar.labchecker.lab.MacroProcessorTest" name="testProcess1" time="0.0" />
   <testcase classname="com.github.rizar.labchecker.lab.MacroProcessorTest" name="testProcess2" time="0.0" />
   <testcase classname="com.github.rizar.labchecker.lab.MacroProcessorTest" name="testUndefinedMacro" time="0.0" />
+  <testcase classname="com.github.rizar.labchecker.lab.MacroProcessorTest" name="testUndefinedMacro2" time="0.0" />
   <testcase classname="com.github.rizar.labchecker.lab.MacroProcessorTest" name="testInfiniteCycle" time="0.0" />
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

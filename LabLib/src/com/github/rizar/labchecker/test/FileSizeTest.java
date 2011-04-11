@@ -8,8 +8,14 @@ import com.github.rizar.labchecker.lab.MacroProcessor;
  */
 public class FileSizeTest extends AbstractTest
 {
-    public FileSizeTest(MacroProcessor mp, String sizeMacro, String deviationMacro)
+    public FileSizeTest(String sizeMacro, String deviationMacro)
     {
         
+    }
+
+    @Override
+    public String getLog()
+    {
+        return "file size test future log\n";
     }
 }

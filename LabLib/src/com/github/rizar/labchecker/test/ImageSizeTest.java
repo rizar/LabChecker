@@ -8,8 +8,14 @@ import com.github.rizar.labchecker.lab.MacroProcessor;
  */
 public class ImageSizeTest extends AbstractTest
 {
-    public ImageSizeTest(MacroProcessor macroProcessor, String heightMacro, String widthMacro)
+    public ImageSizeTest(String heightMacro, String widthMacro)
     {
         
+    }
+
+    @Override
+    public String getLog()
+    {
+        return "image size test future log\n";
     }
 }

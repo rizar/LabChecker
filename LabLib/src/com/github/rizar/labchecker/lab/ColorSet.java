@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.github.rizar.labchecker.lab.Constraints.*;
+
 /**
  *
  * @author Rizar
@@ -13,14 +15,6 @@ import java.util.regex.Pattern;
 public class ColorSet
 {
     private int numberOfColors;
-
-    private String numPat = "\\s*(\\d+)\\s*";
-
-    private String hyphenPat = "\\s*[-,–]\\s*";
-
-    private String colorPat = "\\A" + numPat + hyphenPat + numPat + "," + numPat + "," + numPat + "\\s*\\z";
-
-    private Pattern colorPattern = Pattern.compile(colorPat);
 
     private Map<Integer, Color> colorMap = new HashMap<Integer, Color>();
 
@@ -31,13 +25,13 @@ public class ColorSet
 
     public void parse(String colorsString)
     {
-        String[] strings = colorsString.split("[;\\.]");
+        String[] strings = colorsString.split(COLOR_SEPARATOR);
         if (strings.length < numberOfColors)
             throw new IllegalArgumentException("wrong number of colors in set");
         for (int i = 0; i < numberOfColors; i++)
         {
             String string = strings[i];
-            Matcher matcher = colorPattern.matcher(string);
+            Matcher matcher = NUMBERED_COLOR_PATTERN.matcher(string);
             if (!matcher.matches())
                 throw new IllegalArgumentException(
                         string + " doesn't match color pattern");

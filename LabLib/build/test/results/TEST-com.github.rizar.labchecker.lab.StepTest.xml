@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="rizar-laptop" name="com.github.rizar.labchecker.lab.StepTest" tests="5" time="0.625" timestamp="2011-04-11T11:46:52">
+<testsuite errors="0" failures="0" hostname="rizar-laptop" name="com.github.rizar.labchecker.lab.StepTest" tests="7" time="1.11" timestamp="2011-04-11T14:25:49">
   <properties>
     <property name="libs.jsp-compiler.javadoc" value="" />
     <property name="netbeans.autoupdate.country" value="BY" />
@@ -412,11 +412,13 @@
     <property name="platform.active" value="default_platform" />
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit" />
   </properties>
-  <testcase classname="com.github.rizar.labchecker.lab.StepTest" name="testWrongRootTag" time="0.047" />
-  <testcase classname="com.github.rizar.labchecker.lab.StepTest" name="testMissedDeviationAttribute" time="0.016" />
-  <testcase classname="com.github.rizar.labchecker.lab.StepTest" name="testMissedWidthAttribute" time="0.094" />
-  <testcase classname="com.github.rizar.labchecker.lab.StepTest" name="testWrongNestedAddColorTag" time="0.328" />
-  <testcase classname="com.github.rizar.labchecker.lab.StepTest" name="testGroups" time="0.015" />
+  <testcase classname="com.github.rizar.labchecker.lab.StepTest" name="testWrongRootTag" time="0.063" />
+  <testcase classname="com.github.rizar.labchecker.lab.StepTest" name="testMissedDeviationAttribute" time="0.015" />
+  <testcase classname="com.github.rizar.labchecker.lab.StepTest" name="testMissedWidthAttribute" time="0.078" />
+  <testcase classname="com.github.rizar.labchecker.lab.StepTest" name="testWrongNestedAddColorTag" time="0.313" />
+  <testcase classname="com.github.rizar.labchecker.lab.StepTest" name="testGroups" time="0.016" />
+  <testcase classname="com.github.rizar.labchecker.lab.StepTest" name="testGetSolutionNameDoesntModifyMacroProcessor" time="0.156" />
+  <testcase classname="com.github.rizar.labchecker.lab.StepTest" name="testInnerStepCheckerMacroProcessor" time="0.313" />
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[startElement lab
 characters
@@ -597,5 +599,403 @@ startElement group
 startElement file_size_test
 startElement group
 startElement file_size_test
+startElement lab
+characters
+characters
+startElement module
+endElement module
+characters
+characters
+startElement macro
+endElement macro
+characters
+characters
+startElement macro
+endElement macro
+characters
+characters
+startElement step
+endElement step
+characters
+startElement step
+endElement step
+characters
+startElement step
+endElement step
+characters
+startElement step
+endElement step
+characters
+characters
+startElement color_sets
+characters
+startElement color_set
+characters
+characters
+endElement color_set
+characters
+startElement color_set
+characters
+characters
+characters
+endElement color_set
+characters
+startElement color_set
+characters
+characters
+characters
+endElement color_set
+characters
+startElement color_set
+characters
+characters
+characters
+endElement color_set
+characters
+startElement color_set
+characters
+characters
+characters
+endElement color_set
+characters
+startElement color_set
+characters
+characters
+characters
+endElement color_set
+characters
+startElement color_set
+characters
+characters
+characters
+endElement color_set
+characters
+startElement color_set
+characters
+characters
+characters
+endElement color_set
+characters
+startElement color_set
+characters
+characters
+characters
+endElement color_set
+characters
+startElement color_set
+characters
+characters
+characters
+endElement color_set
+characters
+endElement color_sets
+characters
+endElement lab
+startElement script
+startElement file_size_test
+startElement image_size_test
+startElement color_set_test
+startElement add_color
+startElement rem_color
+startElement pat_test
+startElement color
+startElement pat_rect
+startElement script
+startElement file_size_test
+startElement image_size_test
+startElement color_set_test
+startElement add_color
+startElement rem_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement pat_test
+startElement pat_rect
+startElement color
+startElement color
+startElement color
+startElement pat_test
+startElement pat_rect
+startElement color
+startElement color
+startElement color
+startElement pat_test
+startElement color
+startElement color
+startElement pat_rect
+startElement test_rect
+startElement pat_test
+startElement color
+startElement color
+startElement color
+startElement color
+startElement color
+startElement pat_test
+startElement pat_rect
+startElement color
+startElement color
+startElement color
+startElement color
+startElement color
+startElement script
+startElement file_size_test
+startElement image_size_test
+startElement color_set_test
+startElement add_color
+startElement rem_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement pat_test
+startElement pat_rect
+startElement color
+startElement pat_test
+startElement pat_rect
+startElement color
+startElement script
+startElement file_size_test
+startElement image_size_test
+startElement color_set_test
+startElement add_color
+startElement rem_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement pat_test
+startElement pat_rect
+startElement color
+startElement color
+startElement pat_test
+startElement pat_rect
+startElement color
+startElement color
+startElement pat_test
+startElement pat_rect
+startElement color
+startElement color
+startElement pat_test
+startElement pat_rect
+startElement color
+startElement color
+startElement pat_test
+startElement pat_rect
+startElement color
+startElement color
+SOL -> %LAB%-%CODE%-v%VAR%
+GET_VAR -> (\d)
+GET_CODE -> ([\d[a-z]]\d\d)
+LAB -> lab2a
+ORIG -> orig/lab2a0var2(%MOD%k%REM_SUFF%)%GROUP00%BDV.tga
+MOD -> 3
+
+startElement lab
+characters
+characters
+startElement module
+endElement module
+characters
+characters
+startElement macro
+endElement macro
+characters
+characters
+startElement macro
+endElement macro
+characters
+characters
+startElement step
+endElement step
+characters
+startElement step
+endElement step
+characters
+startElement step
+endElement step
+characters
+startElement step
+endElement step
+characters
+characters
+startElement color_sets
+characters
+startElement color_set
+characters
+characters
+endElement color_set
+characters
+startElement color_set
+characters
+characters
+characters
+endElement color_set
+characters
+startElement color_set
+characters
+characters
+characters
+endElement color_set
+characters
+startElement color_set
+characters
+characters
+characters
+endElement color_set
+characters
+startElement color_set
+characters
+characters
+characters
+endElement color_set
+characters
+startElement color_set
+characters
+characters
+characters
+endElement color_set
+characters
+startElement color_set
+characters
+characters
+characters
+endElement color_set
+characters
+startElement color_set
+characters
+characters
+characters
+endElement color_set
+characters
+startElement color_set
+characters
+characters
+characters
+endElement color_set
+characters
+startElement color_set
+characters
+characters
+characters
+endElement color_set
+characters
+endElement color_sets
+characters
+endElement lab
+startElement script
+startElement file_size_test
+startElement image_size_test
+startElement color_set_test
+startElement add_color
+startElement rem_color
+startElement pat_test
+startElement color
+startElement pat_rect
+startElement script
+startElement file_size_test
+startElement image_size_test
+startElement color_set_test
+startElement add_color
+startElement rem_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement pat_test
+startElement pat_rect
+startElement color
+startElement color
+startElement color
+startElement pat_test
+startElement pat_rect
+startElement color
+startElement color
+startElement color
+startElement pat_test
+startElement color
+startElement color
+startElement pat_rect
+startElement test_rect
+startElement pat_test
+startElement color
+startElement color
+startElement color
+startElement color
+startElement color
+startElement pat_test
+startElement pat_rect
+startElement color
+startElement color
+startElement color
+startElement color
+startElement color
+startElement script
+startElement file_size_test
+startElement image_size_test
+startElement color_set_test
+startElement add_color
+startElement rem_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement pat_test
+startElement pat_rect
+startElement color
+startElement pat_test
+startElement pat_rect
+startElement color
+startElement script
+startElement file_size_test
+startElement image_size_test
+startElement color_set_test
+startElement add_color
+startElement rem_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement add_color
+startElement pat_test
+startElement pat_rect
+startElement color
+startElement color
+startElement pat_test
+startElement pat_rect
+startElement color
+startElement color
+startElement pat_test
+startElement pat_rect
+startElement color
+startElement color
+startElement pat_test
+startElement pat_rect
+startElement color
+startElement color
+startElement pat_test
+startElement pat_rect
+startElement color
+startElement color
+    Размер файла в пределах нормы.
+    Изображение верного размера.
+    Правильные цвета.
+    Однородная заливка зоны выполнена верно
+Первый шаг выполнен верно.
+file size test future log
+image size test future log
+color set test future log
+pattern test future log
 ]]></system-err>
 </testsuite>

@@ -1,5 +1,6 @@
 package com.github.rizar.labchecker.test;
 
+import com.github.rizar.labchecker.lab.MacroProcessor;
 import java.io.File;
 
 /**
@@ -8,18 +9,15 @@ import java.io.File;
  */
 abstract public class AbstractTest implements Test
 {
-    public boolean check(File file)
+    public boolean check(MacroProcessor macroProcessor, File file)
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        //TODO check
+        return true;
     }
 
     public String getLog()
     {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public String getMessage()
-    {
-        throw new UnsupportedOperationException("Not supported yet.");
+        //TODO getLog
+        return "abstract test future log\n";
     }
 }

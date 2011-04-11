@@ -1,5 +1,7 @@
 package com.github.rizar.labchecker.lab;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.xml.sax.Attributes;
@@ -22,8 +24,27 @@ public class TestsForGroup extends TestFor
         return testsFor.toArray(new TestFor [0]);
     }
 
-    public TestsForGroup(MacroProcessor macroProcessor, Attributes attributes)
+    @Override
+    public boolean check(MacroProcessor macroProcessor, File file) throws IOException
     {
-        super(macroProcessor, attributes);
+        clearMessageAndLog();
+        if (!forThis(macroProcessor))
+            return true;
+        
+        boolean result = true;
+        for (TestFor testFor : testsFor)
+        {
+            testFor.setMessagePrefix(ONE_LEVEL_MESSAGE_PREFIX + getMessagePrefix());
+            result &= testFor.check(macroProcessor, file);
+            messageBuilder.append(testFor.getMessage());
+            logBuilder.append(testFor.getLog());
+        }
+        messageBuilder.append(result ? getOkMessage() : getFailMessage());
+        return result;
+    }
+
+    public TestsForGroup(Attributes attributes)
+    {
+        super(attributes);
     }
 }

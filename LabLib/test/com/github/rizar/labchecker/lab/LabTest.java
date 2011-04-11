@@ -174,7 +174,6 @@ public class LabTest
         assertEquals(lab.getSolutionName(new File("lab2a3-304-v3.gif")), "lab2a-304-v3");
         assertEquals(lab.getSolutionName(new File("lab2a2-a05-v2.tiff")), "lab2a-a05-v2");
 
-        String [] macros = lab.getMacroProcessor().getMacros();
-        System.err.println(Arrays.deepToString(macros));
+        System.err.println(lab.getMacroProcessor());
     }
 }

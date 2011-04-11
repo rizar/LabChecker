@@ -4,11 +4,13 @@ import com.github.rizar.labchecker.exceptions.WrongConfigException;
 import com.github.rizar.labchecker.exceptions.WrongNestedTagException;
 import com.github.rizar.labchecker.exceptions.WrongRootTagException;
 import com.github.rizar.labchecker.test.ColorSetTest;
-import static com.github.rizar.labchecker.lab.PredefinedMacros.*;
+import static com.github.rizar.labchecker.lab.Macros.*;
 import static com.github.rizar.labchecker.lab.Tags.*;
+import static com.github.rizar.labchecker.lab.Constraints.*;
 import com.github.rizar.labchecker.test.FileSizeTest;
 import com.github.rizar.labchecker.test.ImageSizeTest;
 import com.github.rizar.labchecker.test.PatternTest;
+import java.awt.Color;
 
 import java.io.File;
 import java.io.IOException;
@@ -108,37 +110,32 @@ class Step
             //process attributes
             if (qName.equals(SCRIPT_TAG))
             {
-                stack.add(new TestsForGroup(lab.getMacroProcessor(), attributes));
+                stack.add(new TestsForGroup(attributes));
             }
             else if (qName.equals(FILE_SIZE_TEST_TAG))
             {
-                newTestFor = new TestFor(lab.getMacroProcessor(),
-                        attributes);
+                newTestFor = new TestFor(attributes);
                 String sizeMacro = mustGet(attributes, FILE_SIZE_TEST_TAG,
                         FILE_SIZE_TEST_SIZE_ATTRIBUTE);
                 String devMacro = mustGet(attributes, FILE_SIZE_TEST_TAG,
                         FILE_SIZE_TEST_DEVIATION_ATTRIBUTE);
-                newTestFor.setTest(new FileSizeTest(lab.getMacroProcessor(),
-                        sizeMacro, devMacro));
+                newTestFor.setTest(new FileSizeTest(sizeMacro, devMacro));
                 stack.peek().addTestFor(newTestFor);
             }
             else if (qName.equals(IMAGE_SIZE_TEST_TAG))
             {
-                newTestFor = new TestFor(lab.getMacroProcessor(),
-                        attributes);
+                newTestFor = new TestFor(attributes);
                 String heightMacro = mustGet(attributes, IMAGE_SIZE_TEST_TAG,
                         IMAGE_SIZE_TEST_HEIGHT_TAG);
                 String widthMacro = mustGet(attributes, IMAGE_SIZE_TEST_TAG,
                         IMAGE_SIZE_TEST_WIDTH_TAG);
-                newTestFor.setTest(new ImageSizeTest(lab.getMacroProcessor(),
-                        heightMacro, widthMacro));
+                newTestFor.setTest(new ImageSizeTest(heightMacro, widthMacro));
                 stack.peek().addTestFor(newTestFor);
             }
             else if (qName.equals(COLOR_SET_TEST_TAG))
             {
-                newTestFor = new TestFor(lab.getMacroProcessor(),
-                        attributes);
-                newColorSetTest = new ColorSetTest(lab.getMacroProcessor());
+                newTestFor = new TestFor(attributes);
+                newColorSetTest = new ColorSetTest();
                 newTestFor.setTest(newColorSetTest);
             }
             else if (qName.equals(ADD_COLOR_TAG))
@@ -165,36 +162,48 @@ class Step
             }
             else if (qName.equals(PATTERN_TEST_TAG))
             {
-                newTestFor = new TestFor(lab.getMacroProcessor(), attributes);
-                newPatternTest = new PatternTest(lab.getMacroProcessor(), attributes.
+                newTestFor = new TestFor(attributes);
+                newPatternTest = new PatternTest(attributes.
                         getValue(PATTERN_TEST_SEEK_ATTRIBUTE));
                 newTestFor.setTest(newPatternTest);
             }
             else if (qName.equals(PATTERN_TEST_PATTERN_RECTANGLE_TAG))
             {
-                String x1 = mustGet(attributes, PATTERN_TEST_PATTERN_RECTANGLE_TAG, X1_ATTRIBUTE);
-                String y1 = mustGet(attributes, PATTERN_TEST_PATTERN_RECTANGLE_TAG, Y1_ATTRIBUTE);
-                String x2 = mustGet(attributes, PATTERN_TEST_PATTERN_RECTANGLE_TAG, X2_ATTRIBUTE);
-                String y2 = mustGet(attributes, PATTERN_TEST_PATTERN_RECTANGLE_TAG, Y2_ATTRIBUTE);
-                newPatternTest.setPatternRectangleMacro(x1 + " " + y1 + " " + x2 + " " + y2);
+                String x1 = mustGet(attributes,
+                        PATTERN_TEST_PATTERN_RECTANGLE_TAG, X1_ATTRIBUTE);
+                String y1 = mustGet(attributes,
+                        PATTERN_TEST_PATTERN_RECTANGLE_TAG, Y1_ATTRIBUTE);
+                String x2 = mustGet(attributes,
+                        PATTERN_TEST_PATTERN_RECTANGLE_TAG, X2_ATTRIBUTE);
+                String y2 = mustGet(attributes,
+                        PATTERN_TEST_PATTERN_RECTANGLE_TAG, Y2_ATTRIBUTE);
+                newPatternTest.setPatternRectangleMacro(
+                        x1 + " " + y1 + " " + x2 + " " + y2);
             }
             else if (qName.equals(PATTERN_TEST_TEST_RECTANGLE_TAG))
             {
-                String x1 = mustGet(attributes, PATTERN_TEST_TEST_RECTANGLE_TAG, X1_ATTRIBUTE);
-                String y1 = mustGet(attributes, PATTERN_TEST_TEST_RECTANGLE_TAG, Y1_ATTRIBUTE);
-                String x2 = mustGet(attributes, PATTERN_TEST_TEST_RECTANGLE_TAG, X2_ATTRIBUTE);
-                String y2 = mustGet(attributes, PATTERN_TEST_TEST_RECTANGLE_TAG, Y2_ATTRIBUTE);
-                newPatternTest.setTestRectangleMacro(x1 + " " + y1 + " " + x2 + " " + y2);
+                String x1 = mustGet(attributes, PATTERN_TEST_TEST_RECTANGLE_TAG,
+                        X1_ATTRIBUTE);
+                String y1 = mustGet(attributes, PATTERN_TEST_TEST_RECTANGLE_TAG,
+                        Y1_ATTRIBUTE);
+                String x2 = mustGet(attributes, PATTERN_TEST_TEST_RECTANGLE_TAG,
+                        X2_ATTRIBUTE);
+                String y2 = mustGet(attributes, PATTERN_TEST_TEST_RECTANGLE_TAG,
+                        Y2_ATTRIBUTE);
+                newPatternTest.setTestRectangleMacro(
+                        x1 + " " + y1 + " " + x2 + " " + y2);
             }
             else if (qName.equals(PATTERN_TEST_COLOR_TAG))
             {
-                String patternColor = mustGet(attributes, PATTERN_TEST_COLOR_TAG, PATTERN_COLOR_ATTRIBUTE);
-                String testColor = mustGet(attributes, PATTERN_TEST_COLOR_TAG, TEST_COLOR_ATTRIBUTE);
+                String patternColor = mustGet(attributes, PATTERN_TEST_COLOR_TAG,
+                        PATTERN_COLOR_ATTRIBUTE);
+                String testColor = mustGet(attributes, PATTERN_TEST_COLOR_TAG,
+                        TEST_COLOR_ATTRIBUTE);
                 newPatternTest.addColorMapping(patternColor, testColor);
             }
             else if (qName.equals(GROUP_TAG))
             {
-                stack.add(new TestsForGroup(lab.getMacroProcessor(), attributes));
+                stack.add(new TestsForGroup(attributes));
             }
         }
 
@@ -231,8 +240,6 @@ class Step
                               SAXException,
                               IOException
     {
-        //TODO insert file name in error message.
-
         try
         {
             SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -263,11 +270,82 @@ class Step
         Matcher matcher = filePattern.matcher(file.getName());
         if (!matcher.matches())
             return null;
-        MacroProcessor mp = lab.getMacroProcessor();
+        MacroProcessor mp = new MacroProcessor(lab.getMacroProcessor());
         String code = matcher.group(1);
         mp.setCode(code);
         String var = matcher.group(2);
         mp.registerMacro(VARIANT_MACRO, var);
         return mp.process("%" + SOLUTION_MACRO + "%");
+    }
+
+    class InnerStepChecker implements StepChecker
+    {
+        private File stepFile;
+
+        private MacroProcessor macroProcessor;
+
+        MacroProcessor getMacroProcessor()
+        {
+            return macroProcessor;
+        }
+
+        public InnerStepChecker(File stepFile)
+        {
+            this.stepFile = stepFile;
+
+            macroProcessor = new MacroProcessor(lab.getMacroProcessor());
+            Matcher matcher = filePattern.matcher(stepFile.getName());
+            matcher.matches();
+            String code = matcher.group(1);
+            macroProcessor.setCode(matcher.group(1));
+            macroProcessor.setGroup(Character.digit(code.charAt(0),
+                    MAX_NUMBER_OF_GROUPS));
+            macroProcessor.registerMacro(VARIANT_MACRO, matcher.group(2));
+            int colorSetNumber = Character.digit(code.charAt(2), 10);
+            for (int colorNumber = 1; colorNumber <= lab.getNumberOfColorsInSet(); colorNumber++)
+            {
+                Color color = lab.getColor(colorSetNumber, colorNumber);
+                String colorStr = color.getRed() + "," + color.getGreen() + "," + color.
+                        getBlue();
+                macroProcessor.registerMacro(COLOR_MACRO_PREFIX + colorNumber,
+                        colorStr);
+            }
+        }
+
+        boolean checkResult;
+        String message, log;
+
+        public boolean check() throws IOException
+        {
+            checkResult = rootTest.check(macroProcessor, stepFile);
+            message = rootTest.getMessage();
+            log = rootTest.getLog();
+            return checkResult;
+        }
+
+        public boolean getCheckResult()
+        {
+            return checkResult;
+        }
+
+        public String getLog()
+        {
+            return log;
+        }
+
+        public String getMessage()
+        {
+            return message;
+        }
+
+        public File getStepFile()
+        {
+            return stepFile;
+        }
+    }
+
+    StepChecker getStepChecker(File stepFile)
+    {
+        return new InnerStepChecker(stepFile);
     }
 }

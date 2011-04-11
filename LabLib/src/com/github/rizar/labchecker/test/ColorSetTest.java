@@ -8,7 +8,7 @@ import com.github.rizar.labchecker.lab.MacroProcessor;
  */
 public class ColorSetTest extends AbstractTest
 {
-    public ColorSetTest(MacroProcessor macroProcessor)
+    public ColorSetTest()
     {
         
     }
@@ -21,5 +21,11 @@ public class ColorSetTest extends AbstractTest
     public void includeRemoveColorMacro(String colorMacro)
     {
         
+    }
+
+    @Override
+    public String getLog()
+    {
+        return "color set test future log\n";
     }
 }

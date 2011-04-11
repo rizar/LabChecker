@@ -8,8 +8,9 @@ import com.github.rizar.labchecker.exceptions.WrongTagDataException;
 import com.github.rizar.labchecker.exceptions.DuplicateTagException;
 import com.github.rizar.labchecker.exceptions.WrongRootTagException;
 import static com.github.rizar.labchecker.lab.Tags.*;
-import static com.github.rizar.labchecker.lab.PredefinedMacros.*;
+import static com.github.rizar.labchecker.lab.Macros.*;
 import static com.github.rizar.labchecker.lab.Constraints.*;
+import java.awt.Color;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -24,9 +25,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.Attributes;
-import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * An class for accessing lab data.
@@ -107,6 +106,11 @@ public class Lab
     ColorSet[] getColorSets()
     {
         return colorSets;
+    }
+
+    Color getColor(int colorSetNumber, int colorNumber)
+    {
+        return colorSets[colorSetNumber].getColor(colorNumber);
     }
 
     List<Step> getSteps()
@@ -380,6 +384,15 @@ public class Lab
      */
     public StepChecker getStepChecker(File stepFile)
     {
+        for (Step step : steps)
+            if (step.isStepFile(stepFile))
+                return step.getStepChecker(stepFile);
         return null;
+    }
+
+    public static final int codeInteger(String code)
+    {
+        return 100 * Character.digit(code.charAt(0), MAX_NUMBER_OF_GROUPS) + 10 * Character.digit(code.
+                charAt(1), 10) + Character.digit(code.charAt(2), 10);
     }
 }

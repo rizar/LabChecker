@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="rizar-laptop" name="com.github.rizar.labchecker.lab.LabTest" tests="10" time="0.812" timestamp="2011-04-11T11:46:46">
+<testsuite errors="0" failures="0" hostname="rizar-laptop" name="com.github.rizar.labchecker.lab.LabTest" tests="10" time="0.766" timestamp="2011-04-11T14:25:43">
   <properties>
     <property name="libs.jsp-compiler.javadoc" value="" />
     <property name="netbeans.autoupdate.country" value="BY" />
@@ -414,14 +414,14 @@
   </properties>
   <testcase classname="com.github.rizar.labchecker.lab.LabTest" name="testLabTagWithoutNameThrowsException" time="0.047" />
   <testcase classname="com.github.rizar.labchecker.lab.LabTest" name="testModuleTagWithoutModuleAttribute" time="0.016" />
-  <testcase classname="com.github.rizar.labchecker.lab.LabTest" name="testModuleTagWithWrongValue" time="0.015" />
-  <testcase classname="com.github.rizar.labchecker.lab.LabTest" name="testWrongNestedTag2" time="0.016" />
+  <testcase classname="com.github.rizar.labchecker.lab.LabTest" name="testModuleTagWithWrongValue" time="0.016" />
+  <testcase classname="com.github.rizar.labchecker.lab.LabTest" name="testWrongNestedTag2" time="0.015" />
   <testcase classname="com.github.rizar.labchecker.lab.LabTest" name="testColorSetsTagWithoutNumberOfColorsInSetAttribute" time="0.016" />
   <testcase classname="com.github.rizar.labchecker.lab.LabTest" name="testDuplicateColorSetsTag" time="0.015" />
-  <testcase classname="com.github.rizar.labchecker.lab.LabTest" name="testWrongColorData" time="0.11" />
-  <testcase classname="com.github.rizar.labchecker.lab.LabTest" name="testWrongRootTag" time="0.015" />
-  <testcase classname="com.github.rizar.labchecker.lab.LabTest" name="testTagMissed" time="0.079" />
-  <testcase classname="com.github.rizar.labchecker.lab.LabTest" name="testSuccessfulLabLoad" time="0.343" />
+  <testcase classname="com.github.rizar.labchecker.lab.LabTest" name="testWrongColorData" time="0.125" />
+  <testcase classname="com.github.rizar.labchecker.lab.LabTest" name="testWrongRootTag" time="0.016" />
+  <testcase classname="com.github.rizar.labchecker.lab.LabTest" name="testTagMissed" time="0.078" />
+  <testcase classname="com.github.rizar.labchecker.lab.LabTest" name="testSuccessfulLabLoad" time="0.25" />
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[startElement lab
 startElement lab
@@ -789,6 +789,12 @@ startElement pat_test
 startElement pat_rect
 startElement color
 startElement color
-[SOL %LAB%-%CODE%-v%VAR%, GET_VAR (\d), GET_CODE ([\d[a-z]]\d\d), LAB lab2a, VAR 2, ORIG orig/lab2a0var2(%MOD%k%REM_SUFF%)%GROUP%.BDV, MOD 3, CODE a05]
+SOL -> %LAB%-%CODE%-v%VAR%
+GET_VAR -> (\d)
+GET_CODE -> ([\d[a-z]]\d\d)
+LAB -> lab2a
+ORIG -> orig/lab2a0var2(%MOD%k%REM_SUFF%)%GROUP00%BDV.tga
+MOD -> 3
+
 ]]></system-err>
 </testsuite>

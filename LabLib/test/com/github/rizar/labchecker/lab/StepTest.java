@@ -102,4 +102,55 @@ public class StepTest
         assertEquals(tests20[0].getRemainderMacro(), "0 mod 2");
         assertFalse(tests20[0] instanceof TestsForGroup);
     }
+
+    @Test
+    public void testGetSolutionNameDoesntModifyMacroProcessor() throws Exception
+    {
+        Lab lab = realManager.getLabByName("famcs_2011_course2");
+        lab.load();
+        String before = lab.getMacroProcessor().toString();
+        System.err.println(before);
+        assertEquals(lab.getSolutionName(new File("lab2a1-304-v1.pcx")), "lab2a-304-v1");
+        assertEquals(before, lab.getMacroProcessor().toString());
+    }
+
+    @Test
+    public void testInnerStepCheckerMacroProcessor() throws Exception
+    {
+        Lab lab = realManager.getLabByName("famcs_2011_course2");
+        lab.load();
+        Step.InnerStepChecker checker = (Step.InnerStepChecker)lab.getStepChecker(new File("lab2a1-304-v1.pcx"));
+        MacroProcessor mp = checker.getMacroProcessor();
+        assertEquals(mp.process("%C1%"), "0,0,0");
+        assertEquals(mp.process("%C4%"), "255,255,20");
+        assertEquals(mp.process("%C16%"), "255,128,64");
+        assertEquals(mp.process("%ORIG%"), "orig/lab2a0var2(3k+1)03BDV.tga");
+        checker.check();
+        System.err.println(checker.getMessage());
+        System.err.println(checker.getLog());
+    }
+
+    @Test
+    public void testGroupAndRemainderMacros() throws Exception
+    {
+        Lab lab = testManager.getLabByName("lab25");
+        lab.load();
+
+        StepChecker checker = lab.getStepChecker(new File("lab2a2-304-v2.tif"));
+        checker.check();
+        String [] messages = checker.getMessage().split("\n");
+        assertEquals(messages[0].trim(), "file_size_test");
+        assertEquals(checker.getMessage().indexOf("image_size_test"), -1);
+
+        StepChecker checker2 = lab.getStepChecker(new File("lab2a2-a05-v3.tif"));
+        checker2.check();
+        String [] messages2 = checker2.getMessage().split("\n");
+        assertEquals(messages2[0].trim(), "image_size_test");
+        assertEquals(checker2.getMessage().indexOf("file_size_test"), -1);
+
+        StepChecker checker3 = lab.getStepChecker(new File("lab2a2-a11-v1.tif"));
+        checker3.check();
+        String [] messages3 = checker3.getMessage().split("\n");
+        assertEquals(messages3[0].trim(), "color_set_test");
+    }
 }

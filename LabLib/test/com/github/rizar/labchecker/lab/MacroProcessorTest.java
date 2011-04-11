@@ -24,7 +24,7 @@ public class MacroProcessorTest
     {
         mc = new MacroProcessor();
         mc.setModule(3);
-        mc.registerMacro("ORIG", "orig/lab2a0var2(%MOD%k%REM_SUFF%)%GROUP%.BDV");
+        mc.registerMacro("ORIG", "orig/lab2a0var2(%MOD%k%REM_SUFF%)%GROUP00%.BDV");
     }
 
     @After
@@ -60,6 +60,12 @@ public class MacroProcessorTest
     public void testUndefinedMacro()
     {
         mc.process("%UNDEFINED%");
+    }
+
+    @Test (expected = UndefinedMacroException.class)
+    public void testUndefinedMacro2()
+    {
+        mc.process("%REM%");
     }
 
     @Test (expected = InfiniteCycleException.class)

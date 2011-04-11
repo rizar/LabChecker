@@ -8,7 +8,7 @@ import com.github.rizar.labchecker.lab.MacroProcessor;
  */
 public class PatternTest extends AbstractTest
 {
-    public PatternTest(MacroProcessor macroProcessor, String seekMacro)
+    public PatternTest(String seekMacro)
     {
         
     }
@@ -26,5 +26,11 @@ public class PatternTest extends AbstractTest
     public void addColorMapping(String patternColorMacro, String testColorMacro)
     {
         
+    }
+
+    @Override
+    public String getLog()
+    {
+        return "pattern test future log";
     }
 }

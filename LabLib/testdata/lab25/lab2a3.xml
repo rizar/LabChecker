@@ -1,0 +1,35 @@
+﻿<!-- Скрипт проверки третьего шага -->
+
+<script>
+    
+    <!-- Проверяю размер файла, размеры изображения, набор цветов изображения -->
+
+    <file_size_test size = "30kb" dev = "5%"/>
+    
+    <image_size_test width = "880" height = "530"/>
+
+    <color_set_test>
+        <add_color file = "%ORIG%"/>
+        <rem_color color = "0, 204, 255"/>
+        <add_color color = "%C4%"/>
+        <add_color color = "%C5%"/>
+        <add_color color = "%C6%"/>
+        <add_color color = "%C6-%"/>
+        <add_color color = "%C7%"/>
+        <add_color color = "%C8%"/>
+    </color_set_test>
+
+    <!-- Проверяю рамку снизу и слева-->
+
+    <pat_test file = "lab2a3.png">
+        <pat_rect x1 = "0" y1 = "0" x2 = "20" y2 = "529"/>
+        <color pat_color = "255, 255, 0" test_color = "255, 255, 0"/>
+    </pat_test>
+
+    <pat_test file = "lab2a3.png">
+        <pat_rect x1 = "0" y1 = "510" x2 = "879" y2 = "529"/>
+        <color pat_color = "25, 255, 0" test_color = "255, 255, 0"/>
+    </pat_test>
+
+</script>
+

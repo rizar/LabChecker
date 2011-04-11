@@ -4,7 +4,7 @@ package com.github.rizar.labchecker.lab;
  * Containts names for predefined macros.
  * @author Rizar
  */
-public interface PredefinedMacros
+public interface Macros
 {
     String LAB_MACRO = "LAB";
 
@@ -16,7 +16,9 @@ public interface PredefinedMacros
 
     String REMAINDER_SUFFIX_MACRO = "REM_SUFF";
 
-    String GROUP_MACRO = "GROUP";
+    String GROUP_TWO_CHARACTERS_MACRO = "GROUP00";
+
+    String GROUP_ONE_CHARACTER_MACRO = "GROUPX";
 
     String GET_CODE_MACRO = "GET_CODE";
 
@@ -29,4 +31,6 @@ public interface PredefinedMacros
     String GET_CODE_MACRO_DEFINITION = "([\\d[a-z]]\\d\\d)";
 
     String GET_VAR_MACRO_DEFINITION = "(\\d)";
+
+    String COLOR_MACRO_PREFIX = "C";
 }
