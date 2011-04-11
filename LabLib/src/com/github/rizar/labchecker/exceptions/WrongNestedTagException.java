@@ -45,7 +45,7 @@ public class WrongNestedTagException extends TagProblemException
      * @param mustBeNested
      */
     public WrongNestedTagException(int lineNumber, int columnNumber, String tag,
-                                   boolean mustBeNested, String currentTag)
+                                   Boolean mustBeNested, String currentTag)
     {
         super(lineNumber, columnNumber, tag, "tag \"" + tag
                 + "\" should " + (mustBeNested ? "" : "not")

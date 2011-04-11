@@ -8,9 +8,9 @@ import com.github.rizar.labchecker.exceptions.WrongTagDataException;
 import com.github.rizar.labchecker.exceptions.MissedAttributeException;
 import com.github.rizar.labchecker.exceptions.DuplicateTagException;
 import com.github.rizar.labchecker.exceptions.WrongRootTagException;
-import static com.github.rizar.labchecker.lab.LabTags.*;
-import static com.github.rizar.labchecker.lab.LabPredefinedMacros.*;
-import static com.github.rizar.labchecker.lab.LabConstraints.*;
+import static com.github.rizar.labchecker.lab.Tags.*;
+import static com.github.rizar.labchecker.lab.PredefinedMacros.*;
+import static com.github.rizar.labchecker.lab.Constraints.*;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -37,7 +37,17 @@ public class Lab
 {
     private File directory;
 
-    private File config;
+    private File configFile;
+
+    public File getConfigFile()
+    {
+        return configFile;
+    }
+
+    public File getDirectory()
+    {
+        return directory;
+    }
 
     public static final FilenameFilter CONFIG_FILTER = new FilenameFilter()
     {
@@ -50,7 +60,7 @@ public class Lab
     private Lab(File directory, File config)
     {
         this.directory = directory;
-        this.config = config;
+        this.configFile = config;
     }
 
     static Lab getInstance(File directory)
@@ -77,7 +87,6 @@ public class Lab
 
     private int module;
 
-    //private String solutionNameMacro;
     private int numberOfColorsInSet;
 
     ColorSet[] colorSets;
@@ -91,14 +100,6 @@ public class Lab
         return module;
     }
 
-    /**
-     * Get solution name macro.
-     * @return solution name macro
-     */
-    /*public String getSolutionNameMacro()
-    {
-    return solutionNameMacro;
-    }*/
     int getNumberOfColorsInSet()
     {
         return numberOfColorsInSet;
@@ -215,16 +216,6 @@ public class Lab
                             MODULE_TAG_MODULE_ATTRIBUTE));
                 }
             }
-            /*else if (qName.equals(SOLUTION_NAME_TAG))
-            {
-            solutionNameMacro = attributes.getValue(
-            SOLUTION_NAME_TAG_NAME_ATTRIBUTE);
-            if (solutionNameMacro == null)
-            throw new SAXException(new MissedAttributeException(
-            locator.getLineNumber(), locator.getColumnNumber(),
-            SOLUTION_NAME_TAG,
-            SOLUTION_NAME_TAG_NAME_ATTRIBUTE));
-            }*/
             else if (qName.equals(COLOR_SETS_TAG))
             {
                 try
@@ -298,7 +289,6 @@ public class Lab
                             getLineNumber(), locator.getColumnNumber(), STEP_TAG,
                             STEP_TAG_FILE_ATTRIBUTE));
                 Step step = new Step(Lab.this, script, fileMacro);
-                step.load();
                 steps.add(step);
             }
             else if (qName.equals(MACRO_TAG))
@@ -332,6 +322,7 @@ public class Lab
 
             if (colorSetStringBuiler != null)
                 colorSetStringBuiler.append(new String(ch, start, length));
+            
             /*String data = new String(ch, start, length).trim();
             if (data.equals(""))
             return;
@@ -393,7 +384,7 @@ public class Lab
     /**
      * Load lab settings and probably images.
      */
-    void load() throws WrongConfigException,
+    public void load() throws WrongConfigException,
                        IOException,
                        SAXException
     {
@@ -401,7 +392,10 @@ public class Lab
         {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
-            parser.parse(config, new ConfigHandler());
+            parser.parse(configFile, new ConfigHandler());
+
+            for (Step step : steps)
+                step.load();
         }
         catch (ParserConfigurationException e)
         {
@@ -412,10 +406,7 @@ public class Lab
             Throwable cause = e.getCause();
             if (cause instanceof WrongConfigException)
                 throw (WrongConfigException) cause;
-            /*throw cause.getClass().asSubclass(
-            WrongConfigException.class).
-            cast(cause);*/
-
+            
             throw e;
         }
     }
@@ -423,7 +414,7 @@ public class Lab
     /**
      * Unload lab images.
      */
-    void unload()
+    public void unload()
     {
     }
 
@@ -453,7 +444,7 @@ public class Lab
      * Get <code>StepChecker</code> object to check <code>stepFile</code>
      * @return <code>StepChecker</code> object is <code>stepFile</code> is well-named step file, <code>null</code> otherwise.
      */
-    StepChecker getStepChecker(File stepFile)
+    public StepChecker getStepChecker(File stepFile)
     {
         return null;
     }

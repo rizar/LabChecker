@@ -14,6 +14,15 @@ public class LabsManager
     private File directory;
 
     /**
+     * Get root directory of this LabsManager
+     * @return root directory.
+     */
+    public File getDirectory()
+    {
+        return directory;
+    }
+    
+    /**
      * Constructs LabsManagers for a given directory.
      * @param directory
      */

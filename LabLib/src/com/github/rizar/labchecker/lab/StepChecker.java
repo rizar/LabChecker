@@ -16,6 +16,12 @@ public interface StepChecker
     boolean check() throws IOException;
 
     /**
+     * Get result of last check.
+     * @return true, if last check was successfull, false if it failed.
+     */
+    boolean getCheckResult();
+
+    /**
      * Get step file to be checked.
      * @return step file reference.
      */

@@ -2,7 +2,7 @@ package com.github.rizar.labchecker.lab;
 
 import com.github.rizar.labchecker.exceptions.InfiniteCycleException;
 import com.github.rizar.labchecker.exceptions.UndefinedMacroException;
-import static com.github.rizar.labchecker.lab.LabPredefinedMacros.*;
+import static com.github.rizar.labchecker.lab.PredefinedMacros.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;

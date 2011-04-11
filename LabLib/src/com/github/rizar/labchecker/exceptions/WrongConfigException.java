@@ -16,9 +16,26 @@ public class WrongConfigException extends Exception
     }
 
     /**
-     * Construct a WrongLabConfigException
+     * Constructs WrongLabConfigException
      */
     public WrongConfigException()
+    {
+    }
+
+    /**
+     * Constructs WrongLabConfigException with given cause.
+     * @param cause
+     */
+    public WrongConfigException(Throwable cause)
+    {
+    }
+
+    /**
+     * Constructs WrongLabConfigException with given cause and message.
+     * @param message
+     * @param cause
+     */
+    public WrongConfigException(String message, Throwable cause)
     {
     }
 

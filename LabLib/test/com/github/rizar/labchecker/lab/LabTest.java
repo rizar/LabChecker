@@ -10,7 +10,7 @@ import com.github.rizar.labchecker.exceptions.AttributeProblemException;
 import com.github.rizar.labchecker.exceptions.WrongRootTagException;
 import java.util.Arrays;
 import java.awt.Color;
-import static com.github.rizar.labchecker.lab.LabTags.*;
+import static com.github.rizar.labchecker.lab.Tags.*;
 
 import java.io.File;
 import org.junit.Test;
@@ -164,8 +164,8 @@ public class LabTest
         assertEquals(colorSets[0].getColor(16), new Color(255, 128, 64));
 
         Step [] steps = lab.getSteps().toArray(new Step[0]);
-        assertEquals(steps[0].getScript(), "%LAB%1.xml");
-        assertEquals(steps[2].getScript(), "%LAB%3.xml");
+        assertEquals(steps[0].getScriptFile().getName(), "lab2a1.xml");
+        assertEquals(steps[2].getScriptFile().getName(), "lab2a3.xml");
         assertTrue(steps[1].isStepFile(new File("lab2a2-304-v1.tiff")));
         assertTrue(steps[3].isStepFile(new File("lab2a4-304-v1.png")));
         //assertEquals(steps[1].getFileMacro(), "%LAB%2-%GET_CODE%-v%GET_VAR%.gif");

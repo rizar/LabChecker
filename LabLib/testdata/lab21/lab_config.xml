@@ -1,0 +1,6 @@
+<lab lab = "lab21">
+    <step script = "%LAB%step1.xml" file = "ggg"/>
+    <module mod = "3"/>
+    <color_sets num_colors_in_set = "2">
+    </color_sets>
+</lab>

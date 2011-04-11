@@ -23,14 +23,14 @@ public class LabsManagerTest
         manager = new LabsManager(new File("testdata"));
     }
 
-    @Test
+    /*@Test
     public void testGetAvailableLabs()
     {
         Lab [] labs = manager.getAvailableLabs();
         assertEquals(labs.length, 2);
         assertEquals(labs[0].getLabName(), "lab1");
         assertEquals(labs[1].getLabName(), "lab3");
-    }
+    }*/
 
     @Test
     public void testGetLabByName()

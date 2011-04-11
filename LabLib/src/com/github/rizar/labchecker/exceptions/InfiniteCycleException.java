@@ -12,5 +12,6 @@ public class InfiniteCycleException extends RuntimeException
 
     public InfiniteCycleException()
     {
+        super("infinite macro cycle");
     }
 }

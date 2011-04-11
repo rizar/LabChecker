@@ -4,7 +4,7 @@ package com.github.rizar.labchecker.lab;
  * Containts names for predefined macros.
  * @author Rizar
  */
-public interface LabPredefinedMacros
+public interface PredefinedMacros
 {
     String LAB_MACRO = "LAB";
 

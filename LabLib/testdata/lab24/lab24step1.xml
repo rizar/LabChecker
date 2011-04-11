@@ -1,0 +1,13 @@
+<script ok_mess = "script">
+    <group ok_mess = "group1">
+        <group ok_mess = "group1.1">
+            <file_size_test size = "50kb" dev = "5per" ok_mess = "test1"/>
+        </group>
+        <group ok_mess = "group1.2">
+            <file_size_test size = "50kb" dev = "5per" ok_mess = "test2"/>
+        </group>
+    </group>
+    <group ok_mess = "group2">
+        <file_size_test group = "3" rem = "0 mod 2" fail_mess = "failtest3" size = "50kb" dev = "5per" ok_mess = "test3"/>        
+    </group>
+</script>
