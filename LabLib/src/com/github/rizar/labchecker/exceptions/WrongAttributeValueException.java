@@ -5,6 +5,7 @@
 
 package com.github.rizar.labchecker.exceptions;
 
+import java.io.File;
 import java.util.Formatter;
 
 /**
@@ -14,11 +15,11 @@ import java.util.Formatter;
 public class WrongAttributeValueException extends AttributeProblemException
 {
 
-    public WrongAttributeValueException(int lineNumber, int columnNumber,
+    public WrongAttributeValueException(File file, int lineNumber, int columnNumber,
                                         String tag,
                                         String attribute)
     {
-        super(lineNumber, columnNumber, tag, attribute, buildMessage(tag, attribute));
+        super(file, lineNumber, columnNumber, tag, attribute, buildMessage(tag, attribute));
     }
 
     private static String buildMessage(String tag, String attribute)

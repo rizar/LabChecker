@@ -5,7 +5,6 @@ import com.github.rizar.labchecker.exceptions.WrongConfigException;
 import com.github.rizar.labchecker.exceptions.WrongNestedTagException;
 import com.github.rizar.labchecker.exceptions.WrongAttributeValueException;
 import com.github.rizar.labchecker.exceptions.WrongTagDataException;
-import com.github.rizar.labchecker.exceptions.MissedAttributeException;
 import com.github.rizar.labchecker.exceptions.DuplicateTagException;
 import com.github.rizar.labchecker.exceptions.WrongRootTagException;
 import static com.github.rizar.labchecker.lab.Tags.*;
@@ -120,10 +119,8 @@ public class Lab
         return macroProcessor;
     }
 
-    private class ConfigHandler extends DefaultHandler
+    private class ConfigHandler extends ExtendedHandler
     {
-        private Locator locator;
-
         private Stack<String> openedTags = new Stack<String>();
 
         private Set<String> allTags = new HashSet<String>();
@@ -132,10 +129,9 @@ public class Lab
 
         int colorSetNumber;
 
-        @Override
-        public void setDocumentLocator(Locator locator)
+        public ConfigHandler(File file)
         {
-            this.locator = locator;
+            super(file);
         }
 
         @Override
@@ -151,23 +147,20 @@ public class Lab
                 if (qName.equals(COLOR_SET_TAG))
                 {
                     if (!currentTag.equals(COLOR_SETS_TAG))
-                        throw new SAXException(new WrongNestedTagException(locator.
-                                getLineNumber(), locator.getColumnNumber(),
-                                COLOR_SET_TAG, true, COLOR_SETS_TAG));
+                        doThrow(WrongNestedTagException.class, COLOR_SET_TAG,
+                                true, COLOR_SETS_TAG);
                 }
                 else
                 {
                     if (!currentTag.equals(LAB_TAG))
-                        throw new SAXException(new WrongNestedTagException(locator.
-                                getLineNumber(), locator.getColumnNumber(),
-                                qName, false, currentTag));
+                        doThrow(WrongNestedTagException.class, qName, false,
+                                currentTag);
                 }
             }
             else
             {
                 if (!qName.equals(LAB_TAG))
-                    throw new SAXException(new WrongRootTagException(locator.
-                            getLineNumber(), locator.getColumnNumber(), qName));
+                    doThrow(WrongRootTagException.class, qName);
             }
             openedTags.push(qName);
             allTags.add(qName);
@@ -175,45 +168,25 @@ public class Lab
             //process attributes
             if (qName.equals(LAB_TAG))
             {
-                try
-                {
-                    String lab = attributes.getValue(LAB_TAG_LAB_ATTRIBUTE);
-                    macroProcessor.registerMacro(LAB_MACRO, lab);
-                }
-                catch (NullPointerException e)
-                {
-                    throw new SAXException(new MissedAttributeException(
-                            locator.getLineNumber(), locator.getColumnNumber(),
-                            LAB_TAG,
-                            LAB_TAG_LAB_ATTRIBUTE));
-                }
+                String lab = mustGet(attributes, LAB_TAG, LAB_TAG_LAB_ATTRIBUTE);
+                macroProcessor.registerMacro(LAB_MACRO, lab);
             }
             else if (qName.equals(MODULE_TAG))
             {
                 try
                 {
-                    String moduleStr = attributes.getValue(
+                    String moduleStr = mustGet(attributes, MODULE_TAG,
                             MODULE_TAG_MODULE_ATTRIBUTE);
-                    if (moduleStr == null)
-                        throw new SAXException(new MissedAttributeException(
-                                locator.getLineNumber(),
-                                locator.getColumnNumber(),
-                                MODULE_TAG,
-                                MODULE_TAG_MODULE_ATTRIBUTE));
                     module = Integer.parseInt(moduleStr);
                     if (module < MIN_MODULE || module > MAX_MODULE)
-                        throw new SAXException(new WrongTagDataException(
-                                locator.getLineNumber(),
-                                locator.getColumnNumber(),
-                                MODULE_TAG));
+                        doThrow(WrongTagDataException.class, MODULE_TAG);
                     macroProcessor.setModule(module);
                 }
                 catch (NumberFormatException e)
                 {
-                    throw new SAXException(new WrongAttributeValueException(
-                            locator.getLineNumber(), locator.getColumnNumber(),
+                    doThrow(WrongAttributeValueException.class,
                             MODULE_TAG,
-                            MODULE_TAG_MODULE_ATTRIBUTE));
+                            MODULE_TAG_MODULE_ATTRIBUTE);
                 }
             }
             else if (qName.equals(COLOR_SETS_TAG))
@@ -221,89 +194,52 @@ public class Lab
                 try
                 {
                     if (colorSets != null)
-                        throw new SAXException(new DuplicateTagException(
-                                locator.getLineNumber(),
-                                locator.getColumnNumber(),
-                                COLOR_SETS_TAG));
+                        doThrow(DuplicateTagException.class,
+                                COLOR_SETS_TAG);
                     colorSets = new ColorSet[COLOR_SETS_NUMBER];
-                    String numberOfColorsInSetStr = attributes.getValue(
+                    String numberOfColorsInSetStr = mustGet(attributes,
+                            COLOR_SETS_TAG,
                             COLOR_SETS_TAG_NUMBER_OF_COLORS_IN_SET_ATTRIBUTE);
-                    if (numberOfColorsInSetStr == null)
-                        throw new SAXException(
-                                new MissedAttributeException(
-                                locator.getLineNumber(),
-                                locator.getColumnNumber(),
-                                COLOR_SETS_TAG,
-                                COLOR_SETS_TAG_NUMBER_OF_COLORS_IN_SET_ATTRIBUTE));
                     numberOfColorsInSet = Integer.parseInt(
                             numberOfColorsInSetStr);
                 }
                 catch (NumberFormatException e)
                 {
-                    throw new SAXException(
-                            new WrongAttributeValueException(locator.
-                            getLineNumber(), locator.getColumnNumber(),
+                    doThrow(WrongAttributeValueException.class,
                             COLOR_SETS_TAG,
-                            COLOR_SETS_TAG_NUMBER_OF_COLORS_IN_SET_ATTRIBUTE));
+                            COLOR_SETS_TAG_NUMBER_OF_COLORS_IN_SET_ATTRIBUTE);
                 }
             }
             else if (qName.equals(COLOR_SET_TAG))
             {
                 try
                 {
-                    String colorSetNumberStr = attributes.getValue(
+                    String colorSetNumberStr = mustGet(attributes, COLOR_SET_TAG,
                             COLOR_SET_TAG_NUMBER_ATTRIBUTE);
-                    if (colorSetNumberStr == null)
-                        throw new SAXException(new MissedAttributeException(locator.
-                                getLineNumber(), locator.getColumnNumber(),
-                                COLOR_SET_TAG, COLOR_SET_TAG_NUMBER_ATTRIBUTE));
-                    try
-                    {
-                        colorSetNumber = Integer.parseInt(colorSetNumberStr);
-                    }
-                    catch (IllegalArgumentException e)
-                    {
-                        throw new SAXException(new WrongTagDataException(locator.
-                                getLineNumber(), locator.getColumnNumber(),
-                                COLOR_SET_TAG, e.getMessage()));
-                    }
+                    colorSetNumber = Integer.parseInt(colorSetNumberStr);
                     colorSetStringBuiler = new StringBuilder();
                 }
                 catch (NumberFormatException e)
                 {
-                    throw new SAXException(new WrongAttributeValueException(
-                            locator.getLineNumber(), locator.getColumnNumber(),
-                            COLOR_SET_TAG, COLOR_SET_TAG_NUMBER_ATTRIBUTE));
+                    doThrow(WrongAttributeValueException.class,
+                            COLOR_SET_TAG, COLOR_SET_TAG_NUMBER_ATTRIBUTE);
                 }
             }
             else if (qName.equals(STEP_TAG))
             {
-                String script = attributes.getValue(STEP_TAG_SCRIPT_ATTRIBUTE);
-                if (script == null)
-                    throw new SAXException(new MissedAttributeException(locator.
-                            getLineNumber(), locator.getColumnNumber(), STEP_TAG,
-                            STEP_TAG_SCRIPT_ATTRIBUTE));
-                String fileMacro = attributes.getValue(STEP_TAG_FILE_ATTRIBUTE);
-                if (fileMacro == null)
-                    throw new SAXException(new MissedAttributeException(locator.
-                            getLineNumber(), locator.getColumnNumber(), STEP_TAG,
-                            STEP_TAG_FILE_ATTRIBUTE));
+                String script = mustGet(attributes, STEP_TAG,
+                        STEP_TAG_SCRIPT_ATTRIBUTE);
+                String fileMacro = mustGet(attributes, STEP_TAG,
+                        STEP_TAG_FILE_ATTRIBUTE);
                 Step step = new Step(Lab.this, script, fileMacro);
                 steps.add(step);
             }
             else if (qName.equals(MACRO_TAG))
             {
-                String name = attributes.getValue(MACRO_TAG_NAME_ATTRIBUTE);
-                if (name == null)
-                    throw new SAXException(new MissedAttributeException(locator.
-                            getLineNumber(), locator.getColumnNumber(),
-                            MACRO_TAG, MACRO_TAG_NAME_ATTRIBUTE));
-                String definition = attributes.getValue(
+                String name = mustGet(attributes, MACRO_TAG,
+                        MACRO_TAG_NAME_ATTRIBUTE);
+                String definition = mustGet(attributes, MACRO_TAG,
                         MACRO_TAG_DEFINITION_ATTRIBUTE);
-                if (definition == null)
-                    throw new SAXException(new MissedAttributeException(locator.
-                            getLineNumber(), locator.getColumnNumber(),
-                            MACRO_TAG, MACRO_TAG_DEFINITION_ATTRIBUTE));
                 macroProcessor.registerMacro(name, definition);
             }
             else
@@ -322,7 +258,7 @@ public class Lab
 
             if (colorSetStringBuiler != null)
                 colorSetStringBuiler.append(new String(ch, start, length));
-            
+
             /*String data = new String(ch, start, length).trim();
             if (data.equals(""))
             return;
@@ -359,9 +295,8 @@ public class Lab
                 }
                 catch (IllegalArgumentException e)
                 {
-                    throw new SAXException(new WrongTagDataException(locator.
-                            getLineNumber(), locator.getColumnNumber(),
-                            COLOR_SET_TAG, e.getMessage()));
+                    doThrow(WrongTagDataException.class,
+                            COLOR_SET_TAG, e.getMessage());
                 }
             }
 
@@ -375,9 +310,8 @@ public class Lab
                     OBLIGATORY_TAGS));
             mustSet.removeAll(allTags);
             if (!mustSet.isEmpty())
-                throw new SAXException(new MissedTagException(locator.
-                        getLineNumber(), locator.getColumnNumber(),
-                        mustSet.toArray(new String[0])[0]));
+                doThrow(MissedTagException.class,
+                        mustSet.toArray(new String[0])[0]);
         }
     }
 
@@ -385,14 +319,14 @@ public class Lab
      * Load lab settings and probably images.
      */
     public void load() throws WrongConfigException,
-                       IOException,
-                       SAXException
+                              IOException,
+                              SAXException
     {
         try
         {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
-            parser.parse(configFile, new ConfigHandler());
+            parser.parse(configFile, new ConfigHandler(configFile));
 
             for (Step step : steps)
                 step.load();
@@ -406,7 +340,7 @@ public class Lab
             Throwable cause = e.getCause();
             if (cause instanceof WrongConfigException)
                 throw (WrongConfigException) cause;
-            
+
             throw e;
         }
     }

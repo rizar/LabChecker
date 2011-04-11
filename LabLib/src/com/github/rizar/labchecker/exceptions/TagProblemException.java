@@ -1,5 +1,7 @@
 package com.github.rizar.labchecker.exceptions;
 
+import java.io.File;
+
 /**
  *
  * @author Rizar
@@ -34,14 +36,15 @@ public class TagProblemException extends WrongConfigException
     }
 
     /**
-     * Constructs TagProblemException with given line number, column number, tag name and message.
+     * Constructs TagProblemException with given file, line number, column number, tag name and message.
+     * @param file
      * @param lineNumber
      * @param columnNumber
      * @param message
      */
-    public TagProblemException(int lineNumber, int columnNumber, String tag, String message)
+    public TagProblemException(File file, int lineNumber, int columnNumber, String tag, String message)
     {
-        super(lineNumber, columnNumber, message);
+        super(file, lineNumber, columnNumber, message);
         this.tag = tag;
     }
 }

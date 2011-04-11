@@ -1,6 +1,5 @@
 package com.github.rizar.labchecker.lab;
 
-import com.github.rizar.labchecker.exceptions.MissedAttributeException;
 import com.github.rizar.labchecker.exceptions.WrongConfigException;
 import com.github.rizar.labchecker.exceptions.WrongNestedTagException;
 import com.github.rizar.labchecker.exceptions.WrongRootTagException;
@@ -13,7 +12,6 @@ import com.github.rizar.labchecker.test.PatternTest;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,9 +19,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.Attributes;
-import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 /**
  *
@@ -58,10 +54,8 @@ class Step
         return rootTest;
     }
 
-    private class ConfigHandler extends DefaultHandler
+    private class ConfigHandler extends ExtendedHandler
     {
-        private Locator locator;
-
         Stack<String> openedTags = new Stack<String>();
 
         Stack<TestsForGroup> stack = new Stack<TestsForGroup>();
@@ -72,10 +66,9 @@ class Step
 
         private PatternTest newPatternTest;
 
-        @Override
-        public void setDocumentLocator(Locator locator)
+        public ConfigHandler(File file)
         {
-            this.locator = locator;
+            super(file);
         }
 
         @Override
@@ -232,42 +225,6 @@ class Step
         {
             rootTest = stack.pop();
         }
-
-        private String mustGet(Attributes attributes, String tag, String attr)
-                throws SAXException
-        {
-            String object = attributes.getValue(attr);
-            if (object == null)
-                doThrow(MissedAttributeException.class, tag, attr);
-            return object;
-        }
-
-        private void doThrow(Class<? extends Exception> c, Object... args)
-                throws
-                SAXException
-        {
-            try
-            {
-                Object[] args2 = new Object[args.length + 2];
-                args2[0] = locator.getLineNumber();
-                args2[1] = locator.getColumnNumber();
-                System.arraycopy(args, 0, args2, 2, args.length);
-                Class[] classes2 = new Class[args2.length];
-                classes2[0] = classes2[1] = int.class;
-                for (int i = 0; i < args.length; i++)
-                    classes2[i + 2] = args[i].getClass();
-                Constructor<? extends Exception> constr = c.getConstructor(
-                        classes2);
-                throw new SAXException(constr.newInstance(args2));
-            }
-            catch (Exception e)
-            {
-                if (e instanceof SAXException)
-                    throw (SAXException) e;
-                else
-                    e.printStackTrace();
-            }
-        }
     }
 
     public void load() throws WrongConfigException,
@@ -280,7 +237,7 @@ class Step
         {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
-            parser.parse(scriptFile, new ConfigHandler());
+            parser.parse(scriptFile, new ConfigHandler(scriptFile));
         }
         catch (ParserConfigurationException e)
         {

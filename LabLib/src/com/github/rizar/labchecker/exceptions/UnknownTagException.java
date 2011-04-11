@@ -1,5 +1,7 @@
 package com.github.rizar.labchecker.exceptions;
 
+import java.io.File;
+
 /**
  *
  * @author Rizar
@@ -23,13 +25,14 @@ public class UnknownTagException extends TagProblemException
     }
 
      /**
-     * Constructs UnknownTagException with given line number, column number and tag name.
+     * Constructs UnknownTagException with given file, line number, column number and tag name.
+     * @param file
      * @param lineNumber
      * @param columnNumber
      * @param qName
      */
-    public UnknownTagException(int lineNumber, int columnNumber, String tag)
+    public UnknownTagException(File file, int lineNumber, int columnNumber, String tag)
     {
-        super(lineNumber, columnNumber, tag, "unknown tag \"" + tag + "\"");
+        super(file, lineNumber, columnNumber, tag, "unknown tag \"" + tag + "\"");
     }
 }

@@ -1,5 +1,7 @@
 package com.github.rizar.labchecker.exceptions;
 
+import java.io.File;
+
 /**
  *
  * @author Rizar
@@ -24,13 +26,14 @@ public class WrongTagDataException extends TagProblemException
 
     /**
      * Constructs WrongTagDataException with given line number, column number, tag name.
+     * @param file
      * @param lineNumber
      * @param columnNumber
      * @param tag
      */
-    public WrongTagDataException(int lineNumber, int columnNumber, String tag)
+    public WrongTagDataException(File file, int lineNumber, int columnNumber, String tag)
     {
-        super(lineNumber, columnNumber, tag, "wrong data for tag \"" + tag + "\"");
+        super(file, lineNumber, columnNumber, tag, "wrong data for tag \"" + tag + "\"");
     }
 
     /**
@@ -40,8 +43,8 @@ public class WrongTagDataException extends TagProblemException
      * @param tag
      * @param reason
      */
-    public WrongTagDataException(int lineNumber, int columnNumber, String tag, String reason)
+    public WrongTagDataException(File file, int lineNumber, int columnNumber, String tag, String reason)
     {
-        super(lineNumber, columnNumber, tag, "wrong data for tag \"" + tag + "\" : " + reason);
+        super(file, lineNumber, columnNumber, tag, "wrong data for tag \"" + tag + "\" : " + reason);
     }
 }

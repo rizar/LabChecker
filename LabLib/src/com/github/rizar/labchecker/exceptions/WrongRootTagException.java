@@ -1,5 +1,7 @@
 package com.github.rizar.labchecker.exceptions;
 
+import java.io.File;
+
 /**
  *
  * @author Rizar
@@ -28,8 +30,8 @@ public class WrongRootTagException extends TagProblemException
      * @param columnNumber
      * @param tag
      */
-    public WrongRootTagException(int lineNumber, int columnNumber, String tag)
+    public WrongRootTagException(File file, int lineNumber, int columnNumber, String tag)
     {
-        super(lineNumber, columnNumber, tag, "tag \"" + tag + "\" can't be root");
+        super(file, lineNumber, columnNumber, tag, "tag \"" + tag + "\" can't be root");
     }
 }

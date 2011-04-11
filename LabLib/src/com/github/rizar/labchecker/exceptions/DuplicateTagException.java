@@ -1,5 +1,7 @@
 package com.github.rizar.labchecker.exceptions;
 
+import java.io.File;
+
 /**
  *
  * @author Rizar
@@ -22,8 +24,8 @@ public class DuplicateTagException  extends TagProblemException
         super(message);
     }
 
-    public DuplicateTagException(int lineNumber, int columnNumber, String tag)
+    public DuplicateTagException(File file, int lineNumber, int columnNumber, String tag)
     {
-        super(lineNumber, columnNumber, tag, "duplicate tag \"" + tag + "\"");
+        super(file, lineNumber, columnNumber, tag, "duplicate tag \"" + tag + "\"");
     }
 }

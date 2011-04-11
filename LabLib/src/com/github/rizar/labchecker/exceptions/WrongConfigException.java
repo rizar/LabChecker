@@ -1,5 +1,7 @@
 package com.github.rizar.labchecker.exceptions;
 
+import java.io.File;
+
 /**
  * An exception to signal, that config is wrong.
  * @author Rizar
@@ -61,11 +63,15 @@ public class WrongConfigException extends Exception
     }
 
     /**
-     * Constructs a WrongLabConfigException storing <code>lineNumber</code> where error occured.
+     * Constructs WrongConfigException with given file, line number, column number and message.
+     * @param file
+     * @param lineNumber
+     * @param columnNumber
+     * @param message
      */
-    public WrongConfigException(int lineNumber, int columnNumber, String message)
+    public WrongConfigException(File file, int lineNumber, int columnNumber, String message)
     {
-        this("At line " + lineNumber + " at column " + columnNumber + " : " + message);
+        this("In file " + file.getName() + " at line " + lineNumber + " at column " + columnNumber + " : " + message);
         this.lineNumber = lineNumber;
         this.columnNumber = columnNumber;
     }

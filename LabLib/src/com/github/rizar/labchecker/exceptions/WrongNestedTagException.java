@@ -4,6 +4,8 @@
  */
 package com.github.rizar.labchecker.exceptions;
 
+import java.io.File;
+
 /**
  *
  * @author Rizar
@@ -44,10 +46,10 @@ public class WrongNestedTagException extends TagProblemException
      * @param tag
      * @param mustBeNested
      */
-    public WrongNestedTagException(int lineNumber, int columnNumber, String tag,
+    public WrongNestedTagException(File file, int lineNumber, int columnNumber, String tag,
                                    Boolean mustBeNested, String currentTag)
     {
-        super(lineNumber, columnNumber, tag, "tag \"" + tag
+        super(file, lineNumber, columnNumber, tag, "tag \"" + tag
                 + "\" should " + (mustBeNested ? "" : "not")
                 + " be nested in tag \"" + currentTag + "\"");
         this.currentTag = currentTag;

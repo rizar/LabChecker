@@ -1,5 +1,7 @@
 package com.github.rizar.labchecker.exceptions;
 
+import java.io.File;
+
 /**
  *
  * @author Rizar
@@ -29,8 +31,8 @@ public class MissedTagException extends TagProblemException
      * @param columnNumber
      * @param tag
      */
-    public MissedTagException(int lineNumber, int columnNumber, String tag)
+    public MissedTagException(File file, int lineNumber, int columnNumber, String tag)
     {
-        super(lineNumber, columnNumber, tag, "missed tag \"" + tag + "\"");
+        super(file, lineNumber, columnNumber, tag, "missed tag \"" + tag + "\"");
     }
 }

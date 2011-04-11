@@ -1,6 +1,6 @@
 package com.github.rizar.labchecker.exceptions;
 
-import java.util.Formatter;
+import java.io.File;
 
 /**
  *
@@ -37,14 +37,15 @@ public class AttributeProblemException extends TagProblemException
     }
 
     /**
-     * Constructs AttributeProblemException with given line number, column number, tag name, attribute name and message.
+     * Constructs AttributeProblemException with given file, line number, column number, tag name, attribute name and message.
+     * @param file
      * @param lineNumber - line number where error occured
      * @param tag - tag name
      * @param attribute - attrubute name
      */
-    public AttributeProblemException(int lineNumber, int columnNumber, String tag, String attribute, String message)
+    public AttributeProblemException(File file, int lineNumber, int columnNumber, String tag, String attribute, String message)
     {
-        super(lineNumber, columnNumber, tag, message);
+        super(file, lineNumber, columnNumber, tag, message);
         this.attribute = attribute;
     }
 }

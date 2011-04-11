@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="rizar-laptop" name="com.github.rizar.labchecker.lab.StepTest" tests="5" time="0.735" timestamp="2011-04-11T11:10:38">
+<testsuite errors="0" failures="0" hostname="rizar-laptop" name="com.github.rizar.labchecker.lab.StepTest" tests="5" time="0.625" timestamp="2011-04-11T11:46:52">
   <properties>
     <property name="libs.jsp-compiler.javadoc" value="" />
     <property name="netbeans.autoupdate.country" value="BY" />
@@ -412,11 +412,11 @@
     <property name="platform.active" value="default_platform" />
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit" />
   </properties>
-  <testcase classname="com.github.rizar.labchecker.lab.StepTest" name="testWrongRootTag" time="0.094" />
-  <testcase classname="com.github.rizar.labchecker.lab.StepTest" name="testMissedDeviationAttribute" time="0.015" />
+  <testcase classname="com.github.rizar.labchecker.lab.StepTest" name="testWrongRootTag" time="0.047" />
+  <testcase classname="com.github.rizar.labchecker.lab.StepTest" name="testMissedDeviationAttribute" time="0.016" />
   <testcase classname="com.github.rizar.labchecker.lab.StepTest" name="testMissedWidthAttribute" time="0.094" />
-  <testcase classname="com.github.rizar.labchecker.lab.StepTest" name="testWrongNestedAddColorTag" time="0.312" />
-  <testcase classname="com.github.rizar.labchecker.lab.StepTest" name="testGroups" time="0.032" />
+  <testcase classname="com.github.rizar.labchecker.lab.StepTest" name="testWrongNestedAddColorTag" time="0.328" />
+  <testcase classname="com.github.rizar.labchecker.lab.StepTest" name="testGroups" time="0.015" />
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[startElement lab
 characters

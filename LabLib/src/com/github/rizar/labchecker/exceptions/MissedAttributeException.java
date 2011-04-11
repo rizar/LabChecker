@@ -1,5 +1,6 @@
 package com.github.rizar.labchecker.exceptions;
 
+import java.io.File;
 import java.util.Formatter;
 
 /**
@@ -31,10 +32,10 @@ public class MissedAttributeException extends AttributeProblemException
      * @param attribute
      * @param message
      */
-    public MissedAttributeException(int lineNumber, int columnNumber, String tag,
+    public MissedAttributeException(File file, int lineNumber, int columnNumber, String tag,
                                     String attribute)
     {
-        super(lineNumber, columnNumber, tag, attribute, buildMessage(tag, attribute));
+        super(file, lineNumber, columnNumber, tag, attribute, buildMessage(tag, attribute));
     }
 
     private static String buildMessage(String tag, String attribute)
