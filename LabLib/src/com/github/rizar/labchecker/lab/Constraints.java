@@ -45,6 +45,10 @@ public interface Constraints
 
     String MOD_PATTERN_STRING = "mod";
 
+    String TRUE_STRING = "true";
+
+    String FALSE_STRING = "false";
+
     String REMAINDERS_SEPARATOR = " ";
 
     /*String REMAINDER_PATTERN_STRING = NUMBER_PATTERN_STRING + MOD_PATTERN_STRING + NUMBER_PATTERN_STRING;
@@ -71,7 +75,14 @@ public interface Constraints
     String COLOR_IN_FILE_PATTERN_STRING = "(.*)" + POSITION_IN_FILE_PATTERN_STRING;
 
     Pattern COLOR_IN_FILE_PATTERN = Pattern.compile(
-            "\\A" + COLOR_PATTERN_STRING + "\\z");
+            "\\A" + COLOR_IN_FILE_PATTERN_STRING + "\\z");
+
+    String RECTANGLE_PATTERN_STRING = NUMBER_PATTERN_STRING +
+                                      NUMBER_PATTERN_STRING +
+                                      NUMBER_PATTERN_STRING +
+                                      NUMBER_PATTERN_STRING;
+
+    Pattern RECTANGLE_PATTERN = Pattern.compile("\\A" + RECTANGLE_PATTERN_STRING + "\\z");
 
     //----------------------
     int BYTES_IN_KILOBYTE = 1024;

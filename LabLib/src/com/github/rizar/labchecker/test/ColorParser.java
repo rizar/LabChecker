@@ -38,7 +38,7 @@ public class ColorParser
             String file = colorInFileMatcher.group(1);
             int x = Integer.parseInt(colorInFileMatcher.group(2));
             int y = Integer.parseInt(colorInFileMatcher.group(3));
-            return ImageLibrary.normalize(library.getImage(file).getRGB(x, y));
+            return ImageLibrary.normalize(library.getLibraryImage(file).getRGB(x, y));
         }
 
         Pattern [] patterns = new Pattern [] {COLOR_PATTERN, COLOR_IN_FILE_PATTERN};

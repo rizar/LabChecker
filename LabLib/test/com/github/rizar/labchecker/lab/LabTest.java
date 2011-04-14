@@ -200,7 +200,7 @@ public class LabTest
         System.err.println(checker2.getMessage());
         System.err.println(checker2.getLog());*/
 
-        File step3 = new File(mmpe, "lab2a3-304-v2.gif");
+        /*File step3 = new File(mmpe, "lab2a3-304-v2.gif");
         StepChecker checker3 = lab.getStepChecker(step3);
         assertTrue(checker3.check());
         System.out.println(checker3.getMessage());
@@ -210,15 +210,15 @@ public class LabTest
         StepChecker checker4 = lab.getStepChecker(step4);
         assertTrue(checker4.check());
         System.out.println(checker4.getMessage());
-        System.err.println(checker4.getLog());
+        System.err.println(checker4.getLog());*/
     }
 
     @Test
     public void testThreeLabs() throws Exception
     {
-        doTest("606");
-        assertTrue(doTest("a43"));
-        doTest("205");
+        /*doTest("606");*/
+        doTest("a43");
+        /*doTest("205");*/
     }
 
     public boolean doTest(String code) throws Exception

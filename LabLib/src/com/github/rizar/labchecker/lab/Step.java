@@ -164,7 +164,7 @@ class Step
             else if (qName.equals(PATTERN_TEST_TAG))
             {
                 newTestFor = new TestFor(attributes);
-                newPatternTest = new PatternTest(attributes.getValue(
+                newPatternTest = new PatternTest(mustGet(attributes, PATTERN_TEST_TAG, FILE_ATTRIBUTE), attributes.getValue(
                         PATTERN_TEST_SEEK_ATTRIBUTE));
                 newTestFor.setTest(newPatternTest);
             }

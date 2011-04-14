@@ -32,20 +32,20 @@
 
     <!-- Проверяю изменение цвета границы между зонами -->
 
-    <pat_test ok_mess = "Цвет границы изменен верно." fail_mess = "Цвет границы изменен неверно." file = "lab2a2(borders).png" rem = "0 mod 2">
-        <pat_rect x1 = "120" y1 = "60" x2 = "735" y2 = "400"/>
-
-        <color pat_color = "120, 165, 120" test_color = "%C6-%"/>
-        <color pat_color = "255, 255, 0" test_color = "%ORIG%(512, 178)"/>
-        <color pat_color = "255, 255, 255" test_color = "%ORIG%(517, 197)"/>
-    </pat_test>
-
     <pat_test ok_mess = "Цвет границы изменен верно." fail_mess = "Цвет границы изменен неверно." file = "lab2a2(borders).png" rem = "1 mod 2">
         <pat_rect x1 = "120" y1 = "60" x2 = "735" y2 = "400"/>
 
-        <color pat_color = "120, 165, 120" test_color = "%ORIG%(291, 326)"/>
+        <color pat_color = "120, 165, 120" test_color = "%C6-%"/>
+        <color pat_color = "255, 255, 0" test_color = "%ORIG%(355, 328)"/>
+        <color pat_color = "192, 192, 192" test_color = "%ORIG%(355, 312)"/>
+    </pat_test>
+
+    <pat_test ok_mess = "Цвет границы изменен верно." fail_mess = "Цвет границы изменен неверно." file = "lab2a2(borders).png" rem = "0 mod 2">
+        <pat_rect x1 = "120" y1 = "60" x2 = "735" y2 = "400"/>
+
+        <color pat_color = "120, 165, 120" test_color = "%ORIG%(355, 347)"/>
         <color pat_color = "255, 255, 0" test_color = "%C6-%"/>
-        <color pat_color = "255, 255, 255" test_color = "%ORIG%(517, 197)"/>
+        <color pat_color = "192, 192, 192" test_color = "%ORIG%(355, 312)"/>
     </pat_test>
 
     <!-- Ищу линию ширины 3пт в легенде -->
