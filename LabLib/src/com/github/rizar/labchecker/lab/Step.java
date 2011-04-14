@@ -1,5 +1,6 @@
 package com.github.rizar.labchecker.lab;
 
+import com.github.rizar.labchecker.exceptions.TestException;
 import com.github.rizar.labchecker.exceptions.WrongConfigException;
 import com.github.rizar.labchecker.exceptions.WrongNestedTagException;
 import com.github.rizar.labchecker.exceptions.WrongRootTagException;
@@ -77,7 +78,7 @@ class Step
         public void startElement(String uri, String localName, String qName,
                                  Attributes attributes) throws SAXException
         {
-            System.err.println("startElement " + qName);
+            if (PRINT_TAGS) System.err.println("startElement " + qName);
 
             //check nested tags
             if (!openedTags.empty())
@@ -142,7 +143,7 @@ class Step
             {
                 String file = attributes.getValue(FILE_ATTRIBUTE);
                 if (file != null)
-                    newColorSetTest.includeAddColorMacro(file);
+                    newColorSetTest.includeAddFileMacro(file);
                 else
                 {
                     newColorSetTest.includeAddColorMacro(mustGet(attributes,
@@ -163,8 +164,8 @@ class Step
             else if (qName.equals(PATTERN_TEST_TAG))
             {
                 newTestFor = new TestFor(attributes);
-                newPatternTest = new PatternTest(attributes.
-                        getValue(PATTERN_TEST_SEEK_ATTRIBUTE));
+                newPatternTest = new PatternTest(attributes.getValue(
+                        PATTERN_TEST_SEEK_ATTRIBUTE));
                 newTestFor.setTest(newPatternTest);
             }
             else if (qName.equals(PATTERN_TEST_PATTERN_RECTANGLE_TAG))
@@ -309,23 +310,38 @@ class Step
                         getBlue();
                 macroProcessor.registerMacro(COLOR_MACRO_PREFIX + colorNumber,
                         colorStr);
+                String invertedColorStr = (255 - color.getRed()) + "," + (255 - color.getGreen()) + "," + (255 - color.
+                        getBlue());
+                macroProcessor.registerMacro(COLOR_MACRO_PREFIX + colorNumber + INVERTED_COLOR_MACRO_SUFFIX,
+                        invertedColorStr);
             }
         }
 
         boolean checkResult;
+
         String message, log;
 
-        public boolean check() throws IOException
+        public boolean check() throws IOException,
+                                      TestException
         {
-            checkResult = rootTest.check(macroProcessor, stepFile);
+            checkResult = rootTest.check(macroProcessor, lab.getImageLibrary(), stepFile);
             message = rootTest.getMessage();
             log = rootTest.getLog();
+            isCheckedFlag = true;
             return checkResult;
         }
 
         public boolean getCheckResult()
         {
             return checkResult;
+        }
+
+        private boolean isCheckedFlag;
+
+
+        public boolean isChecked()
+        {
+            return isCheckedFlag;
         }
 
         public String getLog()
@@ -341,6 +357,11 @@ class Step
         public File getStepFile()
         {
             return stepFile;
+        }
+
+        TestsForGroup getRootTest()
+        {
+            return rootTest;
         }
     }
 

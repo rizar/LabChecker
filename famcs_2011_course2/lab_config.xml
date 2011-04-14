@@ -12,12 +12,12 @@
 
     <!-- Макрос оригинала изображения -->
 
-    <macro name = "ORIG" def = "orig/lab2a0var2(%MOD%k%REM_SUFF%)%GROUP00%BDV.tga"/>
+    <macro name = "ORIG" def = "orig/lab2a0var2(%MOD%k%REM_SUFF%)%GROUP00%BDV.png"/>
 
     <!-- Список шагов. Для каждого определяется проверяющий его скрипт и шаблон названия файла -->
 
-    <step script = "%LAB%1.xml" file = "%LAB%1-%GET_CODE%-v%GET_VAR%.pcx"/>
-    <step script = "%LAB%2.xml" file = "%LAB%2-%GET_CODE%-v%GET_VAR%.tif"/>
+    <step script = "%LAB%1.xml" file = "%LAB%1-%GET_CODE%-v%GET_VAR%.png"/> <!-- change png to pcx -->
+    <step script = "%LAB%2.xml" file = "%LAB%2-%GET_CODE%-v%GET_VAR%.png"/> <!-- change png to tiff -->
     <step script = "%LAB%3.xml" file = "%LAB%3-%GET_CODE%-v%GET_VAR%.gif"/>
     <step script = "%LAB%4.xml" file = "%LAB%4-%GET_CODE%-v%GET_VAR%.png"/>
 

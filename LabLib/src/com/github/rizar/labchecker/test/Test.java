@@ -1,5 +1,6 @@
 package com.github.rizar.labchecker.test;
 
+import com.github.rizar.labchecker.exceptions.TestException;
 import com.github.rizar.labchecker.lab.MacroProcessor;
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +15,8 @@ public interface Test
      * Check given file
      * @return true if check succeded, false if check failed
      */
-    boolean check(MacroProcessor macroProcessor, File file) throws IOException;
+    boolean check(MacroProcessor macroProcessor, ImageLibrary library, File file) throws IOException,
+                                                                   TestException;
 
     /**
      * Get check verbose log.

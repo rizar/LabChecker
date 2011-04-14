@@ -2,6 +2,7 @@ package com.github.rizar.labchecker.test;
 
 import com.github.rizar.labchecker.lab.MacroProcessor;
 import java.io.File;
+import java.util.Formatter;
 
 /**
  *
@@ -9,15 +10,10 @@ import java.io.File;
  */
 abstract public class AbstractTest implements Test
 {
-    public boolean check(MacroProcessor macroProcessor, File file)
-    {
-        //TODO check
-        return true;
-    }
+    protected Formatter log = new Formatter ();
 
     public String getLog()
     {
-        //TODO getLog
-        return "abstract test future log\n";
+        return log.toString();
     }
 }

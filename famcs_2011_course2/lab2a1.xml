@@ -4,11 +4,16 @@
 
     <!-- Проверяю размер файла, размеры изображения, набор цветов изображения -->
 
-    <file_size_test size = "95kb" dev = "5%" ok_mess = "Размер файла в пределах нормы." fail_mess = "Файл слишком велик."/>
+    <file_size_test size = "95kb" dev = "5per" ok_mess = "Размер файла в пределах нормы." fail_mess = "Файл слишком велик."/>
                                
     <image_size_test width = "840" height = "490" ok_mess = "Изображение верного размера." fail_mess = "Неверные размеры изображения."/>
 
-    <color_set_test ok_mess = "Правильные цвета." fail_mess = "Неправильные цвета.">
+    <color_set_test rem = "0 mod %MOD%" ok_mess = "Правильные цвета." fail_mess = "Неправильные цвета.">
+        <add_color file = "%ORIG%"/>
+        <rem_color color = "0, 220, 249"/>
+    </color_set_test>
+
+    <color_set_test rem = "1 2 mod %MOD%" ok_mess = "Правильные цвета." fail_mess = "Неправильные цвета.">
         <add_color file = "%ORIG%"/>
         <rem_color color = "0, 204, 255"/>
     </color_set_test>

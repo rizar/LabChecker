@@ -1,5 +1,6 @@
 package com.github.rizar.labchecker.lab;
 
+import com.github.rizar.labchecker.exceptions.TestException;
 import java.io.File;
 import java.io.IOException;
 
@@ -13,7 +14,14 @@ public interface StepChecker
      * Check step file running all corresponding tests.
      * @return <code>true</code> if check succeeded, <code>false</code> otherwise.
      */
-    boolean check() throws IOException;
+    boolean check() throws IOException,
+                           TestException;
+
+    /**
+     * Returns true, if step was checked, false otherwise.
+     * @return true, if step was checked, false otherwise.
+     */
+    boolean isChecked();
 
     /**
      * Get result of last check.

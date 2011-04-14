@@ -1,5 +1,7 @@
 package com.github.rizar.labchecker.lab;
 
+import com.github.rizar.labchecker.exceptions.TestException;
+import com.github.rizar.labchecker.test.ImageLibrary;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,34 +14,47 @@ import org.xml.sax.Attributes;
  */
 public class TestsForGroup extends TestFor
 {
-    private List<TestFor> testsFor = new ArrayList<TestFor> ();
+    private List<TestFor> testsFor = new ArrayList<TestFor>();
 
     public void addTestFor(TestFor testFor)
     {
         testsFor.add(testFor);
     }
 
-    TestFor [] getGroupTestsFor()
+    TestFor[] getGroupTestsFor()
     {
-        return testsFor.toArray(new TestFor [0]);
+        return testsFor.toArray(new TestFor[0]);
+    }
+
+    TestFor getTestFor(int index)
+    {
+        return testsFor.get(index);
     }
 
     @Override
-    public boolean check(MacroProcessor macroProcessor, File file) throws IOException
+    public boolean check(MacroProcessor macroProcessor, ImageLibrary library, File file) throws
+            IOException, TestException
     {
         clearMessageAndLog();
         if (!forThis(macroProcessor))
             return true;
-        
+
         boolean result = true;
         for (TestFor testFor : testsFor)
         {
-            testFor.setMessagePrefix(ONE_LEVEL_MESSAGE_PREFIX + getMessagePrefix());
-            result &= testFor.check(macroProcessor, file);
+            testFor.setMessagePrefix(
+                    ONE_LEVEL_MESSAGE_PREFIX + getMessagePrefix());
+            result &= testFor.check(macroProcessor, library, file);
             messageBuilder.append(testFor.getMessage());
             logBuilder.append(testFor.getLog());
         }
-        messageBuilder.append(result ? getOkMessage() : getFailMessage());
+        String message = result ? getOkMessage() : getFailMessage();
+        if (message != null)
+        {
+            messageBuilder.append(getMessagePrefix());
+            messageBuilder.append(message);
+            messageBuilder.append("\n");
+        }
         return result;
     }
 

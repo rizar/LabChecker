@@ -10,6 +10,7 @@ import com.github.rizar.labchecker.exceptions.WrongRootTagException;
 import static com.github.rizar.labchecker.lab.Tags.*;
 import static com.github.rizar.labchecker.lab.Macros.*;
 import static com.github.rizar.labchecker.lab.Constraints.*;
+import com.github.rizar.labchecker.test.ImageLibrary;
 import java.awt.Color;
 
 import java.io.File;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+
 import java.util.Set;
 import java.util.Stack;
 import javax.xml.parsers.ParserConfigurationException;
@@ -59,6 +61,7 @@ public class Lab
     {
         this.directory = directory;
         this.configFile = config;
+        this.library = new ImageLibrary(directory);
     }
 
     static Lab getInstance(File directory)
@@ -142,7 +145,7 @@ public class Lab
         public void startElement(String uri, String localName, String qName,
                                  Attributes attributes) throws SAXException
         {
-            System.err.println("startElement " + qName);
+            if (PRINT_TAGS) System.err.println("startElement " + qName);
 
             //check nesting tabs
             if (!openedTags.empty())
@@ -258,7 +261,7 @@ public class Lab
         public void characters(char[] ch, int start, int length) throws
                 SAXException
         {
-            System.err.println("characters");
+            if (PRINT_TAGS) System.err.println("characters");
 
             if (colorSetStringBuiler != null)
                 colorSetStringBuiler.append(new String(ch, start, length));
@@ -285,7 +288,7 @@ public class Lab
                                String qName)
                 throws SAXException
         {
-            System.err.println("endElement " + qName);
+            if (PRINT_TAGS) System.err.println("endElement " + qName);
 
             if (colorSetStringBuiler != null)
             {
@@ -349,11 +352,19 @@ public class Lab
         }
     }
 
+    private ImageLibrary library;
+
+    public ImageLibrary getImageLibrary()
+    {
+        return library;
+    }
+
     /**
      * Unload lab images.
      */
     public void unload()
     {
+        library.unload();
     }
 
     /**
@@ -390,7 +401,7 @@ public class Lab
         return null;
     }
 
-    public static final int codeInteger(String code)
+    public static int codeInteger(String code)
     {
         return 100 * Character.digit(code.charAt(0), MAX_NUMBER_OF_GROUPS) + 10 * Character.digit(code.
                 charAt(1), 10) + Character.digit(code.charAt(2), 10);

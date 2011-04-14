@@ -33,4 +33,6 @@ public interface Macros
     String GET_VAR_MACRO_DEFINITION = "(\\d)";
 
     String COLOR_MACRO_PREFIX = "C";
+
+    String INVERTED_COLOR_MACRO_SUFFIX = "-";
 }

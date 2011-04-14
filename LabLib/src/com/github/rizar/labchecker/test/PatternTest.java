@@ -1,6 +1,9 @@
 package com.github.rizar.labchecker.test;
 
+import com.github.rizar.labchecker.exceptions.TestException;
 import com.github.rizar.labchecker.lab.MacroProcessor;
+import java.io.File;
+import java.io.IOException;
 
 /**
  *
@@ -28,9 +31,10 @@ public class PatternTest extends AbstractTest
         
     }
 
-    @Override
-    public String getLog()
+    public boolean check(MacroProcessor macroProcessor, ImageLibrary library, File file) throws IOException,
+                                                                          TestException
     {
-        return "pattern test future log";
+        return true;
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 }

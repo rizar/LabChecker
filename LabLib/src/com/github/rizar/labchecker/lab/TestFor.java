@@ -1,5 +1,10 @@
 package com.github.rizar.labchecker.lab;
 
+import com.github.rizar.labchecker.exceptions.InfiniteCycleException;
+import com.github.rizar.labchecker.exceptions.TestException;
+import com.github.rizar.labchecker.exceptions.TestParseException;
+import com.github.rizar.labchecker.exceptions.UndefinedMacroException;
+import com.github.rizar.labchecker.test.ImageLibrary;
 import java.util.regex.Matcher;
 import java.io.File;
 import java.io.IOException;
@@ -67,10 +72,10 @@ public class TestFor implements Test
 
     public TestFor(Attributes attributes)
     {
-        this.groupMacro = attributes.getValue(GROUP_ATTRIBUTE);
-        this.remainderMacro = attributes.getValue(REMAINDER_ATTRIBUTE);
-        this.okMessage = attributes.getValue(OK_MESSAGE_ATTRIBTE);
-        this.failMessage = attributes.getValue(FAIL_MESSAGE_ATTRIBUTE);
+        groupMacro = attributes.getValue(GROUP_ATTRIBUTE);
+        remainderMacro = attributes.getValue(REMAINDER_ATTRIBUTE);
+        okMessage = attributes.getValue(OK_MESSAGE_ATTRIBTE);
+        failMessage = attributes.getValue(FAIL_MESSAGE_ATTRIBUTE);
     }
 
     protected StringBuilder messageBuilder, logBuilder;
@@ -85,8 +90,10 @@ public class TestFor implements Test
     {
         if (groupMacro != null)
         {
-            String [] groups = macroProcessor.process(groupMacro).split(GROUP_SEPARATOR);
-            String realGroup = macroProcessor.process("%" + GROUP_ONE_CHARACTER_MACRO + "%");
+            String[] groups = macroProcessor.process(groupMacro).split(
+                    GROUP_SEPARATOR);
+            String realGroup = macroProcessor.process(
+                    "%" + GROUP_ONE_CHARACTER_MACRO + "%");
             boolean found = false;
             for (String group : groups)
                 if (group.equals(realGroup))
@@ -97,36 +104,87 @@ public class TestFor implements Test
 
         if (remainderMacro != null)
         {
-            Matcher matcher = REMAINDER_PATTERN.matcher(macroProcessor.process(
-                    remainderMacro));
+            /*Matcher matcher = REMAINDER_PATTERN.matcher(macroProcessor.process(
+            remainderMacro));
             matcher.matches();
-            int dividend = Lab.codeInteger(macroProcessor.process("%" + CODE_MACRO   + "%"));
+            int dividend = Lab.codeInteger(macroProcessor.process(
+            "%" + CODE_MACRO + "%"));
             int remainder = Integer.parseInt(matcher.group(1));
             int divisor = Integer.parseInt(matcher.group(2));
             if (dividend % divisor != remainder)
-                return false;
+            return false;*/
+            String remainderString = macroProcessor.process(remainderMacro);
+            String[] remaindersAndDivisor = remainderString.split(
+                    MOD_PATTERN_STRING);
+            if (remaindersAndDivisor.length != 2)
+                throw new TestParseException(
+                        "Can't parse remainders in \"" + remainderString + "\"");
+            try
+            {
+                String[] remainders = remaindersAndDivisor[0].split(
+                        REMAINDERS_SEPARATOR);
+                int divisor = Integer.parseInt(remaindersAndDivisor[1].trim());
+                int dividend = Lab.codeInteger(macroProcessor.process(
+                        "%" + CODE_MACRO + "%"));
+                for (String rem : remainders)
+                {
+                    int remainder = Integer.parseInt(rem.trim());
+                    if (dividend % divisor == remainder)
+                        return true;
+                }
+            }
+            catch (NumberFormatException e)
+            {
+                throw new TestParseException(
+                        "Can't parse remainders in \"" + remainderString + "\"");
+            }
+
+            return false;
         }
 
         return true;
     }
 
-    public boolean check(MacroProcessor macroProcessor, File file) throws IOException
+    public boolean check(MacroProcessor macroProcessor, ImageLibrary library,
+                         File file) throws
+            IOException, TestException
     {
         clearMessageAndLog();
         if (!forThis(macroProcessor))
             return true;
 
-        boolean result = getTest().check(macroProcessor, file);
-        messageBuilder.append(messagePrefix);
-        messageBuilder.append(result ? getOkMessage() : getFailMessage());
-        messageBuilder.append("\n");
+        boolean result;
+        try
+        {
+            result = getTest().check(macroProcessor, library, file);
+        }
+        catch (UndefinedMacroException e)
+        {
+            throw new TestException(e.getMessage(), e);
+        }
+        catch (InfiniteCycleException e)
+        {
+            throw new TestException(e.getMessage(), e);
+        }
+        catch (TestParseException e)
+        {
+            throw new TestException(e.getMessage(), e);
+        }
+
+        String message = result ? getOkMessage() : getFailMessage();
+        if (message != null)
+        {
+            messageBuilder.append(getMessagePrefix());
+            messageBuilder.append(result ? getOkMessage() : getFailMessage());
+            messageBuilder.append("\n");
+        }
         logBuilder.append(getTest().getLog());
         return result;
     }
 
     public String getMessage()
     {
-        return getMessagePrefix() + messageBuilder.toString();
+        return messageBuilder.toString();
     }
 
     public String getLog()

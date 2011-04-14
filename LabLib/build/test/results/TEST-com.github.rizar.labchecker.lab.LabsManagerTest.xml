@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="rizar-laptop" name="com.github.rizar.labchecker.lab.LabsManagerTest" tests="1" time="0.172" timestamp="2011-04-11T14:25:46">
+<testsuite errors="0" failures="0" hostname="rizar-laptop" name="com.github.rizar.labchecker.lab.LabsManagerTest" tests="1" time="0.25" timestamp="2011-04-14T16:49:55">
   <properties>
     <property name="libs.jsp-compiler.javadoc" value="" />
     <property name="netbeans.autoupdate.country" value="BY" />
@@ -118,7 +118,6 @@
     <property name="libs.junit.classpath" value="C:\Program Files\NetBeans 6.9\java\modules\ext\junit-3.8.2.jar" />
     <property name="libs.jaxb.javadoc" value="C:\Program Files\NetBeans 6.9\ide\docs\jaxb-api-doc.zip" />
     <property name="libs.struts.classpath" value="C:\Program Files\NetBeans 6.9\enterprise\modules\ext\struts\antlr-2.7.2.jar;C:\Program Files\NetBeans 6.9\enterprise\modules\ext\struts\bsf-2.3.0.jar;C:\Program Files\NetBeans 6.9\enterprise\modules\ext\struts\commons-beanutils-1.7.0.jar;C:\Program Files\NetBeans 6.9\enterprise\modules\ext\struts\commons-chain-1.1.jar;C:\Program Files\NetBeans 6.9\enterprise\modules\ext\struts\commons-digester-1.8.jar;C:\Program Files\NetBeans 6.9\enterprise\modules\ext\struts\commons-fileupload-1.1.1.jar;C:\Program Files\NetBeans 6.9\enterprise\modules\ext\struts\commons-io-1.1.jar;C:\Program Files\NetBeans 6.9\enterprise\modules\ext\struts\commons-logging-1.0.4.jar;C:\Program Files\NetBeans 6.9\enterprise\modules\ext\struts\commons-validator-1.3.1.jar;C:\Program Files\NetBeans 6.9\enterprise\modules\ext\struts\jstl-1.0.2.jar;C:\Program Files\NetBeans 6.9\enterprise\modules\ext\struts\oro-2.0.8.jar;C:\Program Files\NetBeans 6.9\enterprise\modules\ext\struts\standard-1.0.2.jar;C:\Program Files\NetBeans 6.9\enterprise\modules\ext\struts\struts-core-1.3.8.jar;C:\Program Files\NetBeans 6.9\enterprise\modules\ext\struts\struts-el-1.3.8.jar;C:\Program Files\NetBeans 6.9\enterprise\modules\ext\struts\struts-extras-1.3.8.jar;C:\Program Files\NetBeans 6.9\enterprise\modules\ext\struts\struts-faces-1.3.8.jar;C:\Program Files\NetBeans 6.9\enterprise\modules\ext\struts\struts-mailreader-dao-1.3.8.jar;C:\Program Files\NetBeans 6.9\enterprise\modules\ext\struts\struts-scripting-1.3.8.jar;C:\Program Files\NetBeans 6.9\enterprise\modules\ext\struts\struts-taglib-1.3.8.jar;C:\Program Files\NetBeans 6.9\enterprise\modules\ext\struts\struts-tiles-1.3.8.jar" />
-    <property name="org.openide.awt.SwingBrowserImpl.do-not-block-awt" value="false" />
     <property name="ant.home" value="C:\Program Files\NetBeans 6.9\java\ant" />
     <property name="libs.junit_4.src" value="C:\Program Files\NetBeans 6.9\java\docs\junit-4.5-src.jar" />
     <property name="libs.ricoh-ant-utils.maven-pom" value="" />
@@ -236,6 +235,7 @@
     <property name="org.openide.major.version" value="IDE/1" />
     <property name="java.vm.name" value="Java HotSpot(TM) Client VM" />
     <property name="netbeans.user" value="C:\Documents and Settings\Rizar\.netbeans\6.9" />
+    <property name="tests.failed" value="true" />
     <property name="javadoc.additionalparam" value="" />
     <property name="libs.ricoh-ant-utils.classpath" value="C:\Program Files\NetBeans 6.9\mobility\modules\ext\org-netbeans-modules-j2me-cdc-project-ricoh.jar;C:\Program Files\NetBeans 6.9\mobility\modules\ext\RicohAntTasks-2.0.jar;C:\Program Files\NetBeans 6.9\mobility\modules\ext\commons-httpclient-3.0.jar;C:\Program Files\NetBeans 6.9\ide\modules\ext\commons-logging-1.1.jar;C:\Program Files\NetBeans 6.9\mobility\modules\ext\commons-codec-1.3.jar" />
     <property name="java.io.tmpdir" value="C:\DOCUME~1\Rizar\LOCALS~1\Temp\" />
@@ -412,7 +412,7 @@
     <property name="platform.active" value="default_platform" />
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit" />
   </properties>
-  <testcase classname="com.github.rizar.labchecker.lab.LabsManagerTest" name="testGetLabByName" time="0.047" />
+  <testcase classname="com.github.rizar.labchecker.lab.LabsManagerTest" name="testGetLabByName" time="0.109" />
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

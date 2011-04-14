@@ -1,6 +1,8 @@
 package com.github.rizar.labchecker.lab;
 
+import com.github.rizar.labchecker.test.FileSizeTest;
 import com.github.rizar.labchecker.exceptions.MissedAttributeException;
+import com.github.rizar.labchecker.exceptions.TestException;
 import com.github.rizar.labchecker.exceptions.WrongNestedTagException;
 import com.github.rizar.labchecker.exceptions.WrongRootTagException;
 import java.io.File;
@@ -8,6 +10,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+
+import static com.github.rizar.labchecker.lab.Constraints.*;
 
 /**
  *
@@ -125,18 +129,18 @@ public class StepTest
         assertEquals(mp.process("%C4%"), "255,255,20");
         assertEquals(mp.process("%C16%"), "255,128,64");
         assertEquals(mp.process("%ORIG%"), "orig/lab2a0var2(3k+1)03BDV.tga");
-        checker.check();
+        /*checker.check();
         System.err.println(checker.getMessage());
-        System.err.println(checker.getLog());
+        System.err.println(checker.getLog());*/
     }
 
-    @Test
+    /*@Test
     public void testGroupAndRemainderMacros() throws Exception
     {
         Lab lab = testManager.getLabByName("lab25");
         lab.load();
 
-        StepChecker checker = lab.getStepChecker(new File("lab2a2-304-v2.tif"));
+        StepChecker checker = lab.getStepChecker(new File("lab2a4-304-v2.tif"));
         checker.check();
         String [] messages = checker.getMessage().split("\n");
         assertEquals(messages[0].trim(), "file_size_test");
@@ -152,5 +156,32 @@ public class StepTest
         checker3.check();
         String [] messages3 = checker3.getMessage().split("\n");
         assertEquals(messages3[0].trim(), "color_set_test");
+    }*/
+
+    @Test
+    public void testFileSizeTestParsing() throws Exception
+    {
+        Lab lab = testManager.getLabByName("lab26");
+        lab.load();
+
+        StepChecker checker = lab.getStepChecker(new File(MMPE, "lab2a3-304-v2.gif"));
+        assertFalse(checker.isChecked());
+        checker.check();
+        assertTrue(checker.isChecked());
+
+        Step.InnerStepChecker ic = (Step.InnerStepChecker)checker;
+        TestsForGroup root = ic.getRootTest();
+        FileSizeTest fsTest = (FileSizeTest)root.getTestFor(0).getTest();
+        assertEquals(fsTest.getMaxSize(), 150);
+    }
+
+    @Test (expected = TestException.class)
+    public void testWrongDeviationMacroInFileSizeTest() throws Exception
+    {
+        Lab lab = testManager.getLabByName("lab27");
+        lab.load();
+
+        StepChecker checker = lab.getStepChecker(new File(MMPE, "lab2a1-304-v1.pcx"));
+        checker.check();
     }
 }
