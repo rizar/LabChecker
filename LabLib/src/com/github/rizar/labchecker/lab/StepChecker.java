@@ -3,6 +3,7 @@ package com.github.rizar.labchecker.lab;
 import com.github.rizar.labchecker.exceptions.TestException;
 import java.io.File;
 import java.io.IOException;
+import loadimg.LoadImgException;
 
 /**
  * An interface to check step file and store check results.
@@ -14,7 +15,7 @@ public interface StepChecker
      * Check step file running all corresponding tests.
      * @return <code>true</code> if check succeeded, <code>false</code> otherwise.
      */
-    boolean check() throws IOException,
+    boolean check() throws LoadImgException,
                            TestException;
 
     /**

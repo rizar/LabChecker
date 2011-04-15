@@ -1,0 +1,49 @@
+Performing file size test to check lab2a2-406-v1.tif.
+Parsed size and deviation. Maximum file size is 32kb.
+lab2a2-406-v1.tif size is 30kb.
+Test passed.
+Performing image size test to check lab2a2-406-v1.tif.
+Parsed width and height. Width must be 840, height must be 490.
+lab2a2-406-v1.tif width and height are 840, 490.
+Test passed.
+Performing color set test for lab2a2-406-v1.tif.
+Pattern color set: (128, 210, 0) (128, 20, 0) (0, 0, 0) (0, 255, 0) (1, 0, 0) (252, 252, 252) (0, 0, 254) (255, 0, 255) (255, 255, 255) (255, 255, 0) (255, 0, 0) (128, 250, 0) (127, 115, 255) (128, 90, 0) (128, 140, 0) (0, 154, 154) (0, 255, 255) (0, 0, 255)
+Color set of lab2a2-406-v1.tif: (0, 0, 0) (128, 210, 0) (128, 20, 0) (1, 0, 0) (0, 255, 0) (252, 252, 252) (255, 0, 255) (0, 0, 254) (255, 255, 255) (255, 255, 0) (255, 0, 0) (128, 250, 0) (127, 115, 255) (128, 90, 0) (128, 140, 0) (0, 154, 154) (0, 255, 255) (0, 0, 255)
+Test passed.
+Performing pattern test for file lab2a2-406-v1.tif.
+Pattern file: lab2a2(borders).png.
+Pattern rectangle: x1 = 120 y1 = 60 x2 = 735 y2 = 400.
+Test rectangle: x1 = 120 y1 = 60 x2 = 735 y2 = 400.
+Color map:  (255, 255, 0) -> (127, 115, 255) (120, 165, 120) -> (0, 0, 0)
+Test passed.
+Performing pattern test for file lab2a2-406-v1.tif.
+Pattern file: 3pt_line.png.
+Pattern search in test area turned on.
+Pattern rectangle: x1 = 0 y1 = 0 x2 = 9 y2 = 4.
+Test rectangle: x1 = 4 y1 = 423 x2 = 39 y2 = 436.
+Color map:  (0, 0, 0) -> (127, 115, 255) (255, 255, 255) -> (255, 255, 255)
+Found pattern rectangle with offset (5, 4).
+Test passed.
+Performing pattern test for file lab2a2-406-v1.tif.
+Pattern file: lab2a2.png.
+Pattern rectangle: x1 = 0 y1 = 0 x2 = 839 y2 = 489.
+Test rectangle: x1 = 0 y1 = 0 x2 = 839 y2 = 489.
+Color map:  (195, 195, 20) -> (128, 210, 0) (255, 255, 20) -> (128, 250, 0)
+Error: pixel (715, 392) must be (128, 210, 0) instead of (0, 255, 255).
+1 errors.
+Test not passed.
+// Проверка границ дело тонкое.
+Performing pattern test for file lab2a2-406-v1.tif.
+Pattern file: lab2a0var2(3k+1)04BDV.tga.
+Pattern rectangle: x1 = 220 y1 = 94 x2 = 744 y2 = 423.
+Test rectangle: x1 = 192 y1 = 64 x2 = 716 y2 = 393.
+Color map:  (0, 255, 0) -> (128, 140, 0) (0, 255, 255) -> (128, 20, 0) (0, 0, 255) -> (128, 90, 0)
+Ignore following masks: from file lab2a2.png all pixels of color (195, 195, 20); from file lab2a2.png all pixels of color (204, 153, 255);
+Test passed.
+Performing pattern test for file lab2a2-406-v1.tif.
+Pattern file: lab2a2(circles).png.
+Pattern rectangle: x1 = 367 y1 = 416 x2 = 552 y2 = 484.
+Test rectangle: x1 = 367 y1 = 416 x2 = 552 y2 = 484.
+Color map:  (120, 120, 69) -> (127, 115, 255) (0, 255, 0) -> (0, 255, 0) (0, 255, 255) -> (0, 255, 255) (255, 0, 255) -> (255, 0, 255) (0, 0, 255) -> (0, 0, 255)
+Test passed.
+

@@ -1,0 +1,92 @@
+Performing file size test to check lab2a2-409-v1.tif.
+Parsed size and deviation. Maximum file size is 32kb.
+lab2a2-409-v1.tif size is 87kb.
+Test failed.
+Performing image size test to check lab2a2-409-v1.tif.
+Parsed width and height. Width must be 840, height must be 490.
+lab2a2-409-v1.tif width and height are 840, 490.
+Test passed.
+Performing color set test for lab2a2-409-v1.tif.
+Pattern color set: (0, 0, 0) (0, 255, 0) (1, 0, 0) (150, 120, 150) (250, 120, 250) (252, 252, 252) (105, 135, 105) (0, 0, 254) (255, 0, 255) (255, 255, 255) (200, 120, 200) (255, 255, 0) (255, 0, 0) (10, 120, 10) (100, 120, 100) (0, 154, 154) (0, 255, 255) (0, 0, 255)
+Color set of lab2a2-409-v1.tif: (156, 72, 0) (0, 0, 0) (1, 0, 0) (0, 255, 0) (72, 156, 223) (150, 120, 150) (223, 191, 191) (72, 0, 72) (0, 0, 254) (191, 116, 0) (0, 255, 255) (72, 72, 156) (0, 0, 255) (156, 156, 72) (116, 72, 156) (255, 255, 191) (191, 255, 255) (191, 223, 156) (116, 0, 72) (100, 120, 100) (0, 0, 116) (0, 154, 154) (156, 72, 116) (0, 0, 72) (156, 72, 72) (156, 223, 255) (255, 191, 116) (255, 255, 223) (250, 120, 250) (72, 0, 0) (223, 255, 255) (116, 0, 116) (0, 72, 72) (0, 72, 156) (10, 120, 10) (156, 191, 156) (72, 72, 0) (72, 116, 116) (191, 116, 72) (116, 116, 116) (223, 156, 72) (252, 252, 252) (116, 191, 255) (105, 135, 105) (223, 255, 223) (255, 0, 255) (72, 156, 191) (255, 255, 255) (200, 120, 200) (255, 255, 0) (255, 0, 0) (72, 0, 116) (116, 0, 0) (255, 223, 156) (0, 116, 191)
+Color (156, 72, 0) from test set is not from pattern set. You can find it at (104, 67).
+Color (72, 156, 223) from test set is not from pattern set. You can find it at (107, 11).
+Color (223, 191, 191) from test set is not from pattern set. You can find it at (79, 49).
+Color (72, 0, 72) from test set is not from pattern set. You can find it at (99, 16).
+Color (191, 116, 0) from test set is not from pattern set. You can find it at (105, 12).
+Color (72, 72, 156) from test set is not from pattern set. You can find it at (97, 70).
+Color (156, 156, 72) from test set is not from pattern set. You can find it at (89, 17).
+Color (116, 72, 156) from test set is not from pattern set. You can find it at (49, 51).
+Color (255, 255, 191) from test set is not from pattern set. You can find it at (105, 17).
+Color (191, 255, 255) from test set is not from pattern set. You can find it at (106, 15).
+Color (191, 223, 156) from test set is not from pattern set. You can find it at (95, 49).
+Color (116, 0, 72) from test set is not from pattern set. You can find it at (104, 68).
+Color (156, 72, 116) from test set is not from pattern set. You can find it at (50, 49).
+Color (0, 0, 116) from test set is not from pattern set. You can find it at (104, 33).
+Color (156, 72, 72) from test set is not from pattern set. You can find it at (93, 65).
+Color (0, 0, 72) from test set is not from pattern set. You can find it at (103, 34).
+Color (156, 223, 255) from test set is not from pattern set. You can find it at (105, 68).
+Color (255, 255, 223) from test set is not from pattern set. You can find it at (102, 13).
+Color (255, 191, 116) from test set is not from pattern set. You can find it at (103, 28).
+Color (72, 0, 0) from test set is not from pattern set. You can find it at (106, 11).
+Color (223, 255, 255) from test set is not from pattern set. You can find it at (107, 16).
+Color (116, 0, 116) from test set is not from pattern set. You can find it at (97, 67).
+Color (0, 72, 72) from test set is not from pattern set. You can find it at (51, 48).
+Color (0, 72, 156) from test set is not from pattern set. You can find it at (106, 16).
+Color (156, 191, 156) from test set is not from pattern set. You can find it at (104, 15).
+Color (72, 72, 0) from test set is not from pattern set. You can find it at (94, 66).
+Color (72, 116, 116) from test set is not from pattern set. You can find it at (81, 48).
+Color (191, 116, 72) from test set is not from pattern set. You can find it at (74, 53).
+Color (116, 116, 116) from test set is not from pattern set. You can find it at (104, 13).
+Color (223, 156, 72) from test set is not from pattern set. You can find it at (105, 16).
+Color (116, 191, 255) from test set is not from pattern set. You can find it at (105, 67).
+Color (223, 255, 223) from test set is not from pattern set. You can find it at (75, 52).
+Color (72, 156, 191) from test set is not from pattern set. You can find it at (103, 67).
+Color (72, 0, 116) from test set is not from pattern set. You can find it at (105, 15).
+Color (116, 0, 0) from test set is not from pattern set. You can find it at (106, 17).
+Color (255, 223, 156) from test set is not from pattern set. You can find it at (105, 11).
+Color (0, 116, 191) from test set is not from pattern set. You can find it at (107, 17).
+Test not passed.
+// Цвета на самом деле безжалостно поплыли - их 55.
+Performing pattern test for file lab2a2-409-v1.tif.
+Pattern file: lab2a2(borders).png.
+Pattern rectangle: x1 = 120 y1 = 60 x2 = 735 y2 = 400.
+Test rectangle: x1 = 120 y1 = 60 x2 = 735 y2 = 400.
+Color map:  (255, 255, 0) -> (255, 255, 0) (120, 165, 120) -> (105, 135, 105)
+Error: pixel (581, 390) must be (105, 135, 105) instead of (0, 0, 0).
+Error: pixel (582, 390) must be (105, 135, 105) instead of (0, 0, 0).
+Error: pixel (583, 391) must be (105, 135, 105) instead of (0, 0, 0).
+3 errors.
+// Границы 0 дело тонкое.
+Test not passed.
+Performing pattern test for file lab2a2-409-v1.tif.
+Pattern file: 3pt_line.png.
+Pattern search in test area turned on.
+Pattern rectangle: x1 = 0 y1 = 0 x2 = 9 y2 = 4.
+Test rectangle: x1 = 4 y1 = 423 x2 = 39 y2 = 436.
+Color map:  (0, 0, 0) -> (105, 135, 105) (255, 255, 255) -> (255, 255, 255)
+Found pattern rectangle with offset (1, 4).
+Test passed.
+Performing pattern test for file lab2a2-409-v1.tif.
+Pattern file: lab2a2.png.
+Pattern rectangle: x1 = 0 y1 = 0 x2 = 839 y2 = 489.
+Test rectangle: x1 = 0 y1 = 0 x2 = 839 y2 = 489.
+Color map:  (195, 195, 20) -> (200, 120, 200) (255, 255, 20) -> (250, 120, 250)
+Test passed.
+Performing pattern test for file lab2a2-409-v1.tif.
+Pattern file: lab2a0var2(3k+1)04BDV.tga.
+Pattern rectangle: x1 = 220 y1 = 94 x2 = 744 y2 = 423.
+Test rectangle: x1 = 192 y1 = 64 x2 = 716 y2 = 393.
+Color map:  (0, 255, 0) -> (150, 120, 150) (0, 255, 255) -> (10, 120, 10) (0, 0, 255) -> (100, 120, 100)
+Ignore following masks: from file lab2a2.png all pixels of color (195, 195, 20); from file lab2a2.png all pixels of color (204, 153, 255);
+Test passed.
+Performing pattern test for file lab2a2-409-v1.tif.
+Pattern file: lab2a2(circles).png.
+Pattern rectangle: x1 = 367 y1 = 416 x2 = 552 y2 = 484.
+Test rectangle: x1 = 367 y1 = 416 x2 = 552 y2 = 484.
+Color map:  (120, 120, 69) -> (105, 135, 105) (0, 255, 0) -> (0, 255, 0) (0, 255, 255) -> (0, 255, 255) (255, 0, 255) -> (255, 0, 255) (0, 0, 255) -> (0, 0, 255)
+Error: pixel (423, 425) must be (255, 0, 255) instead of (105, 135, 105).
+1 errors.
+Test not passed.
+// Допущена оплошность на границы первой и второй окружности.
+

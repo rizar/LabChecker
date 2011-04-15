@@ -1,15 +1,16 @@
 package com.github.rizar.labchecker.lab;
 
+import com.github.rizar.labchecker.parser.RemainderParser;
 import com.github.rizar.labchecker.exceptions.InfiniteCycleException;
 import com.github.rizar.labchecker.exceptions.TestException;
 import com.github.rizar.labchecker.exceptions.TestParseException;
 import com.github.rizar.labchecker.exceptions.UndefinedMacroException;
+import com.github.rizar.labchecker.parser.GroupParser;
 import com.github.rizar.labchecker.test.ImageLibrary;
-import java.util.regex.Matcher;
 import java.io.File;
-import java.io.IOException;
 import org.xml.sax.Attributes;
 import com.github.rizar.labchecker.test.Test;
+import loadimg.LoadImgException;
 import static com.github.rizar.labchecker.lab.Tags.*;
 import static com.github.rizar.labchecker.lab.Constraints.*;
 import static com.github.rizar.labchecker.lab.Macros.*;
@@ -86,24 +87,21 @@ public class TestFor implements Test
         logBuilder = new StringBuilder();
     }
 
-    protected boolean forThis(MacroProcessor macroProcessor)
+    protected boolean isFor(MacroProcessor macroProcessor)
     {
         if (groupMacro != null)
         {
-            String[] groups = macroProcessor.process(groupMacro).split(
-                    GROUP_SEPARATOR);
-            String realGroup = macroProcessor.process(
-                    "%" + GROUP_ONE_CHARACTER_MACRO + "%");
-            boolean found = false;
-            for (String group : groups)
-                if (group.equals(realGroup))
-                    found = true;
-            if (!found)
+            if (!new GroupParser(macroProcessor.process(groupMacro)).isFor(macroProcessor.
+                    getGroup()))
                 return false;
         }
 
         if (remainderMacro != null)
         {
+            if (!new RemainderParser(macroProcessor.process(remainderMacro)).
+                    isFor(Lab.codeInteger(
+                    macroProcessor.getCode())))
+                return false;
             /*Matcher matcher = REMAINDER_PATTERN.matcher(macroProcessor.process(
             remainderMacro));
             matcher.matches();
@@ -113,33 +111,6 @@ public class TestFor implements Test
             int divisor = Integer.parseInt(matcher.group(2));
             if (dividend % divisor != remainder)
             return false;*/
-            String remainderString = macroProcessor.process(remainderMacro);
-            String[] remaindersAndDivisor = remainderString.split(
-                    MOD_PATTERN_STRING);
-            if (remaindersAndDivisor.length != 2)
-                throw new TestParseException(
-                        "Can't parse remainders in \"" + remainderString + "\"");
-            try
-            {
-                String[] remainders = remaindersAndDivisor[0].split(
-                        REMAINDERS_SEPARATOR);
-                int divisor = Integer.parseInt(remaindersAndDivisor[1].trim());
-                int dividend = Lab.codeInteger(macroProcessor.process(
-                        "%" + CODE_MACRO + "%"));
-                for (String rem : remainders)
-                {
-                    int remainder = Integer.parseInt(rem.trim());
-                    if (dividend % divisor == remainder)
-                        return true;
-                }
-            }
-            catch (NumberFormatException e)
-            {
-                throw new TestParseException(
-                        "Can't parse remainders in \"" + remainderString + "\"");
-            }
-
-            return false;
         }
 
         return true;
@@ -147,10 +118,10 @@ public class TestFor implements Test
 
     public boolean check(MacroProcessor macroProcessor, ImageLibrary library,
                          File file) throws
-            IOException, TestException
+            LoadImgException, TestException
     {
         clearMessageAndLog();
-        if (!forThis(macroProcessor))
+        if (!isFor(macroProcessor))
             return true;
 
         boolean result;

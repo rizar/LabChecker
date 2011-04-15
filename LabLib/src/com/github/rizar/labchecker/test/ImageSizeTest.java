@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.regex.Matcher;
+import loadimg.LoadImgException;
 
 /**
  *
@@ -45,7 +46,7 @@ public class ImageSizeTest extends AbstractTest
 
     public boolean check(MacroProcessor macroProcessor, ImageLibrary library,
                          File file) throws
-            IOException,
+            LoadImgException,
             TestException
     {
         log.format("Performing image size test to check %s.\n", file.getName());

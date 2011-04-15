@@ -2,12 +2,10 @@ package com.github.rizar.labchecker.test;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-import javax.imageio.ImageIO;
+import loadimg.LoadImgC;
 import static com.github.rizar.labchecker.lab.Constraints.*;
+import loadimg.LoadImgException;
 
 /**
  *
@@ -26,32 +24,32 @@ public class ImageLibrary
         this.directory = directory;
     }
 
-    public BufferedImage getImage(String fileName) throws IOException
+    public BufferedImage getImage(String fileName) throws LoadImgException
     {
         BufferedImage image = images.get(fileName);
         if (image != null)
             return image;
         else
         {
-            image = ImageIO.read(new File(fileName));
+            image = new LoadImgC().getImage(new File(fileName), TEMP_FOLDER, true);
             images.put(fileName, image);
             return image;
         }
     }
 
-    public BufferedImage getImage(File file) throws IOException
+    public BufferedImage getImage(File file) throws LoadImgException
     {
         return getImage(file.getAbsolutePath());
     }
 
-    public BufferedImage getLibraryImage(String fileName) throws IOException
+    public BufferedImage getLibraryImage(String fileName) throws LoadImgException
     {
         return getImage(new File(directory, fileName).getAbsolutePath());
     }
 
-    public BufferedImage getLibraryImage(File file) throws IOException
+    public BufferedImage getLibraryImage(File file) throws LoadImgException
     {
-        return getLibraryImage(file.getName());
+        return getLibraryImage(file.getPath());
     }
 
     public void unload()
@@ -61,12 +59,12 @@ public class ImageLibrary
     }
 
     public ColorSet getLibraryImageColorSet(String fileName) throws
-            IOException
+            LoadImgException
     {
         return getImageColorSet(new File(directory, fileName));
     }
 
-    ColorSet getImageColorSet(String fileName) throws IOException
+    ColorSet getImageColorSet(String fileName) throws LoadImgException
     {
         ColorSet colorSet = colorSets.get(fileName);
         if (colorSet != null)
@@ -81,12 +79,12 @@ public class ImageLibrary
         return colorSet;
     }
 
-    ColorSet getImageColorSet(File file) throws IOException
+    ColorSet getImageColorSet(File file) throws LoadImgException
     {
         return getImageColorSet(file.getAbsolutePath());
     }
 
-    long getColorPosition(File file, int color) throws IOException
+    long getColorPosition(File file, int color) throws LoadImgException
     {
         BufferedImage image = getImage(file);
         for (int x = 0; x < image.getWidth(); x++)
@@ -102,6 +100,14 @@ public class ImageLibrary
         int g = (c >> 8) & MASK8;
         int b = c & MASK8;
         return r + (g << 8) + (b << 16);
+    }
+
+    public static String colorString(int c)
+    {
+        int r = c & MASK8;
+        int g = (c >> 8) & MASK8;
+        int b = (c >> 16) & MASK8;
+        return String.format("(%d, %d, %d)", r, g, b);
     }
 }
 

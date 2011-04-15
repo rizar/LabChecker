@@ -12,12 +12,30 @@
 
     <!-- Макрос оригинала изображения -->
 
-    <macro name = "ORIG" def = "orig/lab2a0var2(%MOD%k%REM_SUFF%)%GROUP00%BDV.png"/>
+    <macro name = "ORIG" def = "orig/lab2a0var2(%MOD%k%REM_SUFF%)%GROUP00%BDV.tga"/>
+
+    <!-- Макросы представителей в эталонном фаЙле -->
+
+    <macro name = "ZONE2_STEP2_PIXEL" def = "(215, 90)"/>
+    <macro name = "AUTHOR_ZONE_STEP2_PIXEL" def = "(400, 400)"/>
+
+    <!-- Макросы цветов границ -->
+
+    <macro name = "BOR34REM1" def = "%ORIG%(355, 319)"/>
+    <macro name = "BOR23REM1" def = "%ORIG%(355, 336)"/>
+    <macro name = "BOR12REM1" def = "%ORIG%(355, 355)"/>
+
+    <!-- Макрос цвета, который нужно убрать для однородной заливки -->
+
+    <macro name = "BAD">
+        <def rem = "0 mod %MOD%" def = "0, 220, 249"/>
+        <def rem = "1 2 mod %MOD%" def = "0, 204, 255"/>
+    </macro>
 
     <!-- Список шагов. Для каждого определяется проверяющий его скрипт и шаблон названия файла -->
 
-    <step script = "%LAB%1.xml" file = "%LAB%1-%GET_CODE%-v%GET_VAR%.png"/> <!-- change png to pcx -->
-    <step script = "%LAB%2.xml" file = "%LAB%2-%GET_CODE%-v%GET_VAR%.png"/> <!-- change png to tiff -->
+    <step script = "%LAB%1.xml" file = "%LAB%1-%GET_CODE%-v%GET_VAR%.pcx"/> 
+    <step script = "%LAB%2.xml" file = "%LAB%2-%GET_CODE%-v%GET_VAR%.tif"/> 
     <step script = "%LAB%3.xml" file = "%LAB%3-%GET_CODE%-v%GET_VAR%.gif"/>
     <step script = "%LAB%4.xml" file = "%LAB%4-%GET_CODE%-v%GET_VAR%.png"/>
 
@@ -65,7 +83,7 @@
          </color_set>
          <color_set num = "9"> 1 – 0,0,0; 2 –128,128,128; 3 – 128,0,0;
                                 4 – 250,120,250; 5 – 200,120,200; 6 – 150,120,150; 7 – 100,120,100; 8 – 10,120,10; 9 –
-                                255,255,255; 10 – 200,200,200; 1 – 255,0,0; 12 – 255,255,0; 13 – 0,255,0; 14 – 0,255,255;
+                                255,255,255; 10 – 200,200,200; 11 – 255,0,0; 12 – 255,255,0; 13 – 0,255,0; 14 – 0,255,255;
                                 15 – 255,0,255; 16 – 255,128,64.
          </color_set>
          <color_set num = "0"> 1 – 0,0,0; 2 –128,128,128; 3 – 128,0,0;

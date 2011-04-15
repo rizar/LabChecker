@@ -1,27 +1,16 @@
-﻿<!-- Скрипт проверки второго шага -->
+﻿<!-- Скрипт проверки второго шага -->                                       
 
 <script ok_mess = "Второй шаг выполнен верно." fail_mess = "Второй шаг выполнен неверно.">
-    
+                                                                
     <!-- Проверяю размер файла, размеры изображения, набор цветов изображения -->
 
     <file_size_test ok_mess = "Размер файла в пределах нормы." fail_mess = "Файл слишком велик." size = "30kb" dev = "2kb"/>
 
     <image_size_test ok_mess = "Изображение верного размера." fail_mess = "Неверный размер изображения." width = "840" height = "490"/>
 
-    <color_set_test rem = "0 mod %MOD%" ok_mess = "Правильные цвета." fail_mess = "Неправильные цвета.">
+    <color_set_test ok_mess = "Правильные цвета." fail_mess = "Неправильные цвета.">
         <add_color file = "%ORIG%"/>
-        <rem_color color = "0, 220, 249"/>
-        <add_color color = "%C4%"/>
-        <add_color color = "%C5%"/>
-        <add_color color = "%C6%"/>
-        <add_color color = "%C6-%"/>
-        <add_color color = "%C7%"/>
-        <add_color color = "%C8%"/>
-    </color_set_test>
-
-    <color_set_test rem = "1 2 mod %MOD%" ok_mess = "Правильные цвета." fail_mess = "Неправильные цвета.">
-        <add_color file = "%ORIG%"/>
-        <rem_color color = "0, 204, 255"/>
+        <rem_color color = "%BAD%"/>
         <add_color color = "%C4%"/>
         <add_color color = "%C5%"/>
         <add_color color = "%C6%"/>
@@ -32,21 +21,25 @@
 
     <!-- Проверяю изменение цвета границы между зонами -->
 
-    <pat_test ok_mess = "Цвет границы изменен верно." fail_mess = "Цвет границы изменен неверно." file = "lab2a2(borders).png" rem = "1 mod 2">
-        <pat_rect x1 = "120" y1 = "60" x2 = "735" y2 = "400"/>
+    <group rem = "1 mod %MOD%">
 
-        <color pat_color = "120, 165, 120" test_color = "%C6-%"/>
-        <color pat_color = "255, 255, 0" test_color = "%ORIG%(355, 328)"/>
-        <color pat_color = "192, 192, 192" test_color = "%ORIG%(355, 312)"/>
-    </pat_test>
+        <pat_test ok_mess = "Цвет границы изменен верно." fail_mess = "Цвет границы изменен неверно." file = "lab2a2(borders).png" rem = "1 mod 2">
+            <pat_rect x1 = "120" y1 = "60" x2 = "735" y2 = "400"/>
 
-    <pat_test ok_mess = "Цвет границы изменен верно." fail_mess = "Цвет границы изменен неверно." file = "lab2a2(borders).png" rem = "0 mod 2">
-        <pat_rect x1 = "120" y1 = "60" x2 = "735" y2 = "400"/>
+            <color pat_color = "120, 165, 120" test_color = "%C6-%"/>
+            <color pat_color = "255, 255, 0" test_color = "%BOR23REM1%"/>
+            <!-- <color pat_color = "192, 192, 192" test_color = "%BOR34REM1%"/> -->
+        </pat_test>
 
-        <color pat_color = "120, 165, 120" test_color = "%ORIG%(355, 347)"/>
-        <color pat_color = "255, 255, 0" test_color = "%C6-%"/>
-        <color pat_color = "192, 192, 192" test_color = "%ORIG%(355, 312)"/>
-    </pat_test>
+        <pat_test ok_mess = "Цвет границы изменен верно." fail_mess = "Цвет границы изменен неверно." file = "lab2a2(borders).png" rem = "0 mod 2">
+            <pat_rect x1 = "120" y1 = "60" x2 = "735" y2 = "400"/>
+
+            <color pat_color = "120, 165, 120" test_color = "%BOR12REM1%"/>
+            <color pat_color = "255, 255, 0" test_color = "%C6-%"/>
+            <!-- <color pat_color = "192, 192, 192" test_color = "%BOR34REM1%"/> -->
+        </pat_test>
+
+    </group>
 
     <!-- Ищу линию ширины 3пт в легенде -->
 
@@ -59,24 +52,31 @@
 
     <!-- Проверяю изменение цвета зон -->
 
-    <pat_test ok_mess = "Зоны перекрашены верно." fail_mess = "Зоны перекрашены неверно." file = "lab2a2.png">
+    <pat_test ok_mess = "Зоны 1, 2 перекрашены верно." fail_mess = "Зоны 1, 2 перекрашены неверно." file = "lab2a2.png">
         <color pat_color = "255, 255, 20" test_color = "%C4%"/>
         <color pat_color = "195, 195, 20" test_color = "%C5%"/>
-        <color pat_color = "135, 135, 20" test_color = "%C6%"/>
-        <color pat_color = "75, 75, 20" test_color = "%C7%"/>
-        <color pat_color = "15, 15, 20" test_color = "%C8%"/>   
+    </pat_test>
+
+    <pat_test ok_mess = "Зоны 3, 4, 5 перекрашены верно." fail_mess = "Зоны 3, 4, 5 перекрашены неверно." file = "%ORIG%">
+        <pat_rect x1 = "220" y1 = "94" x2 = "744" y2 = "423"/>
+        <test_rect x1 = "192" y1 = "64" x2 = "716" y2 = "393"/>
+        <ignore file = "lab2a2.png" color = "lab2a2.png%ZONE2_STEP2_PIXEL%"/>
+        <ignore file = "lab2a2.png" color = "lab2a2.png%AUTHOR_ZONE_STEP2_PIXEL%"/>
+        <color pat_color = "%ORIG%(290, 150)" test_color = "%C6%"/>
+        <color pat_color = "%ORIG%(315, 195)" test_color = "%C7%"/>
+        <color pat_color = "%ORIG%(360, 225)" test_color = "%C8%"/>   
     </pat_test>
 
     <!-- Проверяю наличие и правильный цвет окружностей -->
     
-    <pat_test ok_mess = "Окружности нарисованы верно." fail_mess = "Окружности нарисованы неверно." file = "lab2a2.png">
+    <pat_test ok_mess = "Окружности нарисованы верно." fail_mess = "Окружности нарисованы неверно." file = "lab2a2(circles).png">
         <pat_rect x1 = "367" y1 = "416" x2 = "552" y2 = "484"/>
         
         <color pat_color = "120, 120, 325" test_color = "%C6-%"/>
-        <color pat_color = "255, 0, 255" test_color = "%ORIG%(165, 40)"/>
-        <color pat_color = "0, 255, 255" test_color = "%ORIG%(215, 110)"/>
-        <color pat_color = "0, 255, 0" test_color = "%ORIG%(240, 140)"/>
-        <color pat_color = "0, 0, 255" test_color = "%ORIG%(290, 230)"/>
+        <color pat_color = "255, 0, 255" test_color = "%ORIG%(310, 100)"/>
+        <color pat_color = "0, 255, 255" test_color = "0, 255, 255"/>
+        <color pat_color = "0, 255, 0" test_color = "%ORIG%(310, 160)"/>
+        <color pat_color = "0, 0, 255" test_color = "%ORIG%(310, 260)"/>
     </pat_test>
 
 </script>

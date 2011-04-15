@@ -1,5 +1,6 @@
 package com.github.rizar.labchecker.test;
 
+import com.github.rizar.labchecker.parser.ColorParser;
 import com.github.rizar.labchecker.exceptions.TestException;
 import com.github.rizar.labchecker.lab.MacroProcessor;
 import java.io.File;
@@ -9,6 +10,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import loadimg.LoadImgException;
 import static com.github.rizar.labchecker.lab.Constraints.*;
 
 /**
@@ -52,7 +54,7 @@ public class ColorSetTest extends AbstractTest
     private ColorSet patternColorSet, testColorSet;
 
     private void parseMacros(MacroProcessor macroProcessor, ImageLibrary library)
-            throws IOException
+            throws LoadImgException
     {
         patternColorSet = new ColorSet();
         for (String macro : addColorMacros)
@@ -80,7 +82,7 @@ public class ColorSetTest extends AbstractTest
     }
 
     public boolean check(MacroProcessor macroProcessor, ImageLibrary library,
-                         File file) throws IOException,
+                         File file) throws LoadImgException,
                                            TestException
     {
         log.format("Performing color set test for %s.\n", file.getName());

@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import loadimg.LoadImgException;
 import org.xml.sax.Attributes;
 
 /**
@@ -33,10 +34,10 @@ public class TestsForGroup extends TestFor
 
     @Override
     public boolean check(MacroProcessor macroProcessor, ImageLibrary library, File file) throws
-            IOException, TestException
+            LoadImgException, TestException
     {
         clearMessageAndLog();
-        if (!forThis(macroProcessor))
+        if (!isFor(macroProcessor))
             return true;
 
         boolean result = true;

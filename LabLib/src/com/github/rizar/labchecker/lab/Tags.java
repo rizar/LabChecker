@@ -34,9 +34,11 @@ public interface Tags
 
     String MACRO_TAG = "macro";
 
-    String MACRO_TAG_NAME_ATTRIBUTE = "name";
+    String DEFINITION_TAG = "def";
 
-    String MACRO_TAG_DEFINITION_ATTRIBUTE = "def";
+    String NAME_ATTRIBUTE = "name";
+
+    String DEFINITION_ATTRIBUTE = "def";
 
     String[] OBLIGATORY_TAGS = new String[]
     {
@@ -69,6 +71,8 @@ public interface Tags
     String PATTERN_TEST_TAG = "pat_test";
 
     String PATTERN_TEST_COLOR_TAG = "color";
+
+    String IGNORE_TAG = "ignore";
 
     String PATTERN_TEST_PATTERN_RECTANGLE_TAG = "pat_rect";
 

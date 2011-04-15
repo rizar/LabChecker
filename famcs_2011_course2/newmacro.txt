@@ -1,0 +1,6 @@
+<macro name = "BAD">
+    <def rem = "0 mod %MOD%" def = "0, 220, 249"/>
+    <def rem = "1, 2 mod %MOD%" def = "0, 204, 255"/>
+</macro>
+
+<ignore file = "lab2a.png" color = "195, 195, 20"/>

@@ -134,6 +134,8 @@ public class Lab
 
         private StringBuilder colorSetStringBuiler;
 
+        private String currentMacro;
+
         int colorSetNumber;
 
         public ConfigHandler(File file)
@@ -157,7 +159,13 @@ public class Lab
                         doThrow(WrongNestedTagException.class, COLOR_SET_TAG,
                                 true, COLOR_SETS_TAG);
                 }
-                else
+                else if (qName.equals(DEFINITION_TAG))
+                {
+                    if (!currentTag.equals(MACRO_TAG))
+                        doThrow(WrongNestedTagException.class, DEFINITION_TAG,
+                                true, MACRO_TAG);
+                }
+                else 
                 {
                     if (!currentTag.equals(LAB_TAG))
                         doThrow(WrongNestedTagException.class, qName, false,
@@ -244,10 +252,17 @@ public class Lab
             else if (qName.equals(MACRO_TAG))
             {
                 String name = mustGet(attributes, MACRO_TAG,
-                        MACRO_TAG_NAME_ATTRIBUTE);
-                String definition = mustGet(attributes, MACRO_TAG,
-                        MACRO_TAG_DEFINITION_ATTRIBUTE);
+                        NAME_ATTRIBUTE);
+                currentMacro = name;
+                String definition = attributes.getValue(DEFINITION_ATTRIBUTE);
                 macroProcessor.registerMacro(name, definition);
+            }
+            else if (qName.equals(DEFINITION_TAG))
+            {
+                String definitionMacro = mustGet(attributes, DEFINITION_TAG, DEFINITION_ATTRIBUTE);
+                String groupMacro = attributes.getValue(GROUP_ATTRIBUTE);
+                String remainderMacro = attributes.getValue(REMAINDER_ATTRIBUTE);
+                macroProcessor.addDefinition(currentMacro, groupMacro, remainderMacro, definitionMacro);
             }
             else
             {
@@ -405,5 +420,33 @@ public class Lab
     {
         return 100 * Character.digit(code.charAt(0), MAX_NUMBER_OF_GROUPS) + 10 * Character.digit(code.
                 charAt(1), 10) + Character.digit(code.charAt(2), 10);
+    }
+
+    public static int codeGroup(String code)
+    {
+        if (code.charAt(0) < '9')
+            return Character.digit(code.charAt(0), 10);
+        else
+        {
+            int number = Integer.parseInt(code.substring(1));
+            if (number < 30)
+                return 9;
+            else if (number < 70)
+                return 10;
+            else
+                return 11;
+        }
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        return obj instanceof Lab && directory.equals(((Lab)obj).directory);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return directory.hashCode();
     }
 }

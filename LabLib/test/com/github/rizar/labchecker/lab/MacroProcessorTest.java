@@ -1,5 +1,6 @@
 package com.github.rizar.labchecker.lab;
 
+import com.github.rizar.labchecker.exceptions.EmptyMacroException;
 import com.github.rizar.labchecker.exceptions.InfiniteCycleException;
 import com.github.rizar.labchecker.exceptions.UndefinedMacroException;
 import org.junit.After;
@@ -73,5 +74,32 @@ public class MacroProcessorTest
     {
         mc.registerMacro("A", "%A%");
         mc.process("%A%");
+    }
+
+    @Test (expected = EmptyMacroException.class)
+    public void testConditionalMacros()
+    {
+        mc.registerMacro("M");
+
+        String code1 = "502";
+        int group1 = 1;
+        String def1 = "Group 1, code = 2 (mod 5)";
+        mc.addDefinition("M", "1", "2 mod 5", def1);
+
+        String code2 = "704";
+        int group2 = 8;
+        String def2 = "Group 8, code = 4 (mod 7)";
+        mc.addDefinition("M", "8", "4 mod 7", def2);
+
+        mc.setCode(code1);
+        mc.setGroup(group1);
+        assertEquals(mc.process("%M%"), def1);
+
+        mc.setCode(code2);
+        mc.setGroup(group2);
+        assertEquals(mc.process("%M%"), def2);
+
+        mc.setGroup(10);
+        mc.process("%M%");
     }
 }

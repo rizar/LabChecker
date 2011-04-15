@@ -1,0 +1,67 @@
+Performing file size test to check lab2a2-205-v1.tif.
+Parsed size and deviation. Maximum file size is 32kb.
+lab2a2-205-v1.tif size is 30kb.
+Test passed.
+Performing image size test to check lab2a2-205-v1.tif.
+Parsed width and height. Width must be 840, height must be 490.
+lab2a2-205-v1.tif width and height are 840, 490.
+Test passed.
+Performing color set test for lab2a2-205-v1.tif.
+Pattern color set: (0, 0, 0) (0, 255, 0) (1, 0, 0) (0, 140, 140) (0, 90, 90) (252, 252, 252) (255, 115, 115) (0, 210, 210) (0, 0, 252) (255, 0, 255) (255, 255, 255) (255, 255, 0) (255, 0, 0) (0, 250, 250) (0, 152, 152) (0, 255, 255) (0, 20, 20) (0, 0, 255)
+Color set of lab2a2-205-v1.tif: (0, 0, 0) (1, 0, 0) (0, 255, 0) (0, 140, 140) (0, 90, 90) (252, 252, 252) (255, 115, 115) (0, 0, 252) (0, 210, 210) (255, 0, 255) (255, 255, 255) (255, 255, 0) (255, 0, 0) (0, 250, 250) (0, 152, 152) (0, 255, 255) (0, 20, 20) (0, 0, 255)
+Test passed.
+Performing pattern test for file lab2a2-205-v1.tif.
+Pattern file: lab2a2(borders).png.
+Pattern rectangle: x1 = 120 y1 = 60 x2 = 735 y2 = 400.
+Test rectangle: x1 = 120 y1 = 60 x2 = 735 y2 = 400.
+Color map:  (255, 255, 0) -> (255, 255, 0) (120, 165, 120) -> (255, 115, 115)
+Error: pixel (688, 166) must be (255, 115, 115) instead of (0, 250, 250).
+Error: pixel (691, 155) must be (255, 115, 115) instead of (0, 210, 210).
+2 errors.
+Test not passed.
+//Ћинии в эталоне и решении не совсем совпадают, исполнитель не виноват.
+Performing pattern test for file lab2a2-205-v1.tif.
+Pattern file: 3pt_line.png.
+Pattern search in test area turned on.
+Pattern rectangle: x1 = 0 y1 = 0 x2 = 9 y2 = 4.
+Test rectangle: x1 = 4 y1 = 423 x2 = 39 y2 = 436.
+Color map:  (0, 0, 0) -> (255, 115, 115) (255, 255, 255) -> (255, 255, 255)
+Found pattern rectangle with offset (4, 4).
+Test passed.
+Performing pattern test for file lab2a2-205-v1.tif.
+Pattern file: lab2a2.png.
+Pattern rectangle: x1 = 0 y1 = 0 x2 = 839 y2 = 489.
+Test rectangle: x1 = 0 y1 = 0 x2 = 839 y2 = 489.
+Color map:  (195, 195, 20) -> (0, 210, 210) (255, 255, 20) -> (0, 250, 250)
+Error: pixel (687, 166) must be (0, 210, 210) instead of (255, 115, 115).
+Error: pixel (692, 155) must be (0, 250, 250) instead of (255, 115, 115).
+2 errors.
+Test not passed.
+//“а же сама€ проблема - изображение по мелочи отличаютс€.
+Performing pattern test for file lab2a2-205-v1.tif.
+Pattern file: lab2a0var2(3k+1)02BDV.tga.
+Pattern rectangle: x1 = 220 y1 = 94 x2 = 744 y2 = 423.
+Test rectangle: x1 = 192 y1 = 64 x2 = 716 y2 = 393.
+Color map:  (0, 255, 0) -> (0, 140, 140) (0, 255, 255) -> (0, 20, 20) (0, 0, 255) -> (0, 90, 90)
+Ignore following masks: from file lab2a2.png all pixels of color (195, 195, 20); from file lab2a2.png all pixels of color (204, 153, 255);
+Error: pixel (458, 293) must be (0, 140, 140) instead of (0, 255, 0).
+Error: pixel (459, 293) must be (0, 140, 140) instead of (0, 255, 0).
+Error: pixel (460, 293) must be (0, 140, 140) instead of (0, 255, 0).
+Error: pixel (460, 294) must be (0, 140, 140) instead of (0, 255, 0).
+Error: pixel (461, 294) must be (0, 140, 140) instead of (0, 255, 0).
+Error: pixel (462, 295) must be (0, 140, 140) instead of (0, 255, 0).
+Error: pixel (463, 295) must be (0, 140, 140) instead of (0, 255, 0).
+Error: pixel (463, 296) must be (0, 140, 140) instead of (0, 255, 0).
+Error: pixel (464, 296) must be (0, 140, 140) instead of (0, 255, 0).
+Error: pixel (465, 297) must be (0, 140, 140) instead of (0, 255, 0).
+More than 10 errors, output stopped.
+12 errors.
+Test not passed.
+//12 пикселей неправильного цвета отчетливо видны, ошибка исполнител€
+Performing pattern test for file lab2a2-205-v1.tif.
+Pattern file: lab2a2(circles).png.
+Pattern rectangle: x1 = 367 y1 = 416 x2 = 552 y2 = 484.
+Test rectangle: x1 = 367 y1 = 416 x2 = 552 y2 = 484.
+Color map:  (120, 120, 69) -> (255, 115, 115) (0, 255, 0) -> (0, 255, 0) (0, 255, 255) -> (0, 255, 255) (255, 0, 255) -> (255, 0, 255) (0, 0, 255) -> (0, 0, 255)
+Test passed.
+

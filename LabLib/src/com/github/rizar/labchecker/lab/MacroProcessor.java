@@ -1,10 +1,16 @@
 package com.github.rizar.labchecker.lab;
 
+import com.github.rizar.labchecker.exceptions.EmptyMacroException;
 import com.github.rizar.labchecker.exceptions.InfiniteCycleException;
 import com.github.rizar.labchecker.exceptions.UndefinedMacroException;
+import java.util.Collections;
 import static com.github.rizar.labchecker.lab.Macros.*;
+import com.github.rizar.labchecker.parser.GroupParser;
+import com.github.rizar.labchecker.parser.RemainderParser;
+import java.util.ArrayList;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,7 +23,54 @@ public class MacroProcessor
 {
     public static final int MAX_ITERATION_NUMBER = 100;
 
-    Map<String, String> macros = new HashMap<String, String>();
+    private static class Definition
+    {
+        private String groupMacro, remainderMacro, definition;
+
+        public Definition(String groupMacro, String remainderMacro,
+                          String definitionMacro)
+        {
+            this.groupMacro = groupMacro;
+            this.remainderMacro = remainderMacro;
+            this.definition = definitionMacro;
+        }
+
+        public Definition(String definitionMacro)
+        {
+            this(null, null, definitionMacro);
+        }
+
+        public boolean isFor(MacroProcessor macroProcessor)
+        {
+            String code = macroProcessor.getCode();
+            int group = macroProcessor.getGroup();
+
+            if (groupMacro != null)
+            {
+                if (!new GroupParser(macroProcessor.process(groupMacro)).
+                        isFor(group))
+                    return false;
+            }
+
+            if (remainderMacro != null)
+            {
+                if (!new RemainderParser(macroProcessor.process(
+                        remainderMacro)).isFor(Lab.codeInteger(
+                        code)))
+                    return false;
+            }
+
+            return true;
+        }
+
+        @Override
+        public String toString()
+        {
+            return "Definition{" + "groupMacro=" + groupMacro + "remainderMacro=" + remainderMacro + "definitionMacro=" + definition + '}';
+        }
+    }
+
+    Map<String, List<Definition>> macros = new HashMap<String, List<Definition>>();
 
     public MacroProcessor()
     {
@@ -61,11 +114,12 @@ public class MacroProcessor
 
     public void setGroup(int group)
     {
+        //TODO 943
         String def = Integer.toString(group);
         if (def.length() == 1)
             def = "0" + def;
         registerMacro(GROUP_TWO_CHARACTERS_MACRO, def);
-        char c = (char)(group < 10 ? '0' + group : 'a' + group - 10);
+        char c = (char) (group < 10 ? '0' + group : 'a' + group - 10);
         registerMacro(GROUP_ONE_CHARACTER_MACRO, Character.toString(c));
         this.group = group;
     }
@@ -81,18 +135,37 @@ public class MacroProcessor
         this.module = module;
     }
 
+    final public void registerMacro(String macro)
+    {
+        List<Definition> list = new ArrayList<Definition>();
+        macros.put(macro, list);
+    }
+
     final public void registerMacro(String macro, String definition)
     {
         if (definition == null)
-            throw new NullPointerException();
-        macros.put(macro, definition);
+        {
+            registerMacro(macro);
+            return;
+        }
+        
+        List<Definition> list = new ArrayList<Definition>();
+        list.add(new Definition(definition));
+        macros.put(macro, list);
+    }
+
+    public void addDefinition(String macro, String groupMacro,
+                              String remainderMacro, String definition)
+    {
+        macros.get(macro).add(new Definition(groupMacro, remainderMacro,
+                definition));
     }
 
     @Override
     public String toString()
     {
-        StringBuilder sb = new StringBuilder ();
-        for (Map.Entry<String, String> entry : macros.entrySet())
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, List<Definition>> entry : macros.entrySet())
         {
             sb.append(entry.getKey());
             sb.append(" -> ");
@@ -118,11 +191,15 @@ public class MacroProcessor
             }
             else
             {
-                String ret = macros.get(macro);
-                return ret.toString();
+                List<Definition> defs = macros.get(macro);
+                for (Definition def : defs)
+                    if (def.isFor(this))
+                        return def.definition;
+                throw new EmptyMacroException(String.format(
+                        "Empty macro \"%s\"", macro));
             }
         }
-        catch (Exception e)
+        catch (NullPointerException e)
         {
             throw new UndefinedMacroException("", macro);
         }

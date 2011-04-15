@@ -1,5 +1,6 @@
 package com.github.rizar.labchecker.lab;
 
+import java.io.PrintWriter;
 import com.github.rizar.labchecker.exceptions.WrongNestedTagException;
 import com.github.rizar.labchecker.exceptions.MissedAttributeException;
 import com.github.rizar.labchecker.exceptions.DuplicateTagException;
@@ -216,12 +217,14 @@ public class LabTest
     @Test
     public void testThreeLabs() throws Exception
     {
-        /*doTest("606");*/
-        doTest("a43");
-        /*doTest("205");*/
+        PrintWriter log = new PrintWriter("log.txt");
+        String codes [] = {"211", "421", "616", "625", "943"};
+        for (String code : codes)
+            doTest(code, log);
+        log.close();
     }
 
-    public boolean doTest(String code) throws Exception
+    public boolean doTest(String code, PrintWriter log) throws Exception
     {
         Lab lab = realManager.getLabByName("famcs_2011_course2");
         lab.load();
@@ -232,36 +235,36 @@ public class LabTest
         boolean ok = true;
 
         File s1 = new File(TESTS012,
-                "\\" + rem + "\\" + "lab2a1-" + code + "-v1.png");
+                "\\" + rem + "\\" + "lab2a1-" + code + "-v1.pcx");
         StepChecker c1 = lab.getStepChecker(s1);
         ok &= c1.check();
-        System.out.print(c1.getMessage());
-        System.out.flush();
-        System.err.println(c1.getLog());
+        /*System.out.print(c1.getMessage());
+        System.out.flush();*/
+        log.println(c1.getLog());
 
         File s2 = new File(TESTS012,
-                "\\" + rem + "\\" + "lab2a2-" + code + "-v1.png");
+                "\\" + rem + "\\" + "lab2a2-" + code + "-v1.tif");
         StepChecker c2 = lab.getStepChecker(s2);
         ok &= c2.check();
-        System.out.print(c2.getMessage());
-        System.out.flush();
-        System.err.println(c2.getLog());
+        /*System.out.print(c2.getMessage());
+        System.out.flush();*/
+        log.println(c2.getLog());
 
         File s3 = new File(TESTS012,
                 "\\" + rem + "\\" + "lab2a3-" + code + "-v1.gif");
         StepChecker c3 = lab.getStepChecker(s3);
         ok &= c3.check();
-        System.out.print(c3.getMessage());
-        System.out.flush();
-        System.err.println(c3.getLog());
+        /*System.out.print(c3.getMessage());
+        System.out.flush();*/
+        log.println(c3.getLog());
 
         File s4 = new File(TESTS012,
                 "\\" + rem + "\\" + "lab2a4-" + code + "-v1.png");
         StepChecker c4 = lab.getStepChecker(s4);
         ok &= c4.check();
-        System.out.print(c4.getMessage());
-        System.out.flush();
-        System.err.println(c4.getLog());
+        /*System.out.print(c4.getMessage());
+        System.out.flush();*/
+        log.println(c4.getLog());
 
         return ok;
     }

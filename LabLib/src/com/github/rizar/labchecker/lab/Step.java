@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import loadimg.LoadImgException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -78,15 +79,20 @@ class Step
         public void startElement(String uri, String localName, String qName,
                                  Attributes attributes) throws SAXException
         {
-            if (PRINT_TAGS) System.err.println("startElement " + qName);
+            if (PRINT_TAGS)
+                System.err.println("startElement " + qName);
 
             //check nested tags
             if (!openedTags.empty())
             {
                 String currentTag = openedTags.peek();
-                if (qName.equals(PATTERN_TEST_COLOR_TAG) || qName.equals(
-                        PATTERN_TEST_PATTERN_RECTANGLE_TAG) || qName.equals(
-                        PATTERN_TEST_TEST_RECTANGLE_TAG))
+                if (qName.equals(PATTERN_TEST_COLOR_TAG)
+                        || qName.equals(
+                        PATTERN_TEST_PATTERN_RECTANGLE_TAG)
+                        || qName.equals(
+                        PATTERN_TEST_TEST_RECTANGLE_TAG)
+                        || qName.equals(
+                        IGNORE_TAG))
                 {
                     if (!currentTag.equals(PATTERN_TEST_TAG))
                         doThrow(WrongNestedTagException.class, qName, true,
@@ -164,7 +170,8 @@ class Step
             else if (qName.equals(PATTERN_TEST_TAG))
             {
                 newTestFor = new TestFor(attributes);
-                newPatternTest = new PatternTest(mustGet(attributes, PATTERN_TEST_TAG, FILE_ATTRIBUTE), attributes.getValue(
+                newPatternTest = new PatternTest(mustGet(attributes,
+                        PATTERN_TEST_TAG, FILE_ATTRIBUTE), attributes.getValue(
                         PATTERN_TEST_SEEK_ATTRIBUTE));
                 newTestFor.setTest(newPatternTest);
             }
@@ -201,6 +208,12 @@ class Step
                 String testColor = mustGet(attributes, PATTERN_TEST_COLOR_TAG,
                         TEST_COLOR_ATTRIBUTE);
                 newPatternTest.addColorMapping(patternColor, testColor);
+            }
+            else if (qName.equals(IGNORE_TAG))
+            {
+                String file = mustGet(attributes, IGNORE_TAG, FILE_ATTRIBUTE);
+                String color = mustGet(attributes, IGNORE_TAG, COLOR_ATTRIBUTE);
+                newPatternTest.addIgnoreMask(file, color);
             }
             else if (qName.equals(GROUP_TAG))
             {
@@ -299,8 +312,7 @@ class Step
             matcher.matches();
             String code = matcher.group(1);
             macroProcessor.setCode(matcher.group(1));
-            macroProcessor.setGroup(Character.digit(code.charAt(0),
-                    MAX_NUMBER_OF_GROUPS));
+            macroProcessor.setGroup(Lab.codeGroup(code));
             macroProcessor.registerMacro(VARIANT_MACRO, matcher.group(2));
             int colorSetNumber = Character.digit(code.charAt(2), 10);
             for (int colorNumber = 1; colorNumber <= lab.getNumberOfColorsInSet(); colorNumber++)
@@ -310,9 +322,10 @@ class Step
                         getBlue();
                 macroProcessor.registerMacro(COLOR_MACRO_PREFIX + colorNumber,
                         colorStr);
-                String invertedColorStr = (255 - color.getRed()) + "," + (255 - color.getGreen()) + "," + (255 - color.
-                        getBlue());
-                macroProcessor.registerMacro(COLOR_MACRO_PREFIX + colorNumber + INVERTED_COLOR_MACRO_SUFFIX,
+                String invertedColorStr = (255 - color.getRed()) + "," + (255 - color.
+                        getGreen()) + "," + (255 - color.getBlue());
+                macroProcessor.registerMacro(
+                        COLOR_MACRO_PREFIX + colorNumber + INVERTED_COLOR_MACRO_SUFFIX,
                         invertedColorStr);
             }
         }
@@ -321,10 +334,11 @@ class Step
 
         String message, log;
 
-        public boolean check() throws IOException,
+        public boolean check() throws LoadImgException,
                                       TestException
         {
-            checkResult = rootTest.check(macroProcessor, lab.getImageLibrary(), stepFile);
+            checkResult = rootTest.check(macroProcessor, lab.getImageLibrary(),
+                    stepFile);
             message = rootTest.getMessage();
             log = rootTest.getLog();
             isCheckedFlag = true;
@@ -337,7 +351,6 @@ class Step
         }
 
         private boolean isCheckedFlag;
-
 
         public boolean isChecked()
         {
