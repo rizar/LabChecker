@@ -49,9 +49,12 @@
     <macro name = "CIRC_Y2" def = "476"/>
 
     <macro name = "ZONE1_ORIG_PIXEL" def = "(200, 80)"/>
+    <macro name = "ZONE3_ORIG_PIXEL" def = "(280, 175)"/>
+    <macro name = "ZONE4_ORIG_PIXEL" def = "(310, 220)"/>
 
-    <macro name = "ZONE3_ORIG_COLOR" def = "0, 255, 0"/>
-    <macro name = "ZONE4_ORIG_COLOR" def = "0, 0, 255"/>
+    <macro name = "ZONE1_ORIG_COLOR" def = "%ORIG%%ZONE1_ORIG_PIXEL%"/>
+    <macro name = "ZONE3_ORIG_COLOR" def = "%ORIG%%ZONE3_ORIG_PIXEL%"/>
+    <macro name = "ZONE4_ORIG_COLOR" def = "%ORIG%%ZONE4_ORIG_PIXEL%"/>
     <macro name = "ZONE5_ORIG_COLOR" def = "0, 255, 255"/>
     <macro name = "BORDER12_ORIG_COLOR" def = "0, 0, 0"/>
     <macro name = "BORDER23_ORIG_COLOR" def = "255, 255, 0"/>
