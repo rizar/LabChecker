@@ -8,20 +8,9 @@
 
     <image_size_test ok_mess = "Изображение верного размера." fail_mess = "Неверные размеры изображения." width = "940" height = "590"/>
 
-    <color_set_test rem = "0 mod %MOD%" ok_mess = "Правильные цвета." fail_mess = "Неправильные цвета.">
+    <color_set_test ok_mess = "Правильные цвета." fail_mess = "Неправильные цвета.">
         <add_color file = "%ORIG%"/>
-        <rem_color color = "0, 220, 249"/>
-        <add_color color = "%C4%"/>
-        <add_color color = "%C5%"/>
-        <add_color color = "%C6%"/>
-        <add_color color = "%C6-%"/>
-        <add_color color = "%C7%"/>
-        <add_color color = "%C8%"/>
-    </color_set_test>
-
-    <color_set_test rem = "1 2 mod %MOD%" ok_mess = "Правильные цвета." fail_mess = "Неправильные цвета.">
-        <add_color file = "%ORIG%"/>
-        <rem_color color = "0, 204, 255"/>
+        <rem_color color = "%BAD_COLOR%"/>
         <add_color color = "%C4%"/>
         <add_color color = "%C5%"/>
         <add_color color = "%C6%"/>

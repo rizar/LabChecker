@@ -66,7 +66,7 @@ public class FileSizeTest extends AbstractTest
         log.format("Parsed size and deviation. Maximum file size is %dkb.\n", maxSize);
         log.format("%s size is %dkb.\n", file.getName(), (int)(file.length() / BYTES_IN_KILOBYTE));
         boolean result =  file.length() <= maxSize * BYTES_IN_KILOBYTE;
-        log.format(result ? "Test passed.\n" : "Test failed.\n");
+        log.format(result ? "Test passed.\n" : "Test not passed.\n");
         return result;
     }
 }

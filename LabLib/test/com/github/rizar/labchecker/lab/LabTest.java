@@ -217,11 +217,19 @@ public class LabTest
     @Test
     public void testThreeLabs() throws Exception
     {
-        PrintWriter log = new PrintWriter("log.txt");
+        /*PrintWriter log = new PrintWriter("log.txt");
         String codes [] = {"211", "421", "616", "625", "943"};
         for (String code : codes)
             doTest(code, log);
-        log.close();
+        log.close();*/
+    }
+
+    @Test
+    public void test211() throws Exception
+    {
+        PrintWriter pw;
+        doTest("938", pw = new PrintWriter(System.err));
+        pw.close();
     }
 
     public boolean doTest(String code, PrintWriter log) throws Exception

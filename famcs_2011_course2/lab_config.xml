@@ -14,23 +14,68 @@
 
     <macro name = "ORIG" def = "orig/lab2a0var2(%MOD%k%REM_SUFF%)%GROUP00%BDV.tga"/>
 
-    <!-- Макросы представителей в эталонном фаЙле -->
+    <!-- Макросы различного назначения -->
 
-    <macro name = "ZONE2_STEP2_PIXEL" def = "(215, 90)"/>
-    <macro name = "AUTHOR_ZONE_STEP2_PIXEL" def = "(400, 400)"/>
+    <macro name = "ORIG_X1">
+        <def rem = "0 mod %MOD%" def = "27"/>
+        <def rem = "1 mod %MOD%" def = "28"/>
+        <def rem = "2 mod %MOD%" def = "36"/>
+    </macro>
+    <macro name = "ORIG_Y1">
+        <def rem = "0 mod %MOD%" def = "22"/>
+        <def rem = "1 mod %MOD%" def = "30"/>
+        <def rem = "2 mod %MOD%" def = "45"/>
+    </macro>
+    <macro name = "ORIG_X2">
+        <def rem = "0 mod %MOD%" def = "866"/>
+        <def rem = "1 mod %MOD%" def = "867"/>
+        <def rem = "2 mod %MOD%" def = "875"/>
+    </macro>
+    <macro name = "ORIG_Y2">
+        <def rem = "0 mod %MOD%" def = "511"/>
+        <def rem = "1 mod %MOD%" def = "519"/>
+        <def rem = "2 mod %MOD%" def = "534"/>
+    </macro>
 
-    <!-- Макросы цветов границ -->
+    <macro name = "CIRC_X1">
+        <def rem = "0 mod %MOD%" def = "384"/>
+        <def rem = "1 2 mod %MOD%" def = "383"/>
+    </macro>
+    <macro name = "CIRC_Y1" def = "420"/>
+    <macro name = "CIRC_X2">
+        <def rem = "0 mod %MOD%" def = "548"/>
+        <def rem = "1 2 mod %MOD%" def = "547"/>
+    </macro>
+    <macro name = "CIRC_Y2" def = "476"/>
 
-    <macro name = "BOR34REM1" def = "%ORIG%(355, 319)"/>
-    <macro name = "BOR23REM1" def = "%ORIG%(355, 336)"/>
-    <macro name = "BOR12REM1" def = "%ORIG%(355, 355)"/>
+    <macro name = "ZONE1_ORIG_PIXEL" def = "(200, 80)"/>
 
-    <!-- Макрос цвета, который нужно убрать для однородной заливки -->
+    <macro name = "ZONE3_ORIG_COLOR" def = "0, 255, 0"/>
+    <macro name = "ZONE4_ORIG_COLOR" def = "0, 0, 255"/>
+    <macro name = "ZONE5_ORIG_COLOR" def = "0, 255, 255"/>
+    <macro name = "BORDER12_ORIG_COLOR" def = "0, 0, 0"/>
+    <macro name = "BORDER23_ORIG_COLOR" def = "255, 255, 0"/>
+    <macro name = "BORDER34_ORIG_COLOR" def = "255, 255, 255"/>
 
-    <macro name = "BAD">
+    <macro name = "ZONE1_SAMPLE_COLOR" def = "255, 255, 20"/>
+    <macro name = "ZONE2_SAMPLE_COLOR" def = "195, 195, 20"/>
+    <macro name = "ZONE3_SAMPLE_COLOR" def = "135, 135, 20"/>
+    <macro name = "ZONE4_SAMPLE_COLOR" def = "75, 75, 20"/>    
+    <macro name = "ZONE5_SAMPLE_COLOR" def = "15, 15, 20"/>
+
+    <macro name = "BORDER12_SAMPLE_COLOR" def = "120, 165, 120"/>
+    <macro name = "BORDER23_SAMPLE_COLOR" def = "255, 255, 0"/>
+
+    <macro name = "CIRCLE_BORDER_SAMPLE_COLOR" def = "120, 120, 235"/>
+
+    <macro name = "MAIN_COLOR" def = "0, 255, 255"/>
+    <macro name = "BAD_COLOR">
         <def rem = "0 mod %MOD%" def = "0, 220, 249"/>
         <def rem = "1 2 mod %MOD%" def = "0, 204, 255"/>
     </macro>
+    <macro name = "IGNORE_COLOR" def = "204, 153, 255"/>
+    <macro name = "WHITE_COLOR" def = "255, 255, 255"/>
+    <macro name = "BLACK_COLOR" def = "0, 0, 0"/>
 
     <!-- Список шагов. Для каждого определяется проверяющий его скрипт и шаблон названия файла -->
 

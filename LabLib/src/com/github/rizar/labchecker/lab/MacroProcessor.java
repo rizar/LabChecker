@@ -114,7 +114,6 @@ public class MacroProcessor
 
     public void setGroup(int group)
     {
-        //TODO 943
         String def = Integer.toString(group);
         if (def.length() == 1)
             def = "0" + def;

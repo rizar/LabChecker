@@ -209,6 +209,8 @@ public class PatternTest extends AbstractTest
             im.parseMacros(macroProcessor, library);
     }
 
+    private static int MANY_ERRORS = 20;
+
     private int doCheck(int xOffset, int yOffset, boolean printInLog)
     {
         int nErrors = 0;
@@ -232,7 +234,7 @@ public class PatternTest extends AbstractTest
                     if (cMust != cUV)
                     {
                         nErrors++;
-                        if (nErrors <= 10)
+                        if (nErrors <= MANY_ERRORS)
                         {
                             int rM = cMust & MASK8;
                             int gM = (cMust >> 8) & MASK8;
@@ -245,7 +247,7 @@ public class PatternTest extends AbstractTest
                                         "Error: pixel (%d, %d) must be (%d, %d, %d) instead of (%d, %d, %d).\n",
                                         u, v, rM, gM, bM, rUV, gUV, bUV);
                         }
-                        else if (nErrors == 11)
+                        else if (nErrors == MANY_ERRORS + 1)
                             if (printInLog)
                                 log.format(
                                         "More than 10 errors, output stopped.\n");
@@ -303,7 +305,7 @@ public class PatternTest extends AbstractTest
                     }
                 }
             log.format("Didn't find pattern rectangle.");
-            log.format("Test not passed.");
+            log.format("Test not passed.\n");
             return false;
         }
         else
