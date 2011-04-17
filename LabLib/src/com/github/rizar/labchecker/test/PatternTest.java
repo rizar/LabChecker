@@ -211,9 +211,12 @@ public class PatternTest extends AbstractTest
 
     private static int MANY_ERRORS = 20;
 
+    private int nChecked;
+
     private int doCheck(int xOffset, int yOffset, boolean printInLog)
     {
         int nErrors = 0;
+        nChecked = 0;
         for (int x = patX1; x <= patX2; x++)
             for (int y = patY1; y <= patY2; y++)
             {
@@ -252,6 +255,7 @@ public class PatternTest extends AbstractTest
                                 log.format(
                                         "More than 10 errors, output stopped.\n");
                     }
+                    nChecked++;
                 }
             }
         return nErrors;
@@ -310,7 +314,9 @@ public class PatternTest extends AbstractTest
         }
         else
         {
+
             int nErrors = doCheck(0, 0, true);
+            log.format("%d pixels checked.\n", nChecked);
             if (nErrors == 0)
                 log.format("Test passed.\n");
             else

@@ -228,7 +228,7 @@ public class LabTest
     public void test211() throws Exception
     {
         PrintWriter pw;
-        doTest("938", pw = new PrintWriter(System.err));
+        doTest("609", pw = new PrintWriter(System.err));
         pw.close();
     }
 

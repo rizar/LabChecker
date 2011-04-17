@@ -30,7 +30,7 @@
 
         <pat_test file = "lab2a3.png">
             <pat_rect x1 = "0" y1 = "510" x2 = "879" y2 = "529"/>
-            <color pat_color = "25, 255, 0" test_color = "255, 255, 0"/>
+            <color pat_color = "255, 255, 0" test_color = "255, 255, 0"/>
         </pat_test>
 
     </group>

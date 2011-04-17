@@ -16,6 +16,16 @@
 
     <!-- Макросы различного назначения -->
 
+    <macro name = "STEP2_BORDERS">
+        <def rem = "0 1 mod %MOD%" def = "lab2a2(borders).png"/>
+        <def rem = "2 mod %MOD%" def = "lab2a2(zones_only_3k+2).png"/>
+    </macro>
+
+    <macro name = "STEP2_ZONES_ONLY">
+        <def rem = "0 1 mod %MOD%" def = "lab2a2(zones_only).png"/>
+        <def rem = "2 mod %MOD%" def = "lab2a2(zones_only_3k+2).png"/>
+    </macro>
+
     <macro name = "ORIG_X1">
         <def rem = "0 mod %MOD%" def = "27"/>
         <def rem = "1 mod %MOD%" def = "28"/>
@@ -60,16 +70,34 @@
     <macro name = "BORDER23_ORIG_COLOR" def = "255, 255, 0"/>
     <macro name = "BORDER34_ORIG_COLOR" def = "255, 255, 255"/>
 
-    <macro name = "ZONE1_SAMPLE_COLOR" def = "255, 255, 20"/>
-    <macro name = "ZONE2_SAMPLE_COLOR" def = "195, 195, 20"/>
-    <macro name = "ZONE3_SAMPLE_COLOR" def = "135, 135, 20"/>
-    <macro name = "ZONE4_SAMPLE_COLOR" def = "75, 75, 20"/>    
-    <macro name = "ZONE5_SAMPLE_COLOR" def = "15, 15, 20"/>
+    <macro name = "ZONE1_SAMPLE_COLOR">
+        <def rem = "0 1 mod %MOD%" def = "255, 255, 20"/>
+        <def rem = "2 mod %MOD%" def = "255, 90, 255"/>
+    </macro>
+    <macro name = "ZONE2_SAMPLE_COLOR">
+        <def rem = "0 1 mod %MOD%" def = "195, 195, 20"/>
+        <def rem = "2 mod %MOD%" def = "195, 90, 195"/>
+    </macro>
+    <macro name = "ZONE3_SAMPLE_COLOR">
+        <def rem = "0 1 mod %MOD%" def = "135, 135, 20"/>
+        <def rem = "2 mod %MOD%" def = "135, 90, 135"/>
+    </macro>
+    <macro name = "ZONE4_SAMPLE_COLOR">
+        <def rem = "0 1 mod %MOD%" def = "75, 75, 20"/>    
+        <def rem = "2 mod %MOD%" def = "75, 90, 75"/>
+    </macro>
+    <macro name = "ZONE5_SAMPLE_COLOR">
+        <def rem = "0 1 mod %MOD%" def = "15, 15, 20"/>
+        <def rem = "2 mod %MOD%" def = "15, 90, 15"/>
+    </macro>
 
     <macro name = "BORDER12_SAMPLE_COLOR" def = "120, 165, 120"/>
     <macro name = "BORDER23_SAMPLE_COLOR" def = "255, 255, 0"/>
 
     <macro name = "CIRCLE_BORDER_SAMPLE_COLOR" def = "120, 120, 235"/>
+    <macro name = "CIRCLE1_COLOR" def = "255, 0, 255"/>
+    <macro name = "CIRCLE3_COLOR" def = "0, 255, 0"/>
+    <macro name = "CIRCLE4_COLOR" def = "0, 0, 255"/>
 
     <macro name = "MAIN_COLOR" def = "0, 255, 255"/>
     <macro name = "BAD_COLOR">

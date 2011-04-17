@@ -23,14 +23,14 @@
 
     <group ok_mess = "Цвет границы изменен верно." fail_mess = "Цвет границы изменен неверно.">
 
-        <pat_test file = "lab2a2(borders).png" rem = "0 mod 2">
-            <ignore file = "lab2a2(zones_only).png" color = "%IGNORE_COLOR%"/>
+        <pat_test file = "%STEP2_BORDERS%" rem = "0 mod 2">
+            <ignore file = "%STEP2_ZONES_ONLY%" color = "%IGNORE_COLOR%"/>
             <color pat_color = "%BORDER12_SAMPLE_COLOR%" test_color = "%BORDER12_ORIG_COLOR%"/>
             <color pat_color = "%BORDER23_SAMPLE_COLOR%" test_color = "%C6-%"/>
         </pat_test>
 
-        <pat_test file = "lab2a2(borders).png" rem = "1 mod 2">
-            <ignore file = "lab2a2(zones_only).png" color = "%IGNORE_COLOR%"/>
+        <pat_test file = "%STEP2_BORDERS%" rem = "1 mod 2">
+            <ignore file = "%STEP2_ZONES_ONLY%" color = "%IGNORE_COLOR%"/>
             <color pat_color = "%BORDER12_SAMPLE_COLOR%" test_color = "%C6-%"/>
             <color pat_color = "%BORDER23_SAMPLE_COLOR%" test_color = "%BORDER23_ORIG_COLOR%"/>
         </pat_test> 
@@ -38,7 +38,7 @@
         <pat_test file = "%ORIG%">
             <pat_rect x1 = "%ORIG_X1%" y1 = "%ORIG_Y1%" x2 = "%ORIG_X2%" y2 = "%ORIG_Y2%"/>
             <test_rect x1 = "0" y1 = "0" x2 = "839" y2 = "489"/>
-            <ignore file = "lab2a2(zones_only).png" color = "%IGNORE_COLOR%"/>
+            <ignore file = "%STEP2_ZONES_ONLY%" color = "%IGNORE_COLOR%"/>
             <color pat_color = "%BORDER34_ORIG_COLOR%" test_color = "%BORDER34_ORIG_COLOR%"/>
         </pat_test>
 
@@ -55,7 +55,7 @@
 
     <!-- Проверяю изменение цвета зон -->
 
-    <pat_test ok_mess = "Зоны 1, 2 перекрашены верно." fail_mess = "Зоны 1, 2 перекрашены неверно." file = "lab2a2(zones_only).png">
+    <pat_test ok_mess = "Зоны 1, 2 перекрашены верно." fail_mess = "Зоны 1, 2 перекрашены неверно." file = "%STEP2_ZONES_ONLY%">
         <color pat_color = "%ZONE1_SAMPLE_COLOR%" test_color = "%C4%"/>
         <color pat_color = "%ZONE2_SAMPLE_COLOR%" test_color = "%C5%"/>
     </pat_test>
@@ -63,8 +63,8 @@
     <pat_test ok_mess = "Зоны 3, 4, 5 перекрашены верно." fail_mess = "Зоны 3, 4, 5 перекрашены неверно." file = "%ORIG%">
         <pat_rect x1 = "%ORIG_X1%" y1 = "%ORIG_Y1%" x2 = "%ORIG_X2%" y2 = "%ORIG_Y2%"/>
         <test_rect x1 = "0" y1 = "0" x2 = "839" y2 = "489"/>
-        <ignore file = "lab2a2(zones_only).png" color = "%IGNORE_COLOR%"/>
-        <ignore file = "lab2a2(zones_only).png" color = "%ZONE2_SAMPLE_COLOR%"/>
+        <ignore file = "%STEP2_ZONES_ONLY%" color = "%IGNORE_COLOR%"/>
+        <ignore file = "%STEP2_ZONES_ONLY%" color = "%ZONE2_SAMPLE_COLOR%"/>
 
         <color pat_color = "%ZONE3_ORIG_COLOR%" test_color = "%C6%"/>
         <color pat_color = "%ZONE4_ORIG_COLOR%" test_color = "%C7%"/>
@@ -78,10 +78,10 @@
         <test_rect x1 = "%CIRC_X1%" y1 = "%CIRC_Y1%" x2 = "%CIRC_X2%" y2 = "%CIRC_Y2%"/>
         
         <color pat_color = "%CIRCLE_BORDER_SAMPLE_COLOR%" test_color = "%C6-%"/>
-        <color pat_color = "%ZONE1_ORIG_COLOR%" test_color = "%ZONE1_ORIG_COLOR%"/>
+        <color pat_color = "%CIRCLE1_COLOR%" test_color = "%ZONE1_ORIG_COLOR%"/>
         <color pat_color = "%MAIN_COLOR%" test_color = "%MAIN_COLOR%"/>
-        <color pat_color = "%ZONE3_ORIG_COLOR%" test_color = "%ZONE3_ORIG_COLOR%"/>
-        <color pat_color = "%ZONE4_ORIG_COLOR%" test_color = "%ZONE4_ORIG_COLOR%"/>
+        <color pat_color = "%CIRCLE3_COLOR%" test_color = "%ZONE3_ORIG_COLOR%"/>
+        <color pat_color = "%CIRCLE4_COLOR%" test_color = "%ZONE4_ORIG_COLOR%"/>
 
         <color pat_color = "%ZONE1_SAMPLE_COLOR%" test_color = "%C4%"/>
         <color pat_color = "%ZONE2_SAMPLE_COLOR%" test_color = "%C5%"/>
