@@ -1,5 +1,6 @@
 package com.github.rizar.labchecker.test;
 
+import java.util.Formatter;
 import com.github.rizar.labchecker.parser.ColorParser;
 import com.github.rizar.labchecker.exceptions.TestException;
 import com.github.rizar.labchecker.lab.MacroProcessor;
@@ -81,27 +82,31 @@ public class ColorSetTest extends AbstractTest
         }
     }
 
+    @Override
     public boolean check(MacroProcessor macroProcessor, ImageLibrary library,
                          File file) throws LoadImgException,
                                            TestException
     {
-        log.format("Performing color set test for %s.\n", file.getName());
+        log.clear();
+        log.addMessage(Log.MessageType.INIT,
+                "Performing color set test for %s.", file.getName());
         parseMacros(macroProcessor, library);
-        log.format("Pattern color set:");
+        log.startMessage(Log.MessageType.INFO, "Pattern color set:");
         for (int c : patternColorSet.getColors())
         {
             int mask = (1 << 8) - 1;
-            log.format(" (%d, %d, %d)", c & mask, (c >> 8) & mask,
+            log.appendToMessage(" (%d, %d, %d)", c & mask, (c >> 8) & mask,
                     (c >> 16) & mask);
         }
-        log.format("\n");
+        log.finishMessage();
 
-        log.format("Color set of %s:", file.getName());
+        log.startMessage(Log.MessageType.INFO, "Color set of %s:",
+                file.getName());
         testColorSet = library.getImageColorSet(file);
         for (int c : testColorSet.getColors())
-            log.format(" (%d, %d, %d)", c & MASK8, (c >> 8) & MASK8,
+            log.appendToMessage(" (%d, %d, %d)", c & MASK8, (c >> 8) & MASK8,
                     (c >> 16) & MASK8);
-        log.format("\n");
+        log.finishMessage();
 
         ColorSet inPatternNotInTest = new ColorSet(patternColorSet);
         inPatternNotInTest.removeColorSet(testColorSet);
@@ -111,28 +116,31 @@ public class ColorSetTest extends AbstractTest
         boolean result = true;
         for (int c : inPatternNotInTest.getColors())
         {
-            log.format(
+            log.startMessage(Log.MessageType.ERROR_INFO,
                     "Color (%d, %d, %d) from pattern set is not from test set.",
                     c & MASK8, (c >> 8) & MASK8, (c >> 16) & MASK8);
             String fileName = inPatternNotInTest.getFileName(c);
             int x = inPatternNotInTest.getX(c);
             int y = inPatternNotInTest.getY(c);
             if (fileName != null)
-                log.format(" You can find it at (%d, %d) in file %s.\n", x, y,
+                log.finishMessage(" You can find it at (%d, %d) in file %s.", x, y,
                         fileName);
             else
-                log.format("\n");
+                log.finishMessage();
             result = false;
         }
         for (int c : inTestNotInPattern.getColors())
         {
-            log.format(
-                    "Color (%d, %d, %d) from test set is not from pattern set. You can find it at (%d, %d).\n",
+            log.addMessage(Log.MessageType.ERROR_INFO,
+                    "Color (%d, %d, %d) from test set is not from pattern set. You can find it at (%d, %d).",
                     c & MASK8, (c >> 8) & MASK8, (c >> 16) & MASK8,
                     inTestNotInPattern.getX(c), inTestNotInPattern.getY(c));
             result = false;
         }
-        log.format(result ? "Test passed.\n" : "Test not passed.\n");
+        if (result)
+            log.addMessage(Log.MessageType.OK, "Test passed");
+        else
+            log.addMessage(Log.MessageType.ERROR, "Test not passed");
 
         return result;
     }

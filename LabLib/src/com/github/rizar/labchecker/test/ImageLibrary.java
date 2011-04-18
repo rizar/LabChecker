@@ -24,17 +24,20 @@ public class ImageLibrary
         this.directory = directory;
     }
 
+    private BufferedImage getImageNoCashe(String fileName) throws LoadImgException
+    {
+        return new LoadImgC().getImage(new File(fileName), TEMP_FOLDER, false);
+    }
+
     public BufferedImage getImage(String fileName) throws LoadImgException
     {
         BufferedImage image = images.get(fileName);
-        if (image != null)
-            return image;
-        else
+        if (image == null)
         {
-            image = new LoadImgC().getImage(new File(fileName), TEMP_FOLDER, true);
+            image = getImageNoCashe(fileName);
             images.put(fileName, image);
-            return image;
         }
+        return image;
     }
 
     public BufferedImage getImage(File file) throws LoadImgException
@@ -50,6 +53,16 @@ public class ImageLibrary
     public BufferedImage getLibraryImage(File file) throws LoadImgException
     {
         return getLibraryImage(file.getPath());
+    }
+
+    public void releaseImage(String fileName)
+    {
+        images.remove(fileName);
+    }
+
+    public void releaseImage(File file)
+    {
+        releaseImage(file.getAbsolutePath());
     }
 
     public void unload()

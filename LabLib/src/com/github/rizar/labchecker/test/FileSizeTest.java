@@ -4,6 +4,7 @@ import com.github.rizar.labchecker.lab.MacroProcessor;
 import java.io.File;
 import java.util.regex.Pattern;
 import com.github.rizar.labchecker.exceptions.TestParseException;
+import java.util.Formatter;
 import java.util.regex.Matcher;
 import static com.github.rizar.labchecker.lab.Constraints.*;
 
@@ -61,12 +62,17 @@ public class FileSizeTest extends AbstractTest
 
     public boolean check(MacroProcessor macroProcessor, ImageLibrary library, File file)
     {
-        log.format("Performing file size test to check %s.\n", file.getName());
+        log.clear();
+        log.addMessage(Log.MessageType.INIT,
+                "Performing file size test to check %s.", file.getName());
         parseMacros(macroProcessor);
-        log.format("Parsed size and deviation. Maximum file size is %dkb.\n", maxSize);
-        log.format("%s size is %dkb.\n", file.getName(), (int)(file.length() / BYTES_IN_KILOBYTE));
+        log.addMessage(Log.MessageType.INFO, "Maximum file size is %dkb.", maxSize);
+        log.addMessage(Log.MessageType.INFO, "%s size is %dkb.", file.getName(), (int)(file.length() / BYTES_IN_KILOBYTE));
         boolean result =  file.length() <= maxSize * BYTES_IN_KILOBYTE;
-        log.format(result ? "Test passed.\n" : "Test not passed.\n");
+        if (result)
+            log.addMessage(Log.MessageType.OK, "Test passed");
+        else
+            log.addMessage(Log.MessageType.ERROR, "Test not passed");
         return result;
     }
 }

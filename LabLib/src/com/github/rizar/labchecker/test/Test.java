@@ -23,5 +23,5 @@ public interface Test
      * Get check verbose log.
      * @return check log.
      */
-    String getLog();
+    Log getLog();
 }

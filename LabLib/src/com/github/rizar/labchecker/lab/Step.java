@@ -10,6 +10,7 @@ import static com.github.rizar.labchecker.lab.Tags.*;
 import static com.github.rizar.labchecker.lab.Constraints.*;
 import com.github.rizar.labchecker.test.FileSizeTest;
 import com.github.rizar.labchecker.test.ImageSizeTest;
+import com.github.rizar.labchecker.test.Log;
 import com.github.rizar.labchecker.test.PatternTest;
 import java.awt.Color;
 
@@ -276,12 +277,13 @@ class Step
 
     public boolean isStepFile(File file)
     {
-        return filePattern.matcher(file.getName()).matches();
+        //Lower case matching is important.
+        return filePattern.matcher(file.getName().toLowerCase()).matches();
     }
 
     public String getSolutionName(File file)
     {
-        Matcher matcher = filePattern.matcher(file.getName());
+        Matcher matcher = filePattern.matcher(file.getName().toLowerCase());
         if (!matcher.matches())
             return null;
         MacroProcessor mp = new MacroProcessor(lab.getMacroProcessor());
@@ -308,7 +310,7 @@ class Step
             this.stepFile = stepFile;
 
             macroProcessor = new MacroProcessor(lab.getMacroProcessor());
-            Matcher matcher = filePattern.matcher(stepFile.getName());
+            Matcher matcher = filePattern.matcher(stepFile.getName().toLowerCase());
             matcher.matches();
             String code = matcher.group(1);
             macroProcessor.setCode(matcher.group(1));
@@ -332,16 +334,20 @@ class Step
 
         boolean checkResult;
 
-        String message, log;
+        Log message, log;
 
         public boolean check() throws LoadImgException,
                                       TestException
         {
             checkResult = rootTest.check(macroProcessor, lab.getImageLibrary(),
                     stepFile);
+
             message = rootTest.getMessage();
             log = rootTest.getLog();
             isCheckedFlag = true;
+
+            lab.getImageLibrary().releaseImage(stepFile);
+
             return checkResult;
         }
 
@@ -357,12 +363,12 @@ class Step
             return isCheckedFlag;
         }
 
-        public String getLog()
+        public Log getLog()
         {
             return log;
         }
 
-        public String getMessage()
+        public Log getMessage()
         {
             return message;
         }

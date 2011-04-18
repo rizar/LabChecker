@@ -1,8 +1,10 @@
 package com.github.rizar.labchecker.test;
 
+import com.github.rizar.labchecker.exceptions.TestException;
 import com.github.rizar.labchecker.lab.MacroProcessor;
 import java.io.File;
 import java.util.Formatter;
+import loadimg.LoadImgException;
 
 /**
  *
@@ -10,10 +12,10 @@ import java.util.Formatter;
  */
 abstract public class AbstractTest implements Test
 {
-    protected Formatter log = new Formatter ();
+    protected Log log = new Log();
 
-    public String getLog()
+    public Log getLog()
     {
-        return log.toString();
+        return log;
     }
 }

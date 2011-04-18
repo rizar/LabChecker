@@ -1,7 +1,8 @@
-package com.github.rizar.labchecker.lab;
+    package com.github.rizar.labchecker.lab;
 
 import com.github.rizar.labchecker.exceptions.TestException;
 import com.github.rizar.labchecker.test.ImageLibrary;
+import com.github.rizar.labchecker.test.Log;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,16 +47,19 @@ public class TestsForGroup extends TestFor
             testFor.setMessagePrefix(
                     ONE_LEVEL_MESSAGE_PREFIX + getMessagePrefix());
             result &= testFor.check(macroProcessor, library, file);
-            messageBuilder.append(testFor.getMessage());
-            logBuilder.append(testFor.getLog());
+            messageLog.addAllMessages(testFor.getMessage());
+            log.addAllMessages(testFor.getLog());
         }
-        String message = result ? getOkMessage() : getFailMessage();
-        if (message != null)
+
+        String toAppend = result ? getOkMessage() : getFailMessage();
+        if (toAppend != null)
         {
-            messageBuilder.append(getMessagePrefix());
-            messageBuilder.append(message);
-            messageBuilder.append("\n");
+            messageLog.startMessage(result ? Log.MessageType.OK : Log.MessageType.ERROR);
+            messageLog.appendToMessage(getMessagePrefix());
+            messageLog.appendToMessage(toAppend);
+            messageLog.finishMessage();
         }
+
         return result;
     }
 

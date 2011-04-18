@@ -7,6 +7,7 @@ import com.github.rizar.labchecker.lab.MacroProcessor;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Formatter;
 import java.util.regex.Matcher;
 import loadimg.LoadImgException;
 
@@ -49,14 +50,21 @@ public class ImageSizeTest extends AbstractTest
             LoadImgException,
             TestException
     {
-        log.format("Performing image size test to check %s.\n", file.getName());
+        log.clear();
+        log.addMessage(Log.MessageType.INIT,
+                "Performing image size test to check %s.", file.getName());
         parseMacros(macroProcessor);
-        log.format("Parsed width and height. Width must be %d, height must be %d.\n",
+        log.addMessage(Log.MessageType.INFO,
+                "Width must be %d, height must be %d.",
                 expectedWidth, expectedHeight);
         BufferedImage image = library.getImage(file);
-        log.format("%s width and height are %d, %d.\n", file.getName(), image.getWidth(), image.getHeight());
+        log.addMessage(Log.MessageType.INFO, "%s width and height are %d, %d.", file.getName(), image.
+                getWidth(), image.getHeight());
         boolean result = image.getWidth() == expectedWidth && image.getHeight() == expectedHeight;
-        log.format(result ? "Test passed.\n" : "Test not passed.\n");
+        if (result)
+            log.addMessage(Log.MessageType.OK, "Test passed");
+        else
+            log.addMessage(Log.MessageType.ERROR, "Test not passed");
         return result;
     }
 }

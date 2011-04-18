@@ -1,5 +1,6 @@
 package com.github.rizar.labchecker.lab;
 
+import com.github.rizar.labchecker.test.Log;
 import com.github.rizar.labchecker.parser.RemainderParser;
 import com.github.rizar.labchecker.exceptions.InfiniteCycleException;
 import com.github.rizar.labchecker.exceptions.TestException;
@@ -79,12 +80,12 @@ public class TestFor implements Test
         failMessage = attributes.getValue(FAIL_MESSAGE_ATTRIBUTE);
     }
 
-    protected StringBuilder messageBuilder, logBuilder;
+    protected Log messageLog = new Log(), log = new Log();
 
     protected void clearMessageAndLog()
     {
-        messageBuilder = new StringBuilder();
-        logBuilder = new StringBuilder();
+        messageLog.clear();
+        log.clear();
     }
 
     protected boolean isFor(MacroProcessor macroProcessor)
@@ -142,24 +143,26 @@ public class TestFor implements Test
             throw new TestException(e.getMessage(), e);
         }
 
-        String message = result ? getOkMessage() : getFailMessage();
-        if (message != null)
+        String toAppend = result ? getOkMessage() : getFailMessage();
+        if (toAppend != null)
         {
-            messageBuilder.append(getMessagePrefix());
-            messageBuilder.append(result ? getOkMessage() : getFailMessage());
-            messageBuilder.append("\n");
+            messageLog.startMessage(result ? Log.MessageType.OK : Log.MessageType.ERROR);
+            messageLog.appendToMessage(getMessagePrefix());
+            messageLog.appendToMessage(toAppend);
+            messageLog.finishMessage();
         }
-        logBuilder.append(getTest().getLog());
+
+        log = getTest().getLog();
         return result;
     }
 
-    public String getMessage()
+    public Log getMessage()
     {
-        return messageBuilder.toString();
+        return messageLog;
     }
 
-    public String getLog()
+    public Log getLog()
     {
-        return logBuilder.toString();
+        return log;
     }
 };

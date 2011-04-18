@@ -1,5 +1,6 @@
 package com.github.rizar.labchecker.test;
 
+import java.util.Formatter;
 import com.github.rizar.labchecker.parser.ColorParser;
 import java.util.HashMap;
 import com.github.rizar.labchecker.exceptions.TestParseException;
@@ -246,14 +247,14 @@ public class PatternTest extends AbstractTest
                             int gUV = (cUV >> 8) & MASK8;
                             int bUV = (cUV >> 16) & MASK8;
                             if (printInLog)
-                                log.format(
-                                        "Error: pixel (%d, %d) must be (%d, %d, %d) instead of (%d, %d, %d).\n",
+                                log.addMessage(Log.MessageType.ERROR_INFO, 
+                                        "Error: pixel (%d, %d) must be (%d, %d, %d) instead of (%d, %d, %d).",
                                         u, v, rM, gM, bM, rUV, gUV, bUV);
                         }
                         else if (nErrors == MANY_ERRORS + 1)
                             if (printInLog)
-                                log.format(
-                                        "More than 10 errors, output stopped.\n");
+                                log.addMessage(Log.MessageType.ERROR_INFO,
+                                        "More than %d errors, output stopped.", MANY_ERRORS);
                     }
                     nChecked++;
                 }
@@ -269,28 +270,30 @@ public class PatternTest extends AbstractTest
         testImage = library.getImage(testFile);
         parseMacros(macroProcessor, library);
 
-        log.format("Performing pattern test for file %s.\n", testFile.getName());
-        log.format("Pattern file: %s.\n", patternFile.getName());
-        log.format(doSeek ? "Pattern search in test area turned on.\n" : "");
-        log.format("Pattern rectangle: x1 = %d y1 = %d x2 = %d y2 = %d.\n",
+        log.clear();
+        log.addMessage(Log.MessageType.INIT, "Performing pattern test for file %s.", testFile.getName());
+        log.addMessage(Log.MessageType.INFO, "Pattern file: %s.", patternFile.getName());
+        if (doSeek)
+            log.addMessage(Log.MessageType.INFO, "Pattern search in test area turned on.");
+        log.addMessage(Log.MessageType.INFO, "Pattern rectangle: x1 = %d y1 = %d x2 = %d y2 = %d.",
                 patX1, patY1, patX2, patY2);
-        log.format("Test rectangle: x1 = %d y1 = %d x2 = %d y2 = %d.\n", testX1,
+        log.addMessage(Log.MessageType.INFO, "Test rectangle: x1 = %d y1 = %d x2 = %d y2 = %d.", testX1,
                 testY1, testX2, testY2);
-        log.format("Color map: ");
+        log.startMessage(Log.MessageType.INFO, "Color map: ");
         for (int patternColor : colorsMap.keySet())
         {
             int testColor = colorsMap.get(patternColor);
             int pr = patternColor & MASK8, pg = (patternColor >> 8) & MASK8, pb = (patternColor >> 16) & MASK8;
             int tr = testColor & MASK8, tg = (testColor >> 8) & MASK8, tb = (testColor >> 16) & MASK8;
-            log.format(" (%d, %d, %d) -> (%d, %d, %d)", pr, pg, pb, tr, tg, tb);
+            log.appendToMessage(" (%d, %d, %d) -> (%d, %d, %d)", pr, pg, pb, tr, tg, tb);
         }
-        log.format("\n");
+        log.finishMessage();
         if (!ignoreMasks.isEmpty())
         {
-            log.format("Ignore following masks:");
+            log.startMessage(Log.MessageType.INFO, "Ignore following masks:");
             for (IgnoreMask im : ignoreMasks)
-                log.format(" from file %s all pixels of color %s;", im.fileName, ImageLibrary.colorString(im.color));
-            log.format("\n");
+                log.appendToMessage(" from file %s all pixels of color %s;", im.fileName, ImageLibrary.colorString(im.color));
+            log.finishMessage();
         }
 
         if (doSeek)
@@ -301,28 +304,28 @@ public class PatternTest extends AbstractTest
                     int nErrors = doCheck(xOffset, yOffset, false);
                     if (nErrors == 0)
                     {
-                        log.format(
-                                "Found pattern rectangle with offset (%d, %d).\n",
+                        log.addMessage(Log.MessageType.OK_INFO,
+                                "Found pattern rectangle with offset (%d, %d).",
                                 xOffset, yOffset);
-                        log.format("Test passed.\n");
+                        log.addMessage(Log.MessageType.OK_INFO, "Test passed.");
                         return true;
                     }
                 }
-            log.format("Didn't find pattern rectangle.");
-            log.format("Test not passed.\n");
+            log.addMessage(Log.MessageType.ERROR_INFO, "Didn't find pattern rectangle.");
+            log.addMessage(Log.MessageType.ERROR, "Test not passed.");
             return false;
         }
         else
         {
 
             int nErrors = doCheck(0, 0, true);
-            log.format("%d pixels checked.\n", nChecked);
+            log.addMessage(Log.MessageType.INFO, "%d pixels checked.", nChecked);
             if (nErrors == 0)
-                log.format("Test passed.\n");
+                log.addMessage(Log.MessageType.OK, "Test passed.");
             else
             {
-                log.format("%d errors.\n", nErrors);
-                log.format("Test not passed.\n");
+                log.addMessage(Log.MessageType.ERROR_INFO, "%d errors.", nErrors);
+                log.addMessage(Log.MessageType.ERROR, "Test not passed.");
             }
             return nErrors == 0;
         }
