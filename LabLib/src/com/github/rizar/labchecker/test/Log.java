@@ -29,11 +29,6 @@ public class Log
 
     private List<TypedMessage> messages = new ArrayList<TypedMessage> ();
 
-    public void clear()
-    {
-        messages.clear();
-    }
-
     public String getMessage(int index)
     {
         return messages.get(index).message;

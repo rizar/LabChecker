@@ -62,7 +62,7 @@ public class FileSizeTest extends AbstractTest
 
     public boolean check(MacroProcessor macroProcessor, ImageLibrary library, File file)
     {
-        log.clear();
+        log = new Log ();
         log.addMessage(Log.MessageType.INIT,
                 "Performing file size test to check %s.", file.getName());
         parseMacros(macroProcessor);

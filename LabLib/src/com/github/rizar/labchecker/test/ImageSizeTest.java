@@ -50,7 +50,7 @@ public class ImageSizeTest extends AbstractTest
             LoadImgException,
             TestException
     {
-        log.clear();
+        log = new Log ();
         log.addMessage(Log.MessageType.INIT,
                 "Performing image size test to check %s.", file.getName());
         parseMacros(macroProcessor);

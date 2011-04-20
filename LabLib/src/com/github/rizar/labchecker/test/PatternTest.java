@@ -295,7 +295,7 @@ public class PatternTest extends AbstractTest
         testImage = library.getImage(testFile);
         parseMacros(macroProcessor, library);
 
-        log.clear();
+        log = new Log ();
         log.addMessage(Log.MessageType.INIT,
                 "Performing pattern test for file %s.", testFile.getName());
         log.addMessage(Log.MessageType.INFO, "Pattern file: %s.", patternFile.

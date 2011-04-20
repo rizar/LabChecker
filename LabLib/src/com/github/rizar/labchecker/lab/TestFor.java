@@ -84,8 +84,8 @@ public class TestFor implements Test
 
     protected void clearMessageAndLog()
     {
-        messageLog.clear();
-        log.clear();
+        messageLog = new Log ();
+        log = new Log ();
     }
 
     protected boolean isFor(MacroProcessor macroProcessor)

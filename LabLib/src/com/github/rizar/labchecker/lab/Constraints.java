@@ -96,7 +96,7 @@ public interface Constraints
     int MASK16 = (1 << 16) - 1;
 
     //----------------------
-    File TEMP_FOLDER = new File(System.getProperty("user.dir"), "temp");
+    File TEMP_FOLDER = new File(System.getProperty("user.dir"), "temp\\images");
 
     //----------------------
     File MMPE = new File("D:\\bsu\\mmpe\\labs\\lab2a");

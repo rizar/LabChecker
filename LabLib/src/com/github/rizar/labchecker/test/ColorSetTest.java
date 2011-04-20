@@ -87,7 +87,7 @@ public class ColorSetTest extends AbstractTest
                          File file) throws LoadImgException,
                                            TestException
     {
-        log.clear();
+        log = new Log();
         log.addMessage(Log.MessageType.INIT,
                 "Performing color set test for %s.", file.getName());
         parseMacros(macroProcessor, library);
