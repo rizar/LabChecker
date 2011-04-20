@@ -4,7 +4,7 @@ import com.github.rizar.labchecker.exceptions.TestException;
 import com.github.rizar.labchecker.lab.MacroProcessor;
 import java.io.File;
 import java.io.IOException;
-import loadimg.LoadImgException;
+import com.github.rizar.labchecker.loadimage.LoadImgException;
 
 /**
  * A common interface for all test classes.

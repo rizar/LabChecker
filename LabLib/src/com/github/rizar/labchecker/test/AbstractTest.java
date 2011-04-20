@@ -4,7 +4,7 @@ import com.github.rizar.labchecker.exceptions.TestException;
 import com.github.rizar.labchecker.lab.MacroProcessor;
 import java.io.File;
 import java.util.Formatter;
-import loadimg.LoadImgException;
+import com.github.rizar.labchecker.loadimage.LoadImgException;
 
 /**
  *

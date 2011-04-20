@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 import com.github.rizar.labchecker.exceptions.TestParseException;
 import com.github.rizar.labchecker.test.ImageLibrary;
 import java.util.regex.Matcher;
-import loadimg.LoadImgException;
+import com.github.rizar.labchecker.loadimage.LoadImgException;
 import static com.github.rizar.labchecker.lab.Constraints.*;
 
 /**

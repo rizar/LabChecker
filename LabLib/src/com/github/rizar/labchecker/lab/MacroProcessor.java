@@ -83,6 +83,7 @@ public class MacroProcessor
         code = macroProcessor.code;
         group = macroProcessor.group;
         module = macroProcessor.module;
+        teachersMap = macroProcessor.teachersMap;
         init();
     }
 
@@ -132,6 +133,13 @@ public class MacroProcessor
     {
         registerMacro(MODULE_MACRO, Integer.toString(module));
         this.module = module;
+    }
+
+    private HashMap<String, String> teachersMap = new HashMap<String, String> ();
+
+    void setTeacher(String codeStr, String teacherName)
+    {
+        teachersMap.put(codeStr, teacherName);
     }
 
     final public void registerMacro(String macro)
@@ -187,6 +195,10 @@ public class MacroProcessor
             {
                 int rem = Lab.codeInteger(code) % module;
                 return rem != 0 ? ("+" + Integer.toString(rem)) : "";
+            }
+            else if (macro.equals(TEACHER_MACRO))
+            {
+                return teachersMap.get(Integer.toString(Lab.codeInteger(code)));
             }
             else
             {

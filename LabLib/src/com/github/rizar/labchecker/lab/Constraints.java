@@ -84,6 +84,10 @@ public interface Constraints
 
     Pattern RECTANGLE_PATTERN = Pattern.compile("\\A" + RECTANGLE_PATTERN_STRING + "\\z");
 
+    String CODES_SEPARATOR = "[\\s\\n]";
+
+    String FILES_SEPARATOR = ";";
+
     //----------------------
     int BYTES_IN_KILOBYTE = 1024;
 

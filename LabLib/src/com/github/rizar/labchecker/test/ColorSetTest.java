@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import loadimg.LoadImgException;
+import com.github.rizar.labchecker.loadimage.LoadImgException;
 import static com.github.rizar.labchecker.lab.Constraints.*;
 
 /**

@@ -3,9 +3,9 @@ package com.github.rizar.labchecker.test;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.HashMap;
-import loadimg.LoadImgC;
+import com.github.rizar.labchecker.loadimage.LoadImgC;
 import static com.github.rizar.labchecker.lab.Constraints.*;
-import loadimg.LoadImgException;
+import com.github.rizar.labchecker.loadimage.LoadImgException;
 
 /**
  *
@@ -32,7 +32,7 @@ public class ImageLibrary
     public BufferedImage getImage(String fileName) throws LoadImgException
     {
         BufferedImage image = images.get(fileName);
-        if (image == null)
+            if (image == null)
         {
             image = getImageNoCashe(fileName);
             images.put(fileName, image);

@@ -11,7 +11,7 @@ import com.github.rizar.labchecker.test.ImageLibrary;
 import java.io.File;
 import org.xml.sax.Attributes;
 import com.github.rizar.labchecker.test.Test;
-import loadimg.LoadImgException;
+import com.github.rizar.labchecker.loadimage.LoadImgException;
 import static com.github.rizar.labchecker.lab.Tags.*;
 import static com.github.rizar.labchecker.lab.Constraints.*;
 import static com.github.rizar.labchecker.lab.Macros.*;

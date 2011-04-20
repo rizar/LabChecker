@@ -39,6 +39,8 @@ public class Lab
 
     private File configFile;
 
+    private String labName;
+
     public File getConfigFile()
     {
         return configFile;
@@ -132,11 +134,15 @@ public class Lab
 
         private Set<String> allTags = new HashSet<String>();
 
-        private StringBuilder colorSetStringBuiler;
+        private StringBuilder colorSetStringBuilder;
 
         private String currentMacro;
 
         int colorSetNumber;
+
+        private String teacherName;
+
+        private StringBuilder teacherBuilder;
 
         public ConfigHandler(File file)
         {
@@ -165,7 +171,12 @@ public class Lab
                         doThrow(WrongNestedTagException.class, DEFINITION_TAG,
                                 true, MACRO_TAG);
                 }
-                else 
+                else if (qName.equals(TEACHER_TAG))
+                {
+                    if (!currentTag.equals(TEACHERS_TAG))
+                        doThrow(WrongNestedTagException.class, TEACHER_TAG, true, TEACHERS_TAG);
+                }
+                else
                 {
                     if (!currentTag.equals(LAB_TAG))
                         doThrow(WrongNestedTagException.class, qName, false,
@@ -185,6 +196,7 @@ public class Lab
             {
                 String lab = mustGet(attributes, LAB_TAG, LAB_TAG_LAB_ATTRIBUTE);
                 macroProcessor.registerMacro(LAB_MACRO, lab);
+                labName = attributes.getValue(NAME_ATTRIBUTE);
             }
             else if (qName.equals(MODULE_TAG))
             {
@@ -232,7 +244,7 @@ public class Lab
                     String colorSetNumberStr = mustGet(attributes, COLOR_SET_TAG,
                             COLOR_SET_TAG_NUMBER_ATTRIBUTE);
                     colorSetNumber = Integer.parseInt(colorSetNumberStr);
-                    colorSetStringBuiler = new StringBuilder();
+                    colorSetStringBuilder = new StringBuilder();
                 }
                 catch (NumberFormatException e)
                 {
@@ -264,6 +276,14 @@ public class Lab
                 String remainderMacro = attributes.getValue(REMAINDER_ATTRIBUTE);
                 macroProcessor.addDefinition(currentMacro, groupMacro, remainderMacro, definitionMacro);
             }
+            else if (qName.equals(TEACHERS_TAG))
+            {
+            }
+            else if (qName.equals(TEACHER_TAG))
+            {
+                teacherName = mustGet(attributes, TEACHER_TAG, NAME_ATTRIBUTE);
+                teacherBuilder = new StringBuilder();
+            }
             else
             {
                 /*throw new SAXException(new UnknownTagException(locator.
@@ -278,8 +298,10 @@ public class Lab
         {
             if (PRINT_TAGS) System.err.println("characters");
 
-            if (colorSetStringBuiler != null)
-                colorSetStringBuiler.append(new String(ch, start, length));
+            if (colorSetStringBuilder != null)
+                colorSetStringBuilder.append(new String(ch, start, length));
+            if (teacherBuilder != null)
+                teacherBuilder.append(new String(ch, start, length));
 
             /*String data = new String(ch, start, length).trim();
             if (data.equals(""))
@@ -287,7 +309,7 @@ public class Lab
 
             try
             {
-            colorSetStringBuiler.append(
+            colorSetStringBuilder.append(
             new String(ch, start, length));
             }
             catch (NullPointerException e)
@@ -305,20 +327,44 @@ public class Lab
         {
             if (PRINT_TAGS) System.err.println("endElement " + qName);
 
-            if (colorSetStringBuiler != null)
+            if (colorSetStringBuilder != null)
             {
                 try
                 {
                     ColorSet cs = new ColorSet(
                             numberOfColorsInSet);
-                    cs.parse(colorSetStringBuiler.toString());
+                    cs.parse(colorSetStringBuilder.toString());
                     colorSets[colorSetNumber] = cs;
-                    colorSetStringBuiler = null;
+                    colorSetStringBuilder = null;
                 }
                 catch (IllegalArgumentException e)
                 {
                     doThrow(WrongTagDataException.class,
                             COLOR_SET_TAG, e.getMessage());
+                }
+            }
+
+            if (teacherBuilder != null)
+            {
+                String lastCodeStr = "";
+                try
+                {
+                    String [] codes = teacherBuilder.toString().split(CODES_SEPARATOR);
+                    for (String codeStr : codes)
+                        if (!codeStr.equals(""))
+                        {
+                            lastCodeStr = codeStr;
+                            int code = Lab.codeInteger(codeStr);
+                            if (code < 100 || code >= 10000)
+                                doThrow(WrongTagDataException.class,
+                                        TEACHER_TAG, String.format("Wrong values for code: %d", code));
+                            macroProcessor.setTeacher(codeStr, teacherName);
+                        }
+                    teacherBuilder = null;
+                }
+                catch (NumberFormatException e)
+                {
+                    doThrow(WrongTagDataException.class, TEACHER_TAG, String.format("Wrong value for code: %s", lastCodeStr));
                 }
             }
 
@@ -388,7 +434,7 @@ public class Lab
      */
     public String getLabName()
     {
-        return directory.getName();
+        return labName != null ? labName : directory.getName();
     }
 
     /**
@@ -439,12 +485,18 @@ public class Lab
     }
 
     @Override
+    public String toString()
+    {
+        return getLabName();
+    }
+
+    @Override
     public boolean equals(Object obj)
     {
         return obj instanceof Lab && directory.equals(((Lab)obj).directory);
     }
 
-    @Override
+        @Override
     public int hashCode()
     {
         return directory.hashCode();

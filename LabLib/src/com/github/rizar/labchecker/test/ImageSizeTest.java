@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Formatter;
 import java.util.regex.Matcher;
-import loadimg.LoadImgException;
+import com.github.rizar.labchecker.loadimage.LoadImgException;
 
 /**
  *

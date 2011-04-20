@@ -31,7 +31,7 @@ public class LabTest
     public LabTest()
     {
         testManager = new LabsManager(new File("testdata"));
-        realManager = new LabsManager(new File(".."));
+        realManager = new LabsManager(new File("."));
     }
 
     @Test(expected = AttributeProblemException.class)
@@ -179,6 +179,30 @@ public class LabTest
         //assertEquals(lab.getSolutionName(new File("lab2a2-a05-v2.tif")), "lab2a-a05-v2");
 
         //System.err.println(lab.getMacroProcessor());
+
+        MacroProcessor mp = lab.getMacroProcessor();
+        mp.setCode("205");
+        assertEquals(mp.process("%TEACH%"), "BDV");
+        mp.setCode("978");
+        assertEquals(mp.process("%TEACH%"), "BDV");
+        mp.setCode("107");
+        assertEquals(mp.process("%TEACH%"), "KVA"); 
+        mp.setCode("990");
+        assertEquals(mp.process("%TEACH%"), "KVA");
+        mp.setCode("101");
+        assertEquals(mp.process("%TEACH%"), "PDV");
+        mp.setCode("955");
+        assertEquals(mp.process("%TEACH%"), "PDV");
+        mp.setCode("901");
+        assertEquals(mp.process("%TEACH%"), "BSA");
+        mp.setCode("928");
+        assertEquals(mp.process("%TEACH%"), "BSA");
+        mp.setCode("403");
+        assertEquals(mp.process("%TEACH%"), "TVB");
+        mp.setCode("729");
+        assertEquals(mp.process("%TEACH%"), "TVB");
+
+        assertEquals(lab.getLabName(), "Лабораторная работа 2a, ФПМИ, 2ой курс");
     }
 
     @Test

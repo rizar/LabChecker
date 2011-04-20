@@ -28,6 +28,8 @@ public interface Macros
 
     String SOLUTION_MACRO = "SOL";
 
+    String TEACHER_MACRO = "TEACH";
+
     String GET_CODE_MACRO_DEFINITION = "([\\d[a-z]]\\d\\d)";
 
     String GET_VAR_MACRO_DEFINITION = "(\\d)";

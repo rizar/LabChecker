@@ -40,9 +40,13 @@ public interface Tags
 
     String DEFINITION_ATTRIBUTE = "def";
 
+    String TEACHERS_TAG = "teachers";
+
+    String TEACHER_TAG = "teacher";
+
     String[] OBLIGATORY_TAGS = new String[]
     {
-        LAB_TAG, MODULE_TAG, COLOR_SETS_TAG//, SOLUTION_NAME_TAG
+        LAB_TAG, MODULE_TAG, COLOR_SETS_TAG, TEACHERS_TAG
     };
 
     //script tags
@@ -102,5 +106,9 @@ public interface Tags
 
     String TEST_COLOR_ATTRIBUTE = "test_color";
 
+    String MAXIMUM_ERROR_NUMBER_ATTRIBUTE = "max_err";
+
     String GROUP_TAG = "group";
+
+    String ANY_ATTRIBUTE = "any";
 }

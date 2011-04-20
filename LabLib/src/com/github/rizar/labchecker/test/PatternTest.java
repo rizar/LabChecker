@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import loadimg.LoadImgException;
+import com.github.rizar.labchecker.loadimage.LoadImgException;
 import static com.github.rizar.labchecker.lab.Constraints.*;
 
 /**
@@ -28,6 +28,8 @@ public class PatternTest extends AbstractTest
     private String patternRectangleMacro;
 
     private String testRectangleMacro;
+
+    private String maxErrMacro;
 
     private class IgnoreMask
     {
@@ -99,6 +101,11 @@ public class PatternTest extends AbstractTest
         mappings.add(new ColorMapping(patternColorMacro, testColorMacro));
     }
 
+    public void setMaximumErrorNumberMacro(String maxErrMacro)
+    {
+        this.maxErrMacro = maxErrMacro;
+    }
+
     boolean doSeek;
 
     private File testFile, patternFile;
@@ -110,6 +117,8 @@ public class PatternTest extends AbstractTest
     private int testX1, testY1, testX2, testY2;
 
     private HashMap<Integer, Integer> colorsMap;
+
+    private int maximumErrorNumber;
 
     private void parseMacros(MacroProcessor macroProcessor, ImageLibrary library)
             throws LoadImgException
@@ -208,9 +217,24 @@ public class PatternTest extends AbstractTest
 
         for (IgnoreMask im : ignoreMasks)
             im.parseMacros(macroProcessor, library);
+
+        String maxErrStr = "";
+        try
+        {
+            maximumErrorNumber = 0;
+            if (maxErrMacro != null)
+                maximumErrorNumber = Integer.parseInt(maxErrStr = macroProcessor.
+                        process(
+                        maxErrMacro));
+        }
+        catch (NumberFormatException e)
+        {
+            throw new TestParseException(String.format(
+                    "%s isn't valid value for maximum error number.", maxErrStr));
+        }
     }
 
-    private static int MANY_ERRORS = 20;
+    private static int MANY_ERRORS = 10;
 
     private int nChecked;
 
@@ -247,14 +271,15 @@ public class PatternTest extends AbstractTest
                             int gUV = (cUV >> 8) & MASK8;
                             int bUV = (cUV >> 16) & MASK8;
                             if (printInLog)
-                                log.addMessage(Log.MessageType.ERROR_INFO, 
+                                log.addMessage(Log.MessageType.ERROR_INFO,
                                         "Error: pixel (%d, %d) must be (%d, %d, %d) instead of (%d, %d, %d).",
                                         u, v, rM, gM, bM, rUV, gUV, bUV);
                         }
                         else if (nErrors == MANY_ERRORS + 1)
                             if (printInLog)
                                 log.addMessage(Log.MessageType.ERROR_INFO,
-                                        "More than %d errors, output stopped.", MANY_ERRORS);
+                                        "More than %d errors, output stopped.",
+                                        MANY_ERRORS);
                     }
                     nChecked++;
                 }
@@ -271,13 +296,18 @@ public class PatternTest extends AbstractTest
         parseMacros(macroProcessor, library);
 
         log.clear();
-        log.addMessage(Log.MessageType.INIT, "Performing pattern test for file %s.", testFile.getName());
-        log.addMessage(Log.MessageType.INFO, "Pattern file: %s.", patternFile.getName());
+        log.addMessage(Log.MessageType.INIT,
+                "Performing pattern test for file %s.", testFile.getName());
+        log.addMessage(Log.MessageType.INFO, "Pattern file: %s.", patternFile.
+                getName());
         if (doSeek)
-            log.addMessage(Log.MessageType.INFO, "Pattern search in test area turned on.");
-        log.addMessage(Log.MessageType.INFO, "Pattern rectangle: x1 = %d y1 = %d x2 = %d y2 = %d.",
+            log.addMessage(Log.MessageType.INFO,
+                    "Pattern search in test area turned on.");
+        log.addMessage(Log.MessageType.INFO,
+                "Pattern rectangle: x1 = %d y1 = %d x2 = %d y2 = %d.",
                 patX1, patY1, patX2, patY2);
-        log.addMessage(Log.MessageType.INFO, "Test rectangle: x1 = %d y1 = %d x2 = %d y2 = %d.", testX1,
+        log.addMessage(Log.MessageType.INFO,
+                "Test rectangle: x1 = %d y1 = %d x2 = %d y2 = %d.", testX1,
                 testY1, testX2, testY2);
         log.startMessage(Log.MessageType.INFO, "Color map: ");
         for (int patternColor : colorsMap.keySet())
@@ -285,14 +315,16 @@ public class PatternTest extends AbstractTest
             int testColor = colorsMap.get(patternColor);
             int pr = patternColor & MASK8, pg = (patternColor >> 8) & MASK8, pb = (patternColor >> 16) & MASK8;
             int tr = testColor & MASK8, tg = (testColor >> 8) & MASK8, tb = (testColor >> 16) & MASK8;
-            log.appendToMessage(" (%d, %d, %d) -> (%d, %d, %d)", pr, pg, pb, tr, tg, tb);
+            log.appendToMessage(" (%d, %d, %d) -> (%d, %d, %d)", pr, pg, pb, tr,
+                    tg, tb);
         }
         log.finishMessage();
         if (!ignoreMasks.isEmpty())
         {
             log.startMessage(Log.MessageType.INFO, "Ignore following masks:");
             for (IgnoreMask im : ignoreMasks)
-                log.appendToMessage(" from file %s all pixels of color %s;", im.fileName, ImageLibrary.colorString(im.color));
+                log.appendToMessage(" from file %s all pixels of color %s;",
+                        im.fileName, ImageLibrary.colorString(im.color));
             log.finishMessage();
         }
 
@@ -311,7 +343,8 @@ public class PatternTest extends AbstractTest
                         return true;
                     }
                 }
-            log.addMessage(Log.MessageType.ERROR_INFO, "Didn't find pattern rectangle.");
+            log.addMessage(Log.MessageType.ERROR_INFO,
+                    "Didn't find pattern rectangle.");
             log.addMessage(Log.MessageType.ERROR, "Test not passed.");
             return false;
         }
@@ -320,14 +353,20 @@ public class PatternTest extends AbstractTest
 
             int nErrors = doCheck(0, 0, true);
             log.addMessage(Log.MessageType.INFO, "%d pixels checked.", nChecked);
+            boolean result = nErrors <= maximumErrorNumber;
             if (nErrors == 0)
                 log.addMessage(Log.MessageType.OK, "Test passed.");
             else
             {
-                log.addMessage(Log.MessageType.ERROR_INFO, "%d errors.", nErrors);
-                log.addMessage(Log.MessageType.ERROR, "Test not passed.");
+                log.addMessage(Log.MessageType.INFO, "%d errors.", nErrors);
+                if (maximumErrorNumber > 0)
+                    log.addMessage(Log.MessageType.INFO, "Maximum error number is %d.", maximumErrorNumber);
+                if (result)
+                    log.addMessage(Log.MessageType.OK, "Test passed.");
+                else
+                    log.addMessage(Log.MessageType.ERROR, "Test not passed.");
             }
-            return nErrors == 0;
+            return result;
         }
     }
 }

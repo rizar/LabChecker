@@ -4,7 +4,7 @@ import com.github.rizar.labchecker.exceptions.TestException;
 import com.github.rizar.labchecker.test.Log;
 import java.io.File;
 import java.io.IOException;
-import loadimg.LoadImgException;
+import com.github.rizar.labchecker.loadimage.LoadImgException;
 
 /**
  * An interface to check step file and store check results.

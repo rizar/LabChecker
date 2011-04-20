@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import loadimg.LoadImgException;
+import com.github.rizar.labchecker.loadimage.LoadImgException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -174,6 +174,8 @@ class Step
                 newPatternTest = new PatternTest(mustGet(attributes,
                         PATTERN_TEST_TAG, FILE_ATTRIBUTE), attributes.getValue(
                         PATTERN_TEST_SEEK_ATTRIBUTE));
+                newPatternTest.setMaximumErrorNumberMacro(attributes.getValue(
+                        MAXIMUM_ERROR_NUMBER_ATTRIBUTE));
                 newTestFor.setTest(newPatternTest);
             }
             else if (qName.equals(PATTERN_TEST_PATTERN_RECTANGLE_TAG))
@@ -310,7 +312,8 @@ class Step
             this.stepFile = stepFile;
 
             macroProcessor = new MacroProcessor(lab.getMacroProcessor());
-            Matcher matcher = filePattern.matcher(stepFile.getName().toLowerCase());
+            Matcher matcher = filePattern.matcher(
+                    stepFile.getName().toLowerCase());
             matcher.matches();
             String code = matcher.group(1);
             macroProcessor.setCode(matcher.group(1));
