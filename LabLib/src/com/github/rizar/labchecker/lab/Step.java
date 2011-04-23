@@ -1,6 +1,7 @@
 package com.github.rizar.labchecker.lab;
 
 import com.github.rizar.labchecker.exceptions.TestException;
+import com.github.rizar.labchecker.exceptions.UnknownTagException;
 import com.github.rizar.labchecker.exceptions.WrongConfigException;
 import com.github.rizar.labchecker.exceptions.WrongNestedTagException;
 import com.github.rizar.labchecker.exceptions.WrongRootTagException;
@@ -23,6 +24,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import com.github.rizar.labchecker.loadimage.LoadImgException;
+import com.github.rizar.labchecker.test.DepthTest;
+import com.github.rizar.labchecker.test.FormatTest;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -89,15 +92,19 @@ class Step
                 String currentTag = openedTags.peek();
                 if (qName.equals(PATTERN_TEST_COLOR_TAG)
                         || qName.equals(
-                        PATTERN_TEST_PATTERN_RECTANGLE_TAG)
-                        || qName.equals(
-                        PATTERN_TEST_TEST_RECTANGLE_TAG)
+                        PATTERN_RECTANGLE_TAG)
                         || qName.equals(
                         IGNORE_TAG))
                 {
                     if (!currentTag.equals(PATTERN_TEST_TAG))
                         doThrow(WrongNestedTagException.class, qName, true,
                                 PATTERN_TEST_TAG);
+                }
+                else if (qName.equals(TEST_RECTANGLE_TAG))
+                {
+                    if (!currentTag.equals(PATTERN_TEST_TAG) && !currentTag.equals(COLOR_SET_TEST_TAG))
+                        doThrow(WrongNestedTagException.class, qName, true,
+                                PATTERN_TEST_TAG + " or " + COLOR_SET_TAG);
                 }
                 else if (qName.equals(ADD_COLOR_TAG) || qName.equals(
                         REMOVE_COLOR_TAG))
@@ -178,31 +185,35 @@ class Step
                         MAXIMUM_ERROR_NUMBER_ATTRIBUTE));
                 newTestFor.setTest(newPatternTest);
             }
-            else if (qName.equals(PATTERN_TEST_PATTERN_RECTANGLE_TAG))
+            else if (qName.equals(PATTERN_RECTANGLE_TAG))
             {
                 String x1 = mustGet(attributes,
-                        PATTERN_TEST_PATTERN_RECTANGLE_TAG, X1_ATTRIBUTE);
+                        PATTERN_RECTANGLE_TAG, X1_ATTRIBUTE);
                 String y1 = mustGet(attributes,
-                        PATTERN_TEST_PATTERN_RECTANGLE_TAG, Y1_ATTRIBUTE);
+                        PATTERN_RECTANGLE_TAG, Y1_ATTRIBUTE);
                 String x2 = mustGet(attributes,
-                        PATTERN_TEST_PATTERN_RECTANGLE_TAG, X2_ATTRIBUTE);
+                        PATTERN_RECTANGLE_TAG, X2_ATTRIBUTE);
                 String y2 = mustGet(attributes,
-                        PATTERN_TEST_PATTERN_RECTANGLE_TAG, Y2_ATTRIBUTE);
+                        PATTERN_RECTANGLE_TAG, Y2_ATTRIBUTE);
                 newPatternTest.setPatternRectangleMacro(
                         x1 + " " + y1 + " " + x2 + " " + y2);
             }
-            else if (qName.equals(PATTERN_TEST_TEST_RECTANGLE_TAG))
+            else if (qName.equals(TEST_RECTANGLE_TAG))
             {
-                String x1 = mustGet(attributes, PATTERN_TEST_TEST_RECTANGLE_TAG,
+                String x1 = mustGet(attributes, TEST_RECTANGLE_TAG,
                         X1_ATTRIBUTE);
-                String y1 = mustGet(attributes, PATTERN_TEST_TEST_RECTANGLE_TAG,
+                String y1 = mustGet(attributes, TEST_RECTANGLE_TAG,
                         Y1_ATTRIBUTE);
-                String x2 = mustGet(attributes, PATTERN_TEST_TEST_RECTANGLE_TAG,
+                String x2 = mustGet(attributes, TEST_RECTANGLE_TAG,
                         X2_ATTRIBUTE);
-                String y2 = mustGet(attributes, PATTERN_TEST_TEST_RECTANGLE_TAG,
+                String y2 = mustGet(attributes, TEST_RECTANGLE_TAG,
                         Y2_ATTRIBUTE);
-                newPatternTest.setTestRectangleMacro(
-                        x1 + " " + y1 + " " + x2 + " " + y2);
+                String rectMacro = x1 + " " + y1 + " " + x2 + " " + y2;
+                if (newPatternTest != null)
+                    newPatternTest.setTestRectangleMacro(
+                        rectMacro);
+                else
+                    newColorSetTest.setTestRectangleMacro(rectMacro);
             }
             else if (qName.equals(PATTERN_TEST_COLOR_TAG))
             {
@@ -222,6 +233,26 @@ class Step
             {
                 stack.add(new TestsForGroup(attributes));
             }
+            else if (qName.equals(FORMAT_TEST_TAG))
+            {
+                newTestFor = new TestFor(attributes);
+                String fmtMacro = mustGet(attributes, FORMAT_TEST_TAG,
+                        FORMAT_ATTIRIBUTE);
+                newTestFor.setTest(new FormatTest(fmtMacro));
+                stack.peek().addTestFor(newTestFor);
+            }
+            else if (qName.equals(DEPTH_TEST_TAG))
+            {
+                newTestFor = new TestFor(attributes);
+                String depthMacro = mustGet(attributes, DEPTH_TEST_TAG,
+                        DEPTH_ATTRIBUTE);
+                newTestFor.setTest(new DepthTest(depthMacro));
+                stack.peek().addTestFor(newTestFor);
+            }
+            else
+            {
+                doThrow(UnknownTagException.class, qName);
+            }
         }
 
         @Override
@@ -232,17 +263,19 @@ class Step
             if (currentTag.equals(COLOR_SET_TEST_TAG))
             {
                 stack.peek().addTestFor(newTestFor);
+                newColorSetTest = null;
             }
             else if (currentTag.equals(PATTERN_TEST_TAG))
             {
                 stack.peek().addTestFor(newTestFor);
+                newPatternTest = null;
             }
             else if (currentTag.equals(GROUP_TAG))
             {
                 TestsForGroup group = stack.pop();
                 stack.peek().addTestFor(group);
             }
-
+            
             openedTags.pop();
         }
 

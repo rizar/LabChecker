@@ -6,6 +6,7 @@ import com.github.rizar.labchecker.exceptions.WrongNestedTagException;
 import com.github.rizar.labchecker.exceptions.WrongAttributeValueException;
 import com.github.rizar.labchecker.exceptions.WrongTagDataException;
 import com.github.rizar.labchecker.exceptions.DuplicateTagException;
+import com.github.rizar.labchecker.exceptions.UnknownTagException;
 import com.github.rizar.labchecker.exceptions.WrongRootTagException;
 import static com.github.rizar.labchecker.lab.Tags.*;
 import static com.github.rizar.labchecker.lab.Macros.*;
@@ -286,9 +287,7 @@ public class Lab
             }
             else
             {
-                /*throw new SAXException(new UnknownTagException(locator.
-                getLineNumber(), locator.getColumnNumber(),
-                qName));*/
+                doThrow(UnknownTagException.class, qName);
             }
         }
 

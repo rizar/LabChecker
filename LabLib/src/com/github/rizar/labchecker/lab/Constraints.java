@@ -88,6 +88,8 @@ public interface Constraints
 
     String FILES_SEPARATOR = ";";
 
+    String DEPTH_SEPARATOR = " ";
+
     //----------------------
     int BYTES_IN_KILOBYTE = 1024;
 

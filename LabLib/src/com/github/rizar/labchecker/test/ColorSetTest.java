@@ -1,5 +1,8 @@
 package com.github.rizar.labchecker.test;
 
+import java.awt.image.BufferedImage;
+import com.github.rizar.labchecker.exceptions.TestParseException;
+import java.util.regex.Matcher;
 import java.util.Formatter;
 import com.github.rizar.labchecker.parser.ColorParser;
 import com.github.rizar.labchecker.exceptions.TestException;
@@ -52,9 +55,18 @@ public class ColorSetTest extends AbstractTest
         removeColorMacros.add(colorMacro);
     }
 
+    private String testRectangleMacro;
+
+    private int testX1, testY1, testX2, testY2;
+
+    public void setTestRectangleMacro(String testRectangleMacro)
+    {
+        this.testRectangleMacro = testRectangleMacro;
+    }
+
     private ColorSet patternColorSet, testColorSet;
 
-    private void parseMacros(MacroProcessor macroProcessor, ImageLibrary library)
+    private void parseMacros(MacroProcessor macroProcessor, ImageLibrary library, File testFile)
             throws LoadImgException
     {
         patternColorSet = new ColorSet();
@@ -80,6 +92,28 @@ public class ColorSetTest extends AbstractTest
             patternColorSet.removeColorSet(library.getLibraryImageColorSet(
                     fileName));
         }
+
+        if (testRectangleMacro != null)
+        {
+            String testRectangleString = macroProcessor.process(
+                    testRectangleMacro);
+            Matcher rectangleMatcher = RECTANGLE_PATTERN.matcher(
+                    testRectangleString);
+            if (!rectangleMatcher.matches())
+                throw new TestParseException(RECTANGLE_PATTERN,
+                        testRectangleString);
+            testX1 = Integer.parseInt(rectangleMatcher.group(1));
+            testY1 = Integer.parseInt(rectangleMatcher.group(2));
+            testX2 = Integer.parseInt(rectangleMatcher.group(3));
+            testY2 = Integer.parseInt(rectangleMatcher.group(4));
+        }
+        else
+        {
+            BufferedImage image = library.getImage(testFile);
+            testX1 = testY1 = 0;
+            testX2 = image.getWidth() - 1;
+            testY2 = image.getHeight() - 1;
+        }
     }
 
     @Override
@@ -90,7 +124,9 @@ public class ColorSetTest extends AbstractTest
         log = new Log();
         log.addMessage(Log.MessageType.INIT,
                 "Performing color set test for %s.", file.getName());
-        parseMacros(macroProcessor, library);
+        parseMacros(macroProcessor, library, file);
+        log.addMessage(Log.MessageType.INIT,
+                "Test rectangle: x1 = %d, y1 = %d, x2 = %d, y2 = %d", testX1, testY1, testX2, testY2);
         log.startMessage(Log.MessageType.INFO, "Pattern color set:");
         for (int c : patternColorSet.getColors())
         {
@@ -102,7 +138,7 @@ public class ColorSetTest extends AbstractTest
 
         log.startMessage(Log.MessageType.INFO, "Color set of %s:",
                 file.getName());
-        testColorSet = library.getImageColorSet(file);
+        testColorSet = library.getImageColorSet(file, testX1, testY1, testX2, testY2);
         for (int c : testColorSet.getColors())
             log.appendToMessage(" (%d, %d, %d)", c & MASK8, (c >> 8) & MASK8,
                     (c >> 16) & MASK8);
@@ -123,7 +159,8 @@ public class ColorSetTest extends AbstractTest
             int x = inPatternNotInTest.getX(c);
             int y = inPatternNotInTest.getY(c);
             if (fileName != null)
-                log.finishMessage(" You can find it at (%d, %d) in file %s.", x, y,
+                log.finishMessage(" You can find it at (%d, %d) in file %s.", x,
+                        y,
                         fileName);
             else
                 log.finishMessage();

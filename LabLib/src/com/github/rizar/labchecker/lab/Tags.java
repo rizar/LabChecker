@@ -78,9 +78,9 @@ public interface Tags
 
     String IGNORE_TAG = "ignore";
 
-    String PATTERN_TEST_PATTERN_RECTANGLE_TAG = "pat_rect";
+    String PATTERN_RECTANGLE_TAG = "pat_rect";
 
-    String PATTERN_TEST_TEST_RECTANGLE_TAG = "test_rect";
+    String TEST_RECTANGLE_TAG = "test_rect";
 
     String PATTERN_TEST_SEEK_ATTRIBUTE = "seek";
 
@@ -111,4 +111,12 @@ public interface Tags
     String GROUP_TAG = "group";
 
     String ANY_ATTRIBUTE = "any";
+
+    String FORMAT_TEST_TAG = "fmt_test";
+
+    String FORMAT_ATTIRIBUTE = "fmt";
+
+    String DEPTH_TEST_TAG = "depth_test";
+
+    String DEPTH_ATTRIBUTE = "depth";
 }
