@@ -1,5 +1,6 @@
 package com.github.rizar.labchecker.test;
 
+import com.github.rizar.labchecker.loadimage.LoadImgBufferedImageContainer;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.HashMap;
@@ -16,12 +17,15 @@ public class ImageLibrary
     private File directory;
 
     private HashMap<String, BufferedImage> images = new HashMap<String, BufferedImage>();
-    private HashMap<String, String> formats = new HashMap<String, String> ();
-    private HashMap<String, String> depthes = new HashMap<String, String> ();
+
+    private HashMap<String, String> formats = new HashMap<String, String>();
+
+    private HashMap<String, String> depthes = new HashMap<String, String>();
 
     private class Area
     {
         String fileName;
+
         int x1, y1, x2, y2;
 
         public Area(String fileName, int x1, int y1, int x2, int y2)
@@ -47,7 +51,8 @@ public class ImageLibrary
             if (getClass() != obj.getClass())
                 return false;
             final Area other = (Area) obj;
-            if ((this.fileName == null) ? (other.fileName != null) : !this.fileName.equals(other.fileName))
+            if ((this.fileName == null) ? (other.fileName != null) : !this.fileName.
+                    equals(other.fileName))
                 return false;
             if (this.x1 != other.x1)
                 return false;
@@ -59,7 +64,6 @@ public class ImageLibrary
                 return false;
             return true;
         }
-
     };
 
     private HashMap<Area, ColorSet> colorSets = new HashMap<Area, ColorSet>();
@@ -69,16 +73,24 @@ public class ImageLibrary
         this.directory = directory;
     }
 
-    private BufferedImage getImageNoCashe(String fileName) throws LoadImgException
+    private LoadImgBufferedImageContainer getImageContainer(String fileName)
+            throws LoadImgException
     {
         return new LoadImgC().getImage(new File(fileName), TEMP_FOLDER, false);
+    }
+
+    private BufferedImage getImageNoCashe(String fileName)
+            throws LoadImgException
+    {
+        LoadImgBufferedImageContainer container = getImageContainer(fileName);
+        return container.image;
     }
 
     public BufferedImage getImage(String fileName) throws LoadImgException
     {
         //TODO load format and depth
         BufferedImage image = images.get(fileName);
-            if (image == null)
+        if (image == null)
         {
             image = getImageNoCashe(fileName);
             images.put(fileName, image);
@@ -91,7 +103,8 @@ public class ImageLibrary
         return getImage(file.getAbsolutePath());
     }
 
-    public BufferedImage getLibraryImage(String fileName) throws LoadImgException
+    public BufferedImage getLibraryImage(String fileName) throws
+            LoadImgException
     {
         return getImage(new File(directory, fileName).getAbsolutePath());
     }
@@ -122,10 +135,12 @@ public class ImageLibrary
     {
         File file = new File(directory, fileName);
         BufferedImage image = getImage(file);
-        return getImageColorSet(file, 0, 0, image.getWidth() - 1, image.getHeight() - 1);
+        return getImageColorSet(file, 0, 0, image.getWidth() - 1, image.
+                getHeight() - 1);
     }
 
-    ColorSet getImageColorSet(String fileName, int x1, int y1, int x2, int y2) throws LoadImgException
+    ColorSet getImageColorSet(String fileName, int x1, int y1, int x2, int y2)
+            throws LoadImgException
     {
         Area area = new Area(fileName, x1, y1, x2, y2);
         ColorSet colorSet = colorSets.get(area);
@@ -136,12 +151,14 @@ public class ImageLibrary
         BufferedImage image = getImage(fileName);
         for (int x = x1; x <= x2; x++)
             for (int y = y1; y <= y2; y++)
-                colorSet.addColorFromFile(normalize(image.getRGB(x, y)), fileName, x, y);
+                colorSet.addColorFromFile(normalize(image.getRGB(x, y)),
+                        fileName, x, y);
         colorSets.put(area, colorSet);
         return colorSet;
     }
 
-    ColorSet getImageColorSet(File file, int x1, int y1, int x2, int y2) throws LoadImgException
+    ColorSet getImageColorSet(File file, int x1, int y1, int x2, int y2) throws
+            LoadImgException
     {
         return getImageColorSet(file.getAbsolutePath(), x1, y1, x2, y2);
     }
@@ -149,7 +166,10 @@ public class ImageLibrary
     public String getFormat(String fileName) throws LoadImgException
     {
         getImage(fileName);
-        String [] answer = {"", "pcx", "tiff", "gif", "png"};
+        String[] answer =
+        {
+            "", "pcx", "tiff", "gif", "png"
+        };
         return answer[fileName.charAt(fileName.length() - 12) - '0'];
         //return formats.get(fileName);
     }
@@ -159,12 +179,10 @@ public class ImageLibrary
         return getFormat(file.getAbsolutePath());
     }
 
-
     public String getDepth(String fileName) throws LoadImgException
     {
-        getImage(fileName);
-        return fileName.charAt(fileName.length() - 12) == '4' ? "8" : "24";
-        //return depthes.get(fileName);
+        LoadImgBufferedImageContainer container = getImageContainer(fileName);
+        return Byte.toString(container.detailedBitDepth);
     }
 
     public String getDepth(File file) throws LoadImgException
@@ -178,7 +196,7 @@ public class ImageLibrary
         for (int x = 0; x < image.getWidth(); x++)
             for (int y = 0; y < image.getHeight(); y++)
                 if (normalize(image.getRGB(x, y)) == color)
-                    return x + ((long)(y) << 16);
+                    return x + ((long) (y) << 16);
         return -1;
     }
 
@@ -198,4 +216,3 @@ public class ImageLibrary
         return String.format("(%d, %d, %d)", r, g, b);
     }
 }
-

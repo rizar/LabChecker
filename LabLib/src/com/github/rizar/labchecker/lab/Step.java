@@ -24,6 +24,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import com.github.rizar.labchecker.loadimage.LoadImgException;
+import com.github.rizar.labchecker.loadimage.LoadImgWrongExtensionException;
 import com.github.rizar.labchecker.test.DepthTest;
 import com.github.rizar.labchecker.test.FormatTest;
 import org.xml.sax.Attributes;
@@ -375,8 +376,20 @@ class Step
         public boolean check() throws LoadImgException,
                                       TestException
         {
-            checkResult = rootTest.check(macroProcessor, lab.getImageLibrary(),
-                    stepFile);
+            try
+            {
+                checkResult = rootTest.check(macroProcessor, lab.getImageLibrary(),
+                        stepFile);
+            }
+            catch (LoadImgWrongExtensionException e)
+            {
+                message = new Log();
+                message.addMessage(Log.MessageType.ERROR, "Неверный формат файла.");
+                log = new Log();
+                log.addMessage(Log.MessageType.ERROR, "Wrong file format.");
+                isCheckedFlag = true;
+                return checkResult = false;
+            }
 
             message = rootTest.getMessage();
             log = rootTest.getLog();

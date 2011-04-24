@@ -1,26 +1,32 @@
 package com.github.rizar.labchecker.test;
 
-import java.util.ArrayList;
-import java.util.Formatter;
-import java.util.List;
+import java.util.*;
 
 /**
  *
  * @author Rizar
  */
-public class Log
+public class Log implements Iterable<Log.TypedMessage>
 {
     public enum MessageType
     {
         INIT, INFO, ERROR_INFO, OK_INFO, ERROR, OK;
     }
 
-    private class TypedMessage
+    public class TypedMessage
     {
-        String message;
-        MessageType type;
+        private String message;
+        private MessageType type;
 
-        public TypedMessage(String message, MessageType type)
+        public String getMessage() {
+			return message;
+		}
+
+		public MessageType getType() {
+			return type;
+		}
+
+		public TypedMessage(String message, MessageType type)
         {
             this.message = message;
             this.type = type;
@@ -28,6 +34,11 @@ public class Log
     }
 
     private List<TypedMessage> messages = new ArrayList<TypedMessage> ();
+
+    /*public void clear()
+    {
+        messages.clear();
+    }*/
 
     public String getMessage(int index)
     {
@@ -77,7 +88,8 @@ public class Log
 
     public void addAllMessages(Log otherLog)
     {
-        messages.addAll(otherLog.messages);
+    	if (otherLog != null)
+    		messages.addAll(otherLog.messages);
     }
 
     @Override
@@ -91,4 +103,14 @@ public class Log
         }
         return sb.toString();
     }
+    
+    public int getLength()
+    {
+    	return messages.size();
+    }
+    
+	@Override
+	public Iterator<TypedMessage> iterator() {
+    	return messages.iterator();
+	}
 }
